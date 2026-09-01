@@ -136,6 +136,36 @@ select:focus-visible {
   color: var(--coral-dark);
 }
 
+.site-header__actions {
+  display: flex;
+  align-items: center;
+  justify-self: end;
+  gap: 0.75rem;
+}
+
+.language-select {
+  display: grid;
+  gap: 0.2rem;
+  color: var(--muted);
+  font-size: 0.62rem;
+  font-weight: 760;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.language-select select {
+  min-height: 2.35rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 0 2rem 0 0.7rem;
+  background: var(--white);
+  color: var(--ink);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
 .status-pill {
   display: inline-flex;
   align-items: center;
@@ -822,6 +852,11 @@ select:focus-visible {
   }
 
   .brand__name {
+    display: none;
+  }
+
+  .language-select > span,
+  .status-pill {
     display: none;
   }
 

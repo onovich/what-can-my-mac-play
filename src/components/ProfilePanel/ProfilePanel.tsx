@@ -1,22 +1,18 @@
 import { useState } from 'react'
-
-const profileOptions = {
-  chip: ['Apple silicon', 'M1 family', 'M2 family', 'M3 family', 'M4 family', 'Other'],
-  memory: ['16 GB memory', '8 GB memory', '24 GB memory', '32 GB+ memory'],
-  runner: ['CrossOver 25', 'CrossOver 26', 'Native Mac', 'Not decided'],
-}
+import { useLocale } from '../../i18n/locale'
 
 export function ProfilePanel() {
-  const [chip, setChip] = useState(profileOptions.chip[0])
-  const [memory, setMemory] = useState(profileOptions.memory[0])
-  const [runner, setRunner] = useState(profileOptions.runner[0])
+  const { messages } = useLocale()
+  const [chip, setChip] = useState(0)
+  const [memory, setMemory] = useState(0)
+  const [runner, setRunner] = useState(0)
 
   return (
     <aside className="profile-panel" aria-labelledby="profile-title">
       <div className="profile-panel__heading">
         <div>
-          <p className="utility-label">Your test profile</p>
-          <h2 id="profile-title">Make the question specific.</h2>
+          <p className="utility-label">{messages.profile.label}</p>
+          <h2 id="profile-title">{messages.profile.title}</h2>
         </div>
         <span className="profile-panel__index" aria-hidden="true">
           01
@@ -25,26 +21,26 @@ export function ProfilePanel() {
 
       <div className="profile-panel__fields">
         <label>
-          Chip
-          <select value={chip} onChange={(event) => setChip(event.target.value)}>
-            {profileOptions.chip.map((option) => (
-              <option key={option}>{option}</option>
+          {messages.profile.chip}
+          <select value={chip} onChange={(event) => setChip(Number(event.target.value))}>
+            {messages.profile.chips.map((option, index) => (
+              <option key={index} value={index}>{option}</option>
             ))}
           </select>
         </label>
         <label>
-          Memory
-          <select value={memory} onChange={(event) => setMemory(event.target.value)}>
-            {profileOptions.memory.map((option) => (
-              <option key={option}>{option}</option>
+          {messages.profile.memory}
+          <select value={memory} onChange={(event) => setMemory(Number(event.target.value))}>
+            {messages.profile.memories.map((option, index) => (
+              <option key={index} value={index}>{option}</option>
             ))}
           </select>
         </label>
         <label className="profile-panel__wide-field">
-          Preferred route
-          <select value={runner} onChange={(event) => setRunner(event.target.value)}>
-            {profileOptions.runner.map((option) => (
-              <option key={option}>{option}</option>
+          {messages.profile.runner}
+          <select value={runner} onChange={(event) => setRunner(Number(event.target.value))}>
+            {messages.profile.runners.map((option, index) => (
+              <option key={index} value={index}>{option}</option>
             ))}
           </select>
         </label>
@@ -52,12 +48,13 @@ export function ProfilePanel() {
 
       <div className="profile-panel__output" aria-live="polite">
         <span className="signal-dot" aria-hidden="true" />
-        <p>
-          Previewing evidence for <strong>{chip}</strong>, <strong>{memory}</strong>, using{' '}
-          <strong>{runner}</strong>.
-        </p>
+        <p>{messages.profile.preview(
+          messages.profile.chips[chip] ?? messages.profile.chips[0],
+          messages.profile.memories[memory] ?? messages.profile.memories[0],
+          messages.profile.runners[runner] ?? messages.profile.runners[0],
+        )}</p>
       </div>
-      <p className="profile-panel__privacy">Prototype only. These selections are not stored.</p>
+      <p className="profile-panel__privacy">{messages.profile.privacy}</p>
     </aside>
   )
 }

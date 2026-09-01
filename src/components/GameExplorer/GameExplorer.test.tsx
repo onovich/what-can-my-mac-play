@@ -1,10 +1,19 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
+import { LocaleProvider } from '../../i18n/LocaleProvider'
 import { GameExplorer } from './GameExplorer'
+
+function renderExplorer() {
+  return render(
+    <LocaleProvider initialLocale="en">
+      <GameExplorer />
+    </LocaleProvider>,
+  )
+}
 
 describe('GameExplorer', () => {
   it('filters sample games by search text', () => {
-    render(<GameExplorer />)
+    renderExplorer()
 
     fireEvent.change(screen.getByRole('searchbox', { name: /find a sample game/i }), {
       target: { value: 'Portal' },
@@ -16,7 +25,7 @@ describe('GameExplorer', () => {
   })
 
   it('offers a reset when no sample matches', () => {
-    render(<GameExplorer />)
+    renderExplorer()
 
     fireEvent.change(screen.getByRole('searchbox', { name: /find a sample game/i }), {
       target: { value: 'not in the sample' },

@@ -1,7 +1,11 @@
+import { useLocale, type Locale } from '../../i18n/locale'
+
 export function Header() {
+  const { locale, setLocale, messages } = useLocale()
+
   return (
     <header className="site-header shell">
-      <a className="brand" href="#main-content" aria-label="What Can My Mac Play? home">
+      <a className="brand" href="#main-content" aria-label={messages.header.homeLabel}>
         <span className="brand__mark" aria-hidden="true">
           W<span>?</span>
         </span>
@@ -9,9 +13,9 @@ export function Header() {
           What Can My Mac Play<span>?</span>
         </span>
       </a>
-      <nav aria-label="Primary navigation">
-        <a href="#sample-library">Sample library</a>
-        <a href="#method">Method</a>
+      <nav aria-label={messages.header.primaryNavigation}>
+        <a href="#sample-library">{messages.header.sampleLibrary}</a>
+        <a href="#method">{messages.header.method}</a>
         <a
           href="https://github.com/onovich/what-can-my-mac-play"
           target="_blank"
@@ -20,9 +24,21 @@ export function Header() {
           GitHub <span aria-hidden="true">↗</span>
         </a>
       </nav>
-      <span className="status-pill">
-        <span aria-hidden="true" /> Research preview
-      </span>
+      <div className="site-header__actions">
+        <label className="language-select">
+          <span>{messages.header.language}</span>
+          <select
+            value={locale}
+            onChange={(event) => setLocale(event.target.value as Locale)}
+          >
+            <option value="en">{messages.header.english}</option>
+            <option value="zh-CN">{messages.header.chinese}</option>
+          </select>
+        </label>
+        <span className="status-pill">
+          <span aria-hidden="true" /> {messages.header.status}
+        </span>
+      </div>
     </header>
   )
 }

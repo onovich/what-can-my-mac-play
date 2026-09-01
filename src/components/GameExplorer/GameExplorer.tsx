@@ -1,17 +1,18 @@
 import { useMemo, useState } from 'react'
 import { sampleGames, type SampleGame } from '../../data/sampleGames'
+import { useLocale, type Locale } from '../../i18n/locale'
 
 type SignalFilter = 'all' | SampleGame['signal']
 
-const filters: Array<{ value: SignalFilter; label: string }> = [
-  { value: 'all', label: 'All samples' },
-  { value: 'strong', label: 'Stronger evidence' },
-  { value: 'caution', label: 'Needs caution' },
-]
-
 export function GameExplorer() {
+  const { locale, messages } = useLocale()
   const [query, setQuery] = useState('')
   const [filter, setFilter] = useState<SignalFilter>('all')
+  const filters: Array<{ value: SignalFilter; label: string }> = [
+    { value: 'all', label: messages.explorer.filters.all },
+    { value: 'strong', label: messages.explorer.filters.strong },
+    { value: 'caution', label: messages.explorer.filters.caution },
+  ]
 
   const visibleGames = useMemo(() => {
     const normalizedQuery = query.trim().toLocaleLowerCase()
@@ -27,18 +28,15 @@ export function GameExplorer() {
       <div className="shell">
         <div className="section-heading">
           <div>
-            <p className="eyebrow">Research snapshot · September 2026</p>
-            <h2 id="explorer-title">A sample library, with the caveats left in.</h2>
+            <p className="eyebrow">{messages.explorer.eyebrow}</p>
+            <h2 id="explorer-title">{messages.explorer.title}</h2>
           </div>
-          <p>
-            These are static examples from the repository research—not live compatibility
-            results. Every conclusion still points back to its source.
-          </p>
+          <p>{messages.explorer.intro}</p>
         </div>
 
         <div className="explorer__toolbar">
           <label className="search-field">
-            <span>Find a sample game</span>
+            <span>{messages.explorer.searchLabel}</span>
             <span className="search-field__control">
               <svg aria-hidden="true" viewBox="0 0 24 24">
                 <circle cx="11" cy="11" r="6.5" />
@@ -48,12 +46,12 @@ export function GameExplorer() {
                 type="search"
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder="Try Portal 2"
+                placeholder={messages.explorer.searchPlaceholder}
               />
             </span>
           </label>
 
-          <div className="filter-group" aria-label="Filter evidence signal">
+          <div className="filter-group" aria-label={messages.explorer.filterLabel}>
             {filters.map((item) => (
               <button
                 key={item.value}
@@ -68,22 +66,22 @@ export function GameExplorer() {
         </div>
 
         <p className="result-count" role="status" aria-live="polite">
-          Showing {visibleGames.length} of {sampleGames.length} research samples
+          {messages.explorer.count(visibleGames.length, sampleGames.length)}
         </p>
 
         {visibleGames.length > 0 ? (
           <div className="game-list">
             {visibleGames.map((game, index) => (
-              <GameRow key={game.appId} game={game} index={index + 1} />
+              <GameRow key={game.appId} game={game} index={index + 1} locale={locale} />
             ))}
           </div>
         ) : (
           <div className="empty-state" role="status">
             <span aria-hidden="true">?</span>
-            <h3>No sample game matches that search.</h3>
-            <p>Clear the search or choose another evidence filter.</p>
+            <h3>{messages.explorer.emptyTitle}</h3>
+            <p>{messages.explorer.emptyBody}</p>
             <button type="button" onClick={() => { setQuery(''); setFilter('all') }}>
-              Reset samples
+              {messages.explorer.reset}
             </button>
           </div>
         )}
@@ -92,7 +90,10 @@ export function GameExplorer() {
   )
 }
 
-function GameRow({ game, index }: { game: SampleGame; index: number }) {
+function GameRow({ game, index, locale }: { game: SampleGame; index: number; locale: Locale }) {
+  const { messages } = useLocale()
+  const localized = game.localized[locale]
+
   return (
     <article className="game-row">
       <span className="game-row__index" aria-hidden="true">
@@ -100,25 +101,25 @@ function GameRow({ game, index }: { game: SampleGame; index: number }) {
       </span>
       <div className="game-row__title">
         <p className={`signal-label signal-label--${game.signal}`}>
-          <span aria-hidden="true" /> {game.recommendation}
+          <span aria-hidden="true" /> {localized.recommendation}
         </p>
         <h3>{game.title}</h3>
-        <p>Steam App ID {game.appId}</p>
+        <p>{messages.explorer.steamAppId} {game.appId}</p>
       </div>
       <dl className="game-row__facts">
         <div>
-          <dt>Steam reviews</dt>
-          <dd>{game.steamScore} positive</dd>
+          <dt>{messages.explorer.steamReviews}</dt>
+          <dd>{game.steamScore} {messages.explorer.positive}</dd>
         </div>
         <div>
-          <dt>Source rating</dt>
-          <dd>{game.sourceRating}</dd>
+          <dt>{messages.explorer.sourceRating}</dt>
+          <dd>{localized.sourceRating}</dd>
         </div>
       </dl>
-      <p className="game-row__evidence">{game.evidence}</p>
+      <p className="game-row__evidence">{localized.evidence}</p>
       <div className="game-row__links">
         <a href={game.sourceUrl} target="_blank" rel="noreferrer">
-          Evidence <span aria-hidden="true">↗</span>
+          {messages.explorer.evidence} <span aria-hidden="true">↗</span>
         </a>
         <a href={game.steamUrl} target="_blank" rel="noreferrer">
           Steam <span aria-hidden="true">↗</span>
