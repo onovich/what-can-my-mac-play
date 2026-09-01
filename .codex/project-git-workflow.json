@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "initializedMarker": "codex-project-git-workflow: initialized",
+  "initializedAt": "2026-09-02 03:57:35 +08:00",
+  "projectName": "What Can My Mac Play?",
+  "repoRoot": "/Users/onovich/WebProjects/what-can-my-mac-play",
+  "safeDirectory": "/Users/onovich/WebProjects/what-can-my-mac-play",
+  "statusCommand": "git status --short --branch",
+  "validationCommands": [
+    "python3 /Users/onovich/.codex/skills/repo-readme/scripts/check_readmes.py .",
+    "python3 /Users/onovich/.codex/skills/repo-cover/scripts/validate_preview.py docs/social-preview.png --svg docs/social-preview.svg"
+  ],
+  "stagingPolicy": "selected files only",
+  "commitCommand": "",
+  "pushCommand": "git push -u origin HEAD",
+  "docsRequirement": "Keep README.md and README.zh-CN.md materially aligned; validate the social preview after cover changes.",
+  "forbiddenCommands": "Never force-push or use destructive git commands without explicit user approval."
+}

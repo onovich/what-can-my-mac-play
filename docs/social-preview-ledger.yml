@@ -1,0 +1,109 @@
+repository:
+  name: "what-can-my-mac-play"
+  url: "https://github.com/onovich/what-can-my-mac-play"
+  visibility: unknown
+  default_branch: "main"
+  local_checkout: "/Users/onovich/WebProjects/what-can-my-mac-play"
+
+evidence:
+  mode: local-static
+  inspected:
+    - path_or_url: "WHAT_CAN_MY_MAC_PLAY_HANDOFF.md"
+      proves: "Product scope, audience, evidence model, planned data flow, and current pre-prototype status."
+    - path_or_url: "steam-crossover-research.md"
+      proves: "A local research snapshot showing why environment, recency, and source context matter."
+  claim_boundaries:
+    - "No application, API, data pipeline, build, test, or deployment exists yet."
+    - "The cover represents the planned decision flow, not a captured working interface."
+    - "Compatibility conclusions will be third-party evidence summaries, not independent testing guarantees."
+
+content:
+  promise: "Find games likely to work on your Mac."
+  proof:
+    - "A device profile is part of the planned compatibility context."
+    - "Game-library matching is a planned primary workflow."
+    - "Compatibility and confidence are deliberately separate outputs."
+  exclude:
+    - "Unsupported game counts, performance claims, compatibility guarantees, and release status."
+    - "Unimplemented UI, fabricated scores, Apple or Steam logos, and affiliation claims."
+
+cold_start_route:
+  semantic_skeleton:
+    objects:
+      - "Mac device profile"
+      - "Steam game library"
+      - "dated compatibility evidence"
+      - "compatibility and confidence result"
+    actions:
+      - "match"
+      - "normalize"
+      - "score"
+      - "explain"
+    topology: "Three independent inputs converge into one evidence-aware decision."
+    outcome: "A traceable estimate of whether a game is likely to play on a user's Mac."
+  representation: structural-diagram
+  material_plan:
+    background_surface_relation: "Warm off-white editorial canvas with one dark evidence panel."
+    character: "Independent technical field guide rather than platform-owned product marketing."
+    semantic_texture_or_grid: "No decorative grid; hierarchy comes from mass, spacing, and labeled nodes."
+    contrast_and_focus: "Dark ink title first, coral question mark second, evidence flow third."
+    region_separation: "Open copy field and a bounded dark proof panel with honest gaps between nodes."
+  direction_hypotheses:
+    chosen: "Brand plus a compact three-input decision-flow diagram."
+    rejected: "A fabricated game-browser screenshot or a generic laptop/gamepad illustration."
+    rejection_reason: "No interface or owned product visual exists, and a stock device scene would imply maturity without evidence."
+
+composition:
+  production_route: code-native-svg
+  regions:
+    - name: "identity"
+      bounds: "72,72 500x496"
+      purpose: "Product name, value statement, and honest maturity label."
+    - name: "product-proof"
+      bounds: "626,72 582x496"
+      purpose: "Planned evidence convergence from device, library, and reports to two distinct scores."
+  line_ledger:
+    - element: "three input connectors"
+      role: "connector"
+      endpoints_or_bounds: "Each input card terminates at the decision node."
+      evidence: "The documented pipeline normalizes device, game, and evidence context before scoring."
+    - element: "decision-to-output connector"
+      role: "connector"
+      endpoints_or_bounds: "Decision node terminates at the compatibility/confidence output."
+      evidence: "The scoring draft explicitly separates compatibility and confidence."
+
+version:
+  baseline: "none"
+  candidate: "v1"
+  preservation_contract:
+    identity_anchors:
+      - "Exact product name"
+      - "Question mark as a semantic accent"
+      - "Compatibility and confidence shown separately"
+    protected_strengths: []
+    allowed_changes:
+      - "Typography, spacing, and palette adjustments after thumbnail review"
+    forbidden_changes:
+      - "Fabricated interface, scores, game counts, benchmarks, or affiliation marks"
+  comparison_scores: {}
+  vetoes: []
+  verdict: not-applicable
+  reason: "First repository cover; no baseline exists."
+
+output:
+  svg: "docs/social-preview.svg"
+  png: "docs/social-preview.png"
+  review_sheet: "docs/social-preview-review.png"
+  width: 1280
+  height: 640
+  bytes: 30885
+  mechanical_validation: pass
+  full_size_review: pass
+  thumbnail_light_review: pass
+  thumbnail_dark_review: pass
+  batch_contact_review: not-applicable
+
+authorization:
+  readme_modified: true
+  github_uploaded: false
+  upload_verification: not-requested
