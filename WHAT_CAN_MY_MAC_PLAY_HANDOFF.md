@@ -1,6 +1,6 @@
 # What Can My Mac Play? 项目交接文档
 
-> 状态：概念验证前 / 产品与数据方案已形成初稿
+> 状态：Phase 0 / 可运行前端原型已建立，实时数据接入尚未开始
 > 文档日期：2026-09-02（Asia/Shanghai）
 > 目标：让接手者无需读取原对话，也能理解项目的来由、决定、证据、风险与下一步。
 
@@ -21,11 +21,13 @@
 当前明确决定：
 
 - 主品牌：**What Can My Mac Play?**
-- 主域名：`whatcanmymacplay.com`
-- 短域名：`canmymacplay.com`，永久 `301` 到主域名
+- MVP 地址：`macplay.onovich.com`
+- 独立域名购买暂缓；验证 MVP 后再评估 `whatcanmymacplay.com`
 - 不购买 `macgamecheck.com`
 - GitHub 仓库建议名：`what-can-my-mac-play`
 - 产品初期只做信息聚合与自动分析，不承诺人工复测、论坛或人工技术支持。
+
+当前工程进度：仓库已经包含基于 Vite、React 与 TypeScript 的响应式前端原型，提供设备画像选择、可搜索的静态研究样本和证据外链。尚未实现 Steam 连接、实时兼容数据、后端 API、用户系统或生产部署。
 
 ## 2. 问题与产品定位
 
@@ -158,9 +160,10 @@ AppleGamingWiki 页面页脚声明内容在未另行注明时采用 **Creative C
 
 域名价格、优惠和可注册状态都是时点信息，购买时以注册商结算页为准。GoDaddy 官方也提醒续费费率可能高于首购价，并建议在账户 Domain Portfolio 中查看实际一年续费价；续费价不含附加服务。[GoDaddy 续费价检查说明](https://www.godaddy.com/zh-sg/help/check-my-domain-renewal-price-26950)
 
-购买时：
+当前策略：
 
-- 只买 `whatcanmymacplay.com` 与 `canmymacplay.com`；
+- MVP 先使用 `macplay.onovich.com`，暂不购买独立域名；
+- 产品验证通过后，优先重新评估 `whatcanmymacplay.com`，不默认同时购买多个域名；
 - 核对首购年限、续费价、税费、ICANN 费用和是否为 Premium；
 - 不默认购买收费邮箱、建站、Premium DNS 或额外域名保护；
 - 开启双因素认证、注册锁和自动续费，并记录转移资格日期。
@@ -435,7 +438,7 @@ recommendation_score =
 ### 11.3 技术 SEO
 
 - 每个游戏以 Steam App ID 保证稳定 canonical slug；改名不产生重复页。
-- 主域统一为 `https://whatcanmymacplay.com`；短域全站 301。
+- MVP canonical 统一为 `https://macplay.onovich.com`；未来迁移独立域名时保持路径并逐页永久重定向。
 - 自动 sitemap 分片、`lastmod` 来自实际证据/页面更新。
 - SSR/静态生成，控制 Core Web Vitals；筛选参数默认 canonical 到主集合页，避免索引爆炸。
 - 适当使用 `VideoGame`、`SoftwareApplication`、`FAQPage` 等结构化数据，但只标注页面真实可见内容，不把本站分数伪装成 Steam 官方评分。
@@ -462,7 +465,7 @@ recommendation_score =
 
 ### 12.3 回本口径
 
-- 只看两个域名和低成本托管，现金回本门槛低。
+- MVP 复用现有域名子域名，暂时没有新增域名现金成本。
 - 若计入开发、数据接入、法律审查和持续维护，能否回本完全取决于自然搜索量、库存连接转化和联盟转化。
 - 不应把域名视为投资品；它们是低成本产品资产。
 
@@ -470,9 +473,9 @@ recommendation_score =
 
 ### 13.1 已决定
 
-- **主域**：`whatcanmymacplay.com`
-- **短域**：`canmymacplay.com`
-- **重定向**：短域所有路径用 HTTP `301` 到主域对应路径。
+- **MVP 地址**：`macplay.onovich.com`
+- **独立域名**：当前不购买；MVP 验证后再决定是否购买 `whatcanmymacplay.com`。
+- **未来迁移**：若启用独立域名，保留路径并将子域名永久重定向到新域名对应路径。
 - **不购买**：`macgamecheck.com`
 - **品牌显示**：`What Can My Mac Play?`
 - **GitHub 仓库**：`what-can-my-mac-play`
@@ -501,7 +504,7 @@ recommendation_score =
 
 ### Phase 0：可行性与授权（1–2 周）
 
-- 注册两个域名，设置 2FA、注册锁、自动续费；
+- 配置 `macplay.onovich.com` DNS 与 HTTPS，并记录未来域名迁移方案；
 - 创建 `what-can-my-mac-play` 仓库；
 - 建 source registry，核对每个来源的许可、条款和 robots；
 - 联系 CodeWeavers、AppleGamingWiki、MacGamingDB/Does It Mac，确认 API/合作/再发布边界；
@@ -572,10 +575,10 @@ recommendation_score =
 
 ### Day 1：资产与边界
 
-- [ ] 在结算页再次确认并购买 `whatcanmymacplay.com`、`canmymacplay.com`；
-- [ ] 启用 2FA、注册锁、自动续费，记录续费价格；
-- [ ] 创建 GitHub 仓库 `what-can-my-mac-play`；
-- [ ] 把本文件和现有 `steam-crossover-research.md` 作为最初产品研究资料提交。
+- [ ] 配置 `macplay.onovich.com` DNS 与 HTTPS；
+- [x] 暂缓独立域名购买，保留未来迁移方案；
+- [x] 创建 GitHub 仓库 `what-can-my-mac-play`；
+- [x] 把本文件和现有 `steam-crossover-research.md` 作为最初产品研究资料提交。
 
 ### Day 2：数据合规
 
@@ -633,11 +636,13 @@ recommendation_score =
 |---|---|---|
 | 2026-09-02 | 做自动聚合与分析，不做人工测试团队 | 控制运营成本，发挥数据归一化和个性化价值 |
 | 2026-09-02 | 产品名用 What Can My Mac Play? | 直接表达用户问题，便于搜索与理解 |
-| 2026-09-02 | 主域用无连字符 `whatcanmymacplay.com` | 易输入、口头传播和品牌一致性更好；连字符无明确 SEO 优势 |
-| 2026-09-02 | 只买两个域名 | 主域完整，`canmymacplay.com` 作为短入口；第三个品牌域无必要 |
+| 2026-09-02 | 将 `whatcanmymacplay.com` 作为未来独立域名候选 | 与品牌一致，但是否购买推迟到 MVP 验证之后 |
+| 2026-09-02 | 当前不购买独立域名 | 先复用 `onovich.com` 子域名，降低 MVP 前置成本 |
 | 2026-09-02 | 仓库建议 `what-can-my-mac-play` | GitHub 可读、与品牌一致、适合单仓 MVP |
 | 2026-09-02 | 兼容分与可信度分开 | 防止少量、陈旧或冲突证据产生过度确定的结论 |
 | 2026-09-02 | 原生 Mac 路径优先于 CrossOver | 产品服务用户结果，不应为了 CrossOver 联盟转化而推荐更复杂路径 |
+| 2026-09-02 | MVP 先使用 `macplay.onovich.com` | 先验证产品和数据路径，暂不让独立域名购买阻塞开发 |
+| 2026-09-02 | 建立 Vite + React + TypeScript 前端原型 | 以静态、可部署的交互界面验证信息架构，同时避免伪装尚未实现的实时数据接入 |
 
 ## 20. 关键来源索引
 

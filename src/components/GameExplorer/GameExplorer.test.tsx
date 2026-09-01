@@ -1,0 +1,28 @@
+import { fireEvent, render, screen } from '@testing-library/react'
+import { describe, expect, it } from 'vitest'
+import { GameExplorer } from './GameExplorer'
+
+describe('GameExplorer', () => {
+  it('filters sample games by search text', () => {
+    render(<GameExplorer />)
+
+    fireEvent.change(screen.getByRole('searchbox', { name: /find a sample game/i }), {
+      target: { value: 'Portal' },
+    })
+
+    expect(screen.getByRole('heading', { name: 'Portal 2' })).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Noita' })).not.toBeInTheDocument()
+    expect(screen.getByText(/showing 1 of 6/i)).toBeInTheDocument()
+  })
+
+  it('offers a reset when no sample matches', () => {
+    render(<GameExplorer />)
+
+    fireEvent.change(screen.getByRole('searchbox', { name: /find a sample game/i }), {
+      target: { value: 'not in the sample' },
+    })
+    fireEvent.click(screen.getByRole('button', { name: /reset samples/i }))
+
+    expect(screen.getByText(/showing 6 of 6/i)).toBeInTheDocument()
+  })
+})

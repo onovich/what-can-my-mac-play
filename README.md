@@ -2,7 +2,7 @@
 
 [简体中文](README.zh-CN.md)
 
-An early-stage product research repository for a Mac game compatibility decision engine. The project is designed to help players understand which games are likely to work on their specific Mac—and why—without treating a single compatibility rating as a guarantee.
+An evidence-aware Mac game compatibility prototype. It is designed to help players understand which games are likely to work on their specific Mac—and why—without treating a single compatibility rating as a guarantee.
 
 ![What Can My Mac Play? social preview](docs/social-preview.png)
 
@@ -16,14 +16,33 @@ An early-stage product research repository for a Mac game compatibility decision
 
 ## Current status
 
-The repository is in the **product research and feasibility phase**. It currently contains the product scope, a proposed data model and scoring approach, source and licensing analysis, and one local Steam/CrossOver research snapshot.
+The repository is in the **interactive MVP and data-feasibility phase**. The current Vite/React prototype includes a responsive landing page, a local Mac profile selector, searchable evidence samples, explicit source links, and automated UI tests.
 
-No web application, API, data pipeline, automated test suite, or deployment has been implemented yet. The next gate is to validate legal and stable access to compatibility data before building around large-scale aggregation.
+The sample catalog is static and comes from the repository's point-in-time research. No Steam connection, compatibility API, ingestion pipeline, user account system, or production deployment has been implemented. The next gate remains legal and stable access to compatibility data.
+
+## Run locally
+
+Requirements: Node.js 22.12 or newer and pnpm 11.7 or newer.
+
+```sh
+pnpm install --frozen-lockfile
+cp .env.example .env.local
+pnpm dev
+```
+
+The development server prints its local URL. `VITE_SITE_URL` controls the canonical production URL and defaults to `https://macplay.onovich.com`.
+
+Run the full validation suite with:
+
+```sh
+pnpm check
+```
 
 ## Repository contents
 
 - [`WHAT_CAN_MY_MAC_PLAY_HANDOFF.md`](WHAT_CAN_MY_MAC_PLAY_HANDOFF.md) — product definition, evidence model, MVP scope, risks, and phased delivery plan.
 - [`steam-crossover-research.md`](steam-crossover-research.md) — a point-in-time local research snapshot that demonstrates why version, environment, and evidence freshness matter.
+- [`src/`](src/) — the responsive React prototype, sample evidence data, and component tests.
 - [`docs/social-preview-ledger.yml`](docs/social-preview-ledger.yml) — evidence and design decisions behind the repository cover.
 
 ## Planned MVP
@@ -46,7 +65,7 @@ Technical access does not imply permission to cache or republish data. Each sour
 
 ## Documentation
 
-The detailed [handoff document](WHAT_CAN_MY_MAC_PLAY_HANDOFF.md) is the current source of truth for product decisions and the roadmap.
+The detailed [handoff document](WHAT_CAN_MY_MAC_PLAY_HANDOFF.md) records product decisions, evidence boundaries, and the roadmap. The MVP is planned to use `macplay.onovich.com` before any move to a standalone domain.
 
 ## License
 

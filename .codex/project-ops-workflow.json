@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "initializedMarker": "codex-project-ops-workflow: initialized",
+  "initializedAt": "2026-09-02 04:20:00 +08:00",
+  "projectName": "What Can My Mac Play?",
+  "repoRoot": "/Users/onovich/WebProjects/what-can-my-mac-play",
+  "validateSequence": ["lint", "typecheck", "test", "build", "docsCheck"],
+  "operations": {
+    "envCheck": {
+      "commands": [
+        "node --version",
+        "pnpm --version",
+        "node -e \"const [major, minor] = process.versions.node.split('.').map(Number); if (major < 22 || (major === 22 && minor < 12)) process.exit(1)\""
+      ]
+    },
+    "restoreDeps": { "commands": ["pnpm install --frozen-lockfile"] },
+    "installDeps": { "commands": ["pnpm install"] },
+    "build": { "commands": ["pnpm build"] },
+    "test": { "commands": ["pnpm test"] },
+    "lint": { "commands": ["pnpm lint"] },
+    "format": { "commands": [] },
+    "typecheck": { "commands": ["pnpm typecheck"] },
+    "structureCheck": { "commands": [] },
+    "codegen": { "commands": [] },
+    "docsCheck": {
+      "commands": ["python3 /Users/onovich/.codex/skills/repo-readme/scripts/check_readmes.py ."]
+    },
+    "smoke": { "commands": [], "urls": ["http://127.0.0.1:4173/"] },
+    "package": { "commands": ["pnpm build"] },
+    "releaseDryRun": { "commands": ["pnpm check"] }
+  },
+  "devServer": {
+    "startCommand": "pnpm dev --host 127.0.0.1 --port 4173",
+    "healthUrl": "http://127.0.0.1:4173/",
+    "readyText": "What Can My Mac Play?",
+    "startupTimeoutSeconds": 30,
+    "pidFile": ".codex/project-ops-devserver.pid"
+  },
+  "forbiddenPolicy": "Do not run destructive clean/reset/deploy commands unless the user explicitly asks."
+}

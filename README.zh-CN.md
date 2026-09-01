@@ -2,7 +2,7 @@
 
 [English](README.md)
 
-这是一个处于早期产品研究阶段的 Mac 游戏兼容性决策引擎项目。它希望帮助玩家判断哪些游戏最可能在自己的 Mac 上运行，并解释判断依据，而不是把单一兼容评级当作保证。
+这是一个重视证据的 Mac 游戏兼容性决策原型。它希望帮助玩家判断哪些游戏最可能在自己的 Mac 上运行，并解释判断依据，而不是把单一兼容评级当作保证。
 
 ![What Can My Mac Play? social preview](docs/social-preview.png)
 
@@ -16,14 +16,33 @@
 
 ## 当前状态
 
-仓库目前处于**产品研究与可行性验证阶段**，已有内容包括产品范围、数据模型与评分方案草案、数据来源与授权分析，以及一份本机 Steam/CrossOver 时点调研。
+仓库目前处于**交互式 MVP 与数据可行性验证阶段**。现有 Vite/React 原型包含响应式首页、本地 Mac 画像选择、可搜索的证据样本、明确的来源链接和自动化 UI 测试。
 
-项目尚未实现 Web 应用、API、数据管线、自动化测试或部署。下一道关卡是确认兼容性数据拥有合法、稳定的接入方式，再开始建设依赖大规模聚合的产品。
+样本目录来自仓库内的时点调研，仍是静态数据。项目尚未实现 Steam 连接、兼容性 API、数据接入管线、用户账户或生产部署。下一道关卡仍是确认兼容性数据拥有合法、稳定的接入方式。
+
+## 本地运行
+
+环境要求：Node.js 22.12 或更新版本，以及 pnpm 11.7 或更新版本。
+
+```sh
+pnpm install --frozen-lockfile
+cp .env.example .env.local
+pnpm dev
+```
+
+开发服务器会输出本地访问地址。`VITE_SITE_URL` 用于配置生产 canonical URL，默认值为 `https://macplay.onovich.com`。
+
+运行完整检查：
+
+```sh
+pnpm check
+```
 
 ## 仓库内容
 
 - [`WHAT_CAN_MY_MAC_PLAY_HANDOFF.md`](WHAT_CAN_MY_MAC_PLAY_HANDOFF.md) — 产品定义、证据模型、MVP 范围、风险与分阶段交付计划。
 - [`steam-crossover-research.md`](steam-crossover-research.md) — 一份本机时点调研，用于说明版本、环境和证据新鲜度为什么重要。
+- [`src/`](src/) — 响应式 React 原型、样本证据数据与组件测试。
 - [`docs/social-preview-ledger.yml`](docs/social-preview-ledger.yml) — 仓库封面的证据与设计决策记录。
 
 ## 计划中的 MVP
@@ -46,7 +65,7 @@ MVP 计划聚焦 Apple silicon Mac、Steam 与 CrossOver：
 
 ## 文档
 
-详细的[项目交接文档](WHAT_CAN_MY_MAC_PLAY_HANDOFF.md)是当前产品决策和路线图的事实来源。
+详细的[项目交接文档](WHAT_CAN_MY_MAC_PLAY_HANDOFF.md)记录了产品决策、证据边界和路线图。MVP 计划先使用 `macplay.onovich.com`，之后再决定是否迁移到独立域名。
 
 ## 许可证
 

@@ -24,6 +24,7 @@ git status --short --branch
 ## Validation
 
 ```sh
+pnpm check
 python3 /Users/onovich/.codex/skills/repo-readme/scripts/check_readmes.py .
 python3 /Users/onovich/.codex/skills/repo-cover/scripts/validate_preview.py docs/social-preview.png --svg docs/social-preview.svg
 ```
