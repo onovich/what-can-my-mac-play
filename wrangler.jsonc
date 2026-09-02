@@ -2,7 +2,7 @@
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "what-can-my-mac-play",
   "main": "worker/index.ts",
-  "compatibility_date": "2026-09-03",
+  "compatibility_date": "2026-09-02",
   "compatibility_flags": ["nodejs_compat"],
   "vars": {
     "STEAM_LIBRARY_LOOKUP_ENABLED": false
