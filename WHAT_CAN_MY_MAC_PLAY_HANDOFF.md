@@ -590,8 +590,8 @@ recommendation_score =
 ### Day 3：数据模型与样本
 
 - [x] 建立 Game / Evidence / Environment / CompatibilityReport 最小 schema；
-- [ ] 选 50 款代表性游戏：原生、DX11、DX12、反作弊、启动器、成功/失败/冲突各有样本；
-- [ ] 以 Steam App ID 做第一轮实体对齐。
+- [x] 选 50 款代表性游戏：原生、DX11、DX12、反作弊、启动器、成功/失败/冲突各有样本；
+- [x] 以 Steam App ID 做第一轮实体对齐（当前为 provisional，接入官方 App List 后复核）。
 
 ### Day 4：Steam 官方接入
 
