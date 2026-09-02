@@ -602,7 +602,7 @@ recommendation_score =
 
 ### Day 5：评分与透明度
 
-- [ ] 实现算法 v0，分别输出 compatibility 与 confidence；
+- [x] 实现算法 v0，分别输出 compatibility 与 confidence；
 - [ ] 为每个字段保留 evidence URL；
 - [ ] 设计冲突展示，不自动掩盖少数反例；
 - [ ] 用本机已调研的 10 款游戏回放验证排序是否合理。
