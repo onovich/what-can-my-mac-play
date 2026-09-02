@@ -1,7 +1,10 @@
+import { JsonBodyError, readBoundedJson, type FetchLike } from '../http'
+
 const STEAM_GET_APP_LIST_URL =
   'https://api.steampowered.com/IStoreService/GetAppList/v1/'
 
 const UPSTREAM_TIMEOUT_MS = 8_000
+const MAX_UPSTREAM_BODY_BYTES = 4 * 1024 * 1024
 
 export interface SteamAppListQuery {
   lastAppId?: number
@@ -33,11 +36,6 @@ export class SteamUpstreamError extends Error {
     this.name = 'SteamUpstreamError'
   }
 }
-
-type FetchLike = (
-  input: RequestInfo | URL,
-  init?: RequestInit,
-) => Promise<Response>
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
@@ -136,9 +134,16 @@ export async function getSteamAppList(
 
   let payload: unknown
   try {
-    payload = await response.json()
-  } catch {
-    throw new SteamUpstreamError('invalid_response')
+    payload = await readBoundedJson(
+      response.body,
+      response.headers.get('content-length'),
+      MAX_UPSTREAM_BODY_BYTES,
+    )
+  } catch (error) {
+    if (error instanceof JsonBodyError) {
+      throw new SteamUpstreamError('invalid_response')
+    }
+    throw error
   }
   return parsePage(payload)
 }

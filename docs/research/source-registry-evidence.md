@@ -1,6 +1,6 @@
 # Source Registry Evidence
 
-Audit date: 2026-09-02
+Audit date: 2026-09-03
 
 This note records the official or first-party evidence used to decide which upstream sources the MVP may ingest. It is an engineering risk assessment, not legal advice. A public endpoint, an open-source client, or a permissive `robots.txt` file is not by itself a license to republish a database.
 
@@ -9,6 +9,7 @@ This note records the official or first-party evidence used to decide which upst
 | Source | MVP decision | Permitted MVP use | Blocked or conditional use |
 | --- | --- | --- | --- |
 | Steam Web API: `IStoreService/GetAppList` | Approved with conditions | Retrieve public app identifiers/names through the documented API using a protected API key; keep attribution, privacy, and call-limit controls | Do not expose the key, imply Valve endorsement, or exceed the terms; re-check terms periodically |
+| Steam Web API: `IPlayerService/GetOwnedGames` | Approved with conditions; production disabled | Process a SteamID64 only after an explicit user request and return the minimum owned-game/playtime fields without storage | Keep disabled until rate limiting and public/private/empty live-account tests are complete; never log SteamID64 or retain raw responses |
 | Steam Store `appreviews` | Hold for automated ingestion | Link to Steam review pages; manually inspect a small validation sample without copying review text | No official endpoint documentation or separate redistribution grant was located; obtain Valve clarification before scheduled collection or republication |
 | CodeWeavers Compatibility Center | Reference-only pending permission | Link to individual compatibility pages and record a small number of manually reviewed, attributed observations | Do not bulk crawl, mirror ratings, or treat the site as an API until CodeWeavers grants permission |
 | AppleGamingWiki | Conditional, non-commercial/share-alike only | Cite and adapt individual wiki facts with attribution under CC BY-NC-SA, while keeping provenance and the same-license obligation in scope | Its API lives under a robots-disallowed path and the license is non-commercial; no automated ingestion for this project without written clarification and a licensing review |
@@ -36,6 +37,13 @@ Valve's Steam Web API Terms provide the relevant license for Steam Web API data,
 Source: [Steam Web API Terms of Use](https://steamcommunity.com/dev/apiterms). Valve's separate [privacy policy](https://store.steampowered.com/privacy_agreement/) governs Valve's own handling of personal data; it does not replace the MVP's required privacy notice.
 
 **Registry implication:** allow only the documented `IStoreService/GetAppList` fields needed for canonical identity and freshness (`appid`, name, item type, `last_modified`, and `price_change_number` if used). Keep the key server-side, identify this site consistently when registering it, display source attribution, and implement a hard daily request budget below Valve's ceiling.
+
+### User-requested owned games
+
+- Valve documents `IPlayerService/GetOwnedGames` as returning games owned by a player only when their owned games and game details are visible to the caller. The request requires an API key and SteamID64 and supports excluding app metadata while including played free games. [Valve: IPlayerService/GetOwnedGames](https://partner.steamgames.com/doc/webapi/IPlayerService#GetOwnedGames)
+- The MVP connector therefore requests no app names or icons, returns only identifiers and selected playtime timestamps, applies `no-store`, and treats an empty response object as private or otherwise unavailable rather than as a transport failure.
+
+**Registry implication:** production access stays behind `STEAM_LIBRARY_LOOKUP_ENABLED=false` until a per-user/global request budget and live public/private/empty account tests exist. The Worker may process SteamID64 only for the active request; it must not log or persist the identifier or raw Steam response.
 
 ### Store review endpoint
 

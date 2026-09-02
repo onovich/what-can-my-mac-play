@@ -3,31 +3,11 @@ import {
   SteamUpstreamError,
   type SteamAppListQuery,
 } from './steam/getAppList'
+import { jsonResponse, type FetchLike } from './http'
+import { handleSteamLibraryRequest } from './steam/libraryRoute'
 
 const DEFAULT_MAX_RESULTS = 250
 const MAX_RESULTS_LIMIT = 1_000
-
-type FetchLike = (
-  input: RequestInfo | URL,
-  init?: RequestInit,
-) => Promise<Response>
-
-function jsonResponse(
-  body: unknown,
-  status: number,
-  requestId: string,
-  cacheControl = 'no-store',
-): Response {
-  return Response.json(body, {
-    status,
-    headers: {
-      'Cache-Control': cacheControl,
-      'Content-Type': 'application/json; charset=utf-8',
-      'X-Content-Type-Options': 'nosniff',
-      'X-Request-Id': requestId,
-    },
-  })
-}
 
 function parseOptionalInteger(
   params: URLSearchParams,
@@ -86,11 +66,30 @@ export async function handleRequest(
   fetcher: FetchLike = fetch,
 ): Promise<Response> {
   const url = new URL(request.url)
-  if (url.pathname !== '/api/steam/apps') {
+  if (!url.pathname.startsWith('/api/')) {
     return env.ASSETS.fetch(request)
   }
 
   const requestId = crypto.randomUUID()
+  if (url.pathname === '/api/steam/library') {
+    return handleSteamLibraryRequest(
+      request,
+      {
+        apiKey: env.STEAM_WEB_API_KEY,
+        enabled: Boolean(env.STEAM_LIBRARY_LOOKUP_ENABLED),
+      },
+      requestId,
+      fetcher,
+    )
+  }
+  if (url.pathname !== '/api/steam/apps') {
+    return jsonResponse(
+      { error: { code: 'not_found', requestId } },
+      404,
+      requestId,
+    )
+  }
+
   if (request.method !== 'GET') {
     return jsonResponse(
       { error: { code: 'method_not_allowed', requestId } },

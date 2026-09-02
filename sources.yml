@@ -1,5 +1,5 @@
 schema_version: 1
-audited_at: 2026-09-02
+audited_at: 2026-09-03
 evidence_document: docs/research/source-registry-evidence.md
 
 policy:
@@ -37,6 +37,35 @@ sources:
       - Keep the API key in server-side secrets.
       - Publish a privacy policy before processing non-public user data.
       - Enforce a request budget below Valve's published daily limit.
+
+  - id: steam-iplayer-getownedgames
+    name: Steam IPlayerService/GetOwnedGames
+    base_url: https://api.steampowered.com
+    source_type: documented_api
+    decision: approved_with_conditions
+    terms_url: https://steamcommunity.com/dev/apiterms
+    documentation_url: https://partner.steamgames.com/doc/webapi/IPlayerService#GetOwnedGames
+    robots_url: null
+    robots_checked_at: null
+    allowed_fields:
+      - appid
+      - playtime_forever
+      - playtime_2weeks
+      - playtime_mac_forever
+      - rtime_last_played
+    prohibited_fields:
+      - steamid_retention
+      - raw_response_retention
+    collection: user_initiated_documented_api_only
+    refresh_policy: on_explicit_user_request
+    cache_policy: no_store
+    attribution: Identify Steam as the source and do not imply Valve endorsement.
+    requirements:
+      - Keep the API key in server-side secrets.
+      - Retrieve a user's data only after that user explicitly requests it.
+      - Treat private, invalid, and empty libraries as normal product states.
+      - Do not log or retain SteamID64 values or raw responses.
+      - Keep the production feature flag disabled until rate limiting and live account tests are complete.
 
   - id: steam-store-appreviews
     name: Steam Store appreviews

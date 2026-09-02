@@ -4,6 +4,8 @@
 
 An evidence-aware Mac game compatibility prototype. It is designed to help players understand which games are likely to work on their specific Mac—and why—without treating a single compatibility rating as a guarantee.
 
+[Open the live MVP](https://macplay.onovich.com)
+
 ![What Can My Mac Play? social preview](docs/social-preview.png)
 
 ## What the project aims to do
@@ -16,9 +18,9 @@ An evidence-aware Mac game compatibility prototype. It is designed to help playe
 
 ## Current status
 
-The repository is in the **interactive MVP and data-feasibility phase**. The current Vite/React prototype includes a responsive landing page, a local Mac profile selector, searchable evidence samples, explicit source links, and automated UI tests.
+The repository is in the **interactive MVP and data-feasibility phase**. The deployed Vite/React prototype includes browser-language detection with a persisted language choice, a local Mac profile selector, searchable evidence samples, stable game detail URLs, a three-state My Library interaction preview, explicit source links, and automated tests.
 
-The sample catalog is static and comes from the repository's point-in-time research. No Steam connection, compatibility API, ingestion pipeline, user account system, or production deployment has been implemented. The next gate remains legal and stable access to compatibility data.
+The sample catalog remains static and comes from the repository's point-in-time research. A Cloudflare Worker now provides a tested Steam app-list boundary and a fail-closed owned-games boundary, but the live owned-games feature is deliberately disabled until rate limiting, approved test accounts, and privacy copy are ready. There is no user account system or automated compatibility-data ingestion pipeline.
 
 ## Run locally
 
@@ -43,6 +45,8 @@ pnpm check
 - [`WHAT_CAN_MY_MAC_PLAY_HANDOFF.md`](WHAT_CAN_MY_MAC_PLAY_HANDOFF.md) — product definition, evidence model, MVP scope, risks, and phased delivery plan.
 - [`steam-crossover-research.md`](steam-crossover-research.md) — a point-in-time local research snapshot that demonstrates why version, environment, and evidence freshness matter.
 - [`src/`](src/) — the responsive React prototype, sample evidence data, and component tests.
+- [`worker/`](worker/) — bounded, server-side Steam API connectors and route tests; the Web API key stays in a Worker secret.
+- [`sources.yml`](sources.yml) — allowed fields, retention rules, attribution, and permission status for each researched data source.
 - [`docs/social-preview-ledger.yml`](docs/social-preview-ledger.yml) — evidence and design decisions behind the repository cover.
 
 ## Planned MVP
@@ -61,11 +65,11 @@ The initial validation target is 50 representative games, followed by an interna
 
 The product is intended to aggregate cited third-party reports; it is not an independent testing laboratory. Compatibility depends on hardware, macOS, runner version, graphics backend, game updates, launchers, DRM, and anti-cheat systems.
 
-Technical access does not imply permission to cache or republish data. Each source must have a documented license or approved usage path before production ingestion. Steam credentials must never be collected or stored by this project.
+Technical access does not imply permission to cache or republish data. Each source must have a documented license or approved usage path before production ingestion. The project never requests a Steam password; any future SteamID lookup must be explicitly initiated by the user and must not persist the identifier or raw response.
 
 ## Documentation
 
-The detailed [handoff document](WHAT_CAN_MY_MAC_PLAY_HANDOFF.md) records product decisions, evidence boundaries, and the roadmap. The MVP is planned to use `macplay.onovich.com` before any move to a standalone domain.
+The detailed [handoff document](WHAT_CAN_MY_MAC_PLAY_HANDOFF.md) records product decisions, evidence boundaries, and the roadmap. Connector safety notes are documented for the [app list](docs/steam-app-list-connector.md) and [owned-games lookup](docs/steam-owned-games-connector.md). The MVP uses `macplay.onovich.com` before any move to a standalone domain.
 
 ## License
 

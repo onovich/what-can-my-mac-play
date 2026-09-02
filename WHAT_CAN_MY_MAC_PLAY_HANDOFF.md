@@ -596,6 +596,7 @@ recommendation_score =
 ### Day 4：Steam 官方接入
 
 - [x] 实现 IStoreService/GetAppList 服务端连接器、API 路由和测试；待配置生产 Steam Secret 后启用实时调用；
+- [x] 实现默认关闭的 GetOwnedGames 服务端连接器、请求边界和自动化测试；待限流与真实账号分支验证完成后再启用；
 - [ ] 获取 Valve 对 appreviews 自动聚合的许可；获权前保持 HOLD，不做定时采集；
 - [ ] 用测试账号验证 GetOwnedGames 的公开/私密/无结果分支；
 - [x] 起草并上线中英文 MVP 隐私政策和当前数据删除流程；个人 Steam 数据功能上线前需补充私密联系渠道、存储地区与精确保留策略。

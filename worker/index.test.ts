@@ -8,6 +8,7 @@ function createEnv(
 ): Env {
   return {
     STEAM_WEB_API_KEY: steamKey,
+    STEAM_LIBRARY_LOOKUP_ENABLED: false,
     ASSETS: {
       fetch: vi.fn(async () => assetResponse),
     } as unknown as Fetcher,
@@ -77,5 +78,36 @@ describe('Worker request handler', () => {
 
     expect(await response.text()).toBe('asset response')
     expect(env.ASSETS.fetch).toHaveBeenCalledOnce()
+  })
+
+  it('keeps owned-game lookup fail-closed while the feature flag is off', async () => {
+    const fetcher = vi.fn()
+    const response = await handleRequest(
+      new Request('https://example.com/api/steam/library', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ steamId: '76561198000000000' }),
+      }),
+      createEnv('server-secret'),
+      fetcher,
+    )
+
+    expect(response.status).toBe(503)
+    expect(await response.json()).toMatchObject({
+      error: { code: 'steam_library_not_enabled' },
+    })
+    expect(fetcher).not.toHaveBeenCalled()
+  })
+
+  it('returns JSON 404 for unknown API routes instead of the SPA', async () => {
+    const env = createEnv('server-secret')
+    const response = await handleRequest(
+      new Request('https://example.com/api/unknown'),
+      env,
+    )
+
+    expect(response.status).toBe(404)
+    expect(await response.json()).toMatchObject({ error: { code: 'not_found' } })
+    expect(env.ASSETS.fetch).not.toHaveBeenCalled()
   })
 })

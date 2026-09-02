@@ -4,6 +4,8 @@
 
 这是一个重视证据的 Mac 游戏兼容性决策原型。它希望帮助玩家判断哪些游戏最可能在自己的 Mac 上运行，并解释判断依据，而不是把单一兼容评级当作保证。
 
+[打开在线 MVP](https://macplay.onovich.com)
+
 ![What Can My Mac Play? social preview](docs/social-preview.png)
 
 ## 项目目标
@@ -16,9 +18,9 @@
 
 ## 当前状态
 
-仓库目前处于**交互式 MVP 与数据可行性验证阶段**。现有 Vite/React 原型包含响应式首页、本地 Mac 画像选择、可搜索的证据样本、明确的来源链接和自动化 UI 测试。
+仓库目前处于**交互式 MVP 与数据可行性验证阶段**。已部署的 Vite/React 原型包含浏览器语言检测与语言选择记忆、本地 Mac 画像选择、可搜索的证据样本、稳定的游戏详情 URL、覆盖三种状态的 My Library 交互预览、明确的来源链接和自动化测试。
 
-样本目录来自仓库内的时点调研，仍是静态数据。项目尚未实现 Steam 连接、兼容性 API、数据接入管线、用户账户或生产部署。下一道关卡仍是确认兼容性数据拥有合法、稳定的接入方式。
+样本目录仍来自仓库内的时点调研，属于静态数据。Cloudflare Worker 已包含经过测试的 Steam 应用列表边界，以及默认关闭的游戏库查询边界；线上游戏库功能会继续关闭，直到限流、获准测试账号与隐私说明准备完成。项目目前没有用户账户系统，也没有自动兼容性数据接入管线。
 
 ## 本地运行
 
@@ -43,6 +45,8 @@ pnpm check
 - [`WHAT_CAN_MY_MAC_PLAY_HANDOFF.md`](WHAT_CAN_MY_MAC_PLAY_HANDOFF.md) — 产品定义、证据模型、MVP 范围、风险与分阶段交付计划。
 - [`steam-crossover-research.md`](steam-crossover-research.md) — 一份本机时点调研，用于说明版本、环境和证据新鲜度为什么重要。
 - [`src/`](src/) — 响应式 React 原型、样本证据数据与组件测试。
+- [`worker/`](worker/) — 具有数据量边界的 Steam 服务端连接器和路由测试；Web API Key 只保存在 Worker Secret 中。
+- [`sources.yml`](sources.yml) — 各调研来源的允许字段、保留规则、归因方式与授权状态。
 - [`docs/social-preview-ledger.yml`](docs/social-preview-ledger.yml) — 仓库封面的证据与设计决策记录。
 
 ## 计划中的 MVP
@@ -61,11 +65,11 @@ MVP 计划聚焦 Apple silicon Mac、Steam 与 CrossOver：
 
 产品计划聚合并引用第三方报告，并非独立测试实验室。实际兼容性会受到硬件、macOS、运行器版本、图形后端、游戏更新、启动器、DRM 和反作弊系统影响。
 
-技术上能够访问数据，并不代表可以缓存或再次发布。生产接入前，每个来源都必须具备有记录的许可或获批使用路径。本项目不得收集或存储 Steam 密码。
+技术上能够访问数据，并不代表可以缓存或再次发布。生产接入前，每个来源都必须具备有记录的许可或获批使用路径。本项目绝不索取 Steam 密码；未来的 SteamID 查询必须由用户主动发起，并且不得持久化该标识符或原始响应。
 
 ## 文档
 
-详细的[项目交接文档](WHAT_CAN_MY_MAC_PLAY_HANDOFF.md)记录了产品决策、证据边界和路线图。MVP 计划先使用 `macplay.onovich.com`，之后再决定是否迁移到独立域名。
+详细的[项目交接文档](WHAT_CAN_MY_MAC_PLAY_HANDOFF.md)记录了产品决策、证据边界和路线图。[应用列表](docs/steam-app-list-connector.md)和[游戏库查询](docs/steam-owned-games-connector.md)文档记录了连接器的安全边界。MVP 先使用 `macplay.onovich.com`，之后再决定是否迁移到独立域名。
 
 ## 许可证
 
