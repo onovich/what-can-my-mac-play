@@ -9,7 +9,7 @@
   },
   "ratelimits": [
     {
-      "name": "STEAM_LIBRARY_ROUTE_RATE_LIMITER",
+      "name": "STEAM_API_ROUTE_RATE_LIMITER",
       "namespace_id": "597037684",
       "simple": {
         "limit": 60,
@@ -23,6 +23,20 @@
         "limit": 5,
         "period": 60
       }
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "STEAM_DAILY_BUDGET",
+        "class_name": "SteamDailyBudget"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["SteamDailyBudget"]
     }
   ],
   "assets": {

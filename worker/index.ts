@@ -5,9 +5,61 @@ import {
 } from './steam/getAppList'
 import { jsonResponse, type FetchLike } from './http'
 import { handleSteamLibraryRequest } from './steam/libraryRoute'
+import { SteamDailyBudget } from './steam/dailyBudget'
+import {
+  secondsUntilNextUtcDay,
+  STEAM_DAILY_REQUEST_BUDGET,
+  steamBudgetDay,
+} from './steam/budgetPolicy'
+
+export { SteamDailyBudget }
 
 const DEFAULT_MAX_RESULTS = 250
 const MAX_RESULTS_LIMIT = 1_000
+const RATE_LIMIT_PERIOD_SECONDS = 60
+
+async function enforceSteamAppListControls(
+  env: Env,
+  requestId: string,
+): Promise<Response | null> {
+  try {
+    const routeLimit = await env.STEAM_API_ROUTE_RATE_LIMITER.limit({
+      key: 'steam-app-list',
+    })
+    if (!routeLimit.success) {
+      return jsonResponse(
+        { error: { code: 'rate_limit_exceeded', requestId } },
+        429,
+        requestId,
+        'no-store',
+        { 'Retry-After': String(RATE_LIMIT_PERIOD_SECONDS) },
+      )
+    }
+
+    const dailyAllowed = await env.STEAM_DAILY_BUDGET.getByName(
+      steamBudgetDay(),
+    ).tryConsume(STEAM_DAILY_REQUEST_BUDGET)
+    if (!dailyAllowed) {
+      return jsonResponse(
+        { error: { code: 'daily_budget_exhausted', requestId } },
+        429,
+        requestId,
+        'no-store',
+        { 'Retry-After': String(secondsUntilNextUtcDay()) },
+      )
+    }
+    return null
+  } catch {
+    console.error(
+      JSON.stringify({ event: 'steam_request_control_failed', requestId }),
+    )
+    return jsonResponse(
+      { error: { code: 'request_control_unavailable', requestId } },
+      503,
+      requestId,
+    )
+  }
+}
 
 function parseOptionalInteger(
   params: URLSearchParams,
@@ -80,13 +132,17 @@ export async function handleRequest(
         rateLimits: {
           route: async (key) =>
             (
-              await env.STEAM_LIBRARY_ROUTE_RATE_LIMITER.limit({ key })
+              await env.STEAM_API_ROUTE_RATE_LIMITER.limit({ key })
             ).success,
           user: async (key) =>
             (
               await env.STEAM_LIBRARY_USER_RATE_LIMITER.limit({ key })
             ).success,
         },
+        dailyBudget: async () =>
+          env.STEAM_DAILY_BUDGET.getByName(
+            steamBudgetDay(),
+          ).tryConsume(STEAM_DAILY_REQUEST_BUDGET),
       },
       requestId,
       fetcher,
@@ -124,6 +180,9 @@ export async function handleRequest(
       requestId,
     )
   }
+
+  const controlResponse = await enforceSteamAppListControls(env, requestId)
+  if (controlResponse !== null) return controlResponse
 
   try {
     const result = await getSteamAppList(

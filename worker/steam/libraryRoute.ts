@@ -5,12 +5,14 @@ import {
   type FetchLike,
 } from '../http'
 import { getSteamOwnedGames, SteamOwnedGamesError } from './getOwnedGames'
+import { secondsUntilNextUtcDay } from './budgetPolicy'
 
 const MAX_REQUEST_BODY_BYTES = 1_024
 const RATE_LIMIT_PERIOD_SECONDS = 60
 const ROUTE_RATE_LIMIT_KEY = 'steam-library'
 
 type RateLimitCheck = (key: string) => Promise<boolean>
+type DailyBudgetCheck = () => Promise<boolean>
 
 interface SteamLibraryBindings {
   apiKey: string | undefined
@@ -19,6 +21,7 @@ interface SteamLibraryBindings {
     route: RateLimitCheck
     user: RateLimitCheck
   }
+  dailyBudget: DailyBudgetCheck
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -64,11 +67,11 @@ function rateLimitResponse(requestId: string): Response {
 
 async function enforceRateLimits(
   steamId: string,
-  rateLimits: SteamLibraryBindings['rateLimits'],
+  bindings: Pick<SteamLibraryBindings, 'dailyBudget' | 'rateLimits'>,
   requestId: string,
 ): Promise<Response | null> {
   try {
-    if (!(await rateLimits.route(ROUTE_RATE_LIMIT_KEY))) {
+    if (!(await bindings.rateLimits.route(ROUTE_RATE_LIMIT_KEY))) {
       console.warn(
         JSON.stringify({
           event: 'steam_library_rate_limited',
@@ -80,7 +83,7 @@ async function enforceRateLimits(
     }
 
     const userKey = await hashedSteamId(steamId)
-    if (!(await rateLimits.user(userKey))) {
+    if (!(await bindings.rateLimits.user(userKey))) {
       console.warn(
         JSON.stringify({
           event: 'steam_library_rate_limited',
@@ -90,16 +93,32 @@ async function enforceRateLimits(
       )
       return rateLimitResponse(requestId)
     }
+
+    if (!(await bindings.dailyBudget())) {
+      console.warn(
+        JSON.stringify({
+          event: 'steam_library_daily_budget_exhausted',
+          requestId,
+        }),
+      )
+      return jsonResponse(
+        { error: { code: 'daily_budget_exhausted', requestId } },
+        429,
+        requestId,
+        'no-store',
+        { 'Retry-After': String(secondsUntilNextUtcDay()) },
+      )
+    }
     return null
   } catch {
     console.error(
       JSON.stringify({
-        event: 'steam_library_rate_limit_failed',
+        event: 'steam_library_request_control_failed',
         requestId,
       }),
     )
     return jsonResponse(
-      { error: { code: 'rate_limit_unavailable', requestId } },
+      { error: { code: 'request_control_unavailable', requestId } },
       503,
       requestId,
     )
@@ -171,7 +190,7 @@ export async function handleSteamLibraryRequest(
 
   const limitedResponse = await enforceRateLimits(
     steamId,
-    bindings.rateLimits,
+    bindings,
     requestId,
   )
   if (limitedResponse !== null) return limitedResponse

@@ -12,12 +12,17 @@ function createEnv(
     ASSETS: {
       fetch: vi.fn(async () => assetResponse),
     } as unknown as Fetcher,
-    STEAM_LIBRARY_ROUTE_RATE_LIMITER: {
+    STEAM_API_ROUTE_RATE_LIMITER: {
       limit: vi.fn(async () => ({ success: true })),
     },
     STEAM_LIBRARY_USER_RATE_LIMITER: {
       limit: vi.fn(async () => ({ success: true })),
     },
+    STEAM_DAILY_BUDGET: {
+      getByName: vi.fn(() => ({
+        tryConsume: vi.fn(async () => true),
+      })),
+    } as unknown as Env['STEAM_DAILY_BUDGET'],
   }
 }
 
@@ -73,6 +78,25 @@ describe('Worker request handler', () => {
       page: { hasMore: false },
       source: { id: 'steam-istore-getapplist', attribution: 'Steam' },
     })
+  })
+
+  it('rate-limits app-list calls before consuming the daily budget', async () => {
+    const fetcher = vi.fn()
+    const env = createEnv('server-secret')
+    vi.mocked(env.STEAM_API_ROUTE_RATE_LIMITER.limit).mockResolvedValueOnce({
+      success: false,
+    })
+
+    const response = await handleRequest(
+      new Request('https://example.com/api/steam/apps'),
+      env,
+      fetcher,
+    )
+
+    expect(response.status).toBe(429)
+    expect(response.headers.get('retry-after')).toBe('60')
+    expect(env.STEAM_DAILY_BUDGET.getByName).not.toHaveBeenCalled()
+    expect(fetcher).not.toHaveBeenCalled()
   })
 
   it('preserves the static asset fallback outside the API route', async () => {

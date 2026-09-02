@@ -9,6 +9,7 @@ function createBindings(overrides?: {
   enabled?: boolean
   routeAllowed?: boolean
   userAllowed?: boolean
+  dailyAllowed?: boolean
 }) {
   return {
     apiKey: 'server-secret',
@@ -23,6 +24,7 @@ function createBindings(overrides?: {
         return overrides?.userAllowed ?? true
       }),
     },
+    dailyBudget: vi.fn(async () => overrides?.dailyAllowed ?? true),
   }
 }
 
@@ -142,6 +144,7 @@ describe('handleSteamLibraryRequest', () => {
     expect(response.status).toBe(200)
     expect(bindings.rateLimits.route).toHaveBeenCalledWith('steam-library')
     expect(bindings.rateLimits.user).toHaveBeenCalledOnce()
+    expect(bindings.dailyBudget).toHaveBeenCalledOnce()
     const userKey = bindings.rateLimits.user.mock.calls[0]?.[0]
     expect(userKey).toMatch(/^[a-f0-9]{64}$/)
     expect(userKey).not.toBe(STEAM_ID)
@@ -165,6 +168,7 @@ describe('handleSteamLibraryRequest', () => {
       error: { code: 'rate_limit_exceeded' },
     })
     expect(bindings.rateLimits.user).not.toHaveBeenCalled()
+    expect(bindings.dailyBudget).not.toHaveBeenCalled()
     expect(fetcher).not.toHaveBeenCalled()
   })
 
@@ -181,6 +185,26 @@ describe('handleSteamLibraryRequest', () => {
 
     expect(response.status).toBe(429)
     expect(response.headers.get('retry-after')).toBe('60')
+    expect(bindings.dailyBudget).not.toHaveBeenCalled()
+    expect(fetcher).not.toHaveBeenCalled()
+  })
+
+  it('stops before Steam when the global daily budget is exhausted', async () => {
+    const fetcher = vi.fn()
+    const bindings = createBindings({ dailyAllowed: false })
+
+    const response = await handleSteamLibraryRequest(
+      libraryRequest(JSON.stringify({ steamId: STEAM_ID })),
+      bindings,
+      REQUEST_ID,
+      fetcher,
+    )
+
+    expect(response.status).toBe(429)
+    expect(Number(response.headers.get('retry-after'))).toBeGreaterThan(0)
+    expect(await response.json()).toMatchObject({
+      error: { code: 'daily_budget_exhausted' },
+    })
     expect(fetcher).not.toHaveBeenCalled()
   })
 
@@ -198,7 +222,7 @@ describe('handleSteamLibraryRequest', () => {
 
     expect(response.status).toBe(503)
     expect(await response.json()).toMatchObject({
-      error: { code: 'rate_limit_unavailable' },
+      error: { code: 'request_control_unavailable' },
     })
     expect(fetcher).not.toHaveBeenCalled()
   })
@@ -215,5 +239,6 @@ describe('handleSteamLibraryRequest', () => {
     expect(response.status).toBe(503)
     expect(bindings.rateLimits.route).not.toHaveBeenCalled()
     expect(bindings.rateLimits.user).not.toHaveBeenCalled()
+    expect(bindings.dailyBudget).not.toHaveBeenCalled()
   })
 })
