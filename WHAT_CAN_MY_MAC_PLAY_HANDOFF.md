@@ -604,7 +604,7 @@ recommendation_score =
 
 - [x] 实现算法 v0，分别输出 compatibility 与 confidence；
 - [x] 为每个确定性报告字段保留 evidence ID，并可解析到 evidence URL；
-- [ ] 设计冲突展示，不自动掩盖少数反例；
+- [x] 设计来源数量与冲突状态展示，不自动掩盖证据不足或少数反例；
 - [x] 用本机已调研的 10 款游戏回放验证排序与低置信度边界。
 
 ### Day 6–7：产品原型

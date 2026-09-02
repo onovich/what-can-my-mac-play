@@ -93,9 +93,17 @@ export function GameExplorer() {
 function GameRow({ game, index, locale }: { game: SampleGame; index: number; locale: Locale }) {
   const { messages } = useLocale()
   const localized = game.localized[locale]
+  const { assessment, breakdown } = game.scoring
+  const compatibilityScore = assessment.compatibilityScore
+  const conflictLabel =
+    breakdown.sourceCount < 2
+      ? messages.explorer.conflictUnknown
+      : breakdown.conflictDetected
+        ? messages.explorer.conflictPresent
+        : messages.explorer.noMajorConflict
 
   return (
-    <article className="game-row">
+    <article className="game-row" aria-labelledby={`game-${game.appId}-title`}>
       <span className="game-row__index" aria-hidden="true">
         {String(index).padStart(2, '0')}
       </span>
@@ -103,20 +111,53 @@ function GameRow({ game, index, locale }: { game: SampleGame; index: number; loc
         <p className={`signal-label signal-label--${game.signal}`}>
           <span aria-hidden="true" /> {localized.recommendation}
         </p>
-        <h3>{game.title}</h3>
+        <h3 id={`game-${game.appId}-title`}>{game.title}</h3>
         <p>{messages.explorer.steamAppId} {game.appId}</p>
       </div>
-      <dl className="game-row__facts">
-        <div>
-          <dt>{messages.explorer.steamReviews}</dt>
-          <dd>{game.steamScore} {messages.explorer.positive}</dd>
-        </div>
-        <div>
-          <dt>{messages.explorer.sourceRating}</dt>
-          <dd>{localized.sourceRating}</dd>
-        </div>
-      </dl>
-      <p className="game-row__evidence">{localized.evidence}</p>
+      <div className="game-row__scores">
+        <Score
+          label={messages.explorer.compatibility}
+          title={game.title}
+          value={compatibilityScore}
+        />
+        <Score
+          label={messages.explorer.confidence}
+          title={game.title}
+          value={assessment.confidenceScore}
+        />
+        <p className="game-row__confidence">
+          <strong>{messages.explorer.confidenceBand(assessment.confidenceScore)}</strong>
+          <span>{conflictLabel}</span>
+        </p>
+      </div>
+      <div className="game-row__evidence">
+        <p>{localized.evidence}</p>
+        <details>
+          <summary>{messages.explorer.whyScore}</summary>
+          <dl>
+            <div>
+              <dt>{messages.explorer.steamReviews}</dt>
+              <dd>{game.steamScore} {messages.explorer.positive}</dd>
+            </div>
+            <div>
+              <dt>{messages.explorer.sourceRating}</dt>
+              <dd>{localized.sourceRating}</dd>
+            </div>
+            <div>
+              <dt>{messages.explorer.evidenceBaseLabel}</dt>
+              <dd>{messages.explorer.evidenceBase(
+                breakdown.sourceCount,
+                breakdown.scoredReportCount,
+              )}</dd>
+            </div>
+            <div>
+              <dt>{messages.explorer.upstreamDate}</dt>
+              <dd>{messages.explorer.dateMissing}</dd>
+            </div>
+          </dl>
+          <p>{messages.explorer.modelNotice}</p>
+        </details>
+      </div>
       <div className="game-row__links">
         <a href={game.sourceUrl} target="_blank" rel="noreferrer">
           {messages.explorer.evidence} <span aria-hidden="true">↗</span>
@@ -126,5 +167,26 @@ function GameRow({ game, index, locale }: { game: SampleGame; index: number; loc
         </a>
       </div>
     </article>
+  )
+}
+
+function Score({ label, title, value }: { label: string; title: string; value: number | null }) {
+  const { messages } = useLocale()
+  const displayValue = value ?? 0
+
+  return (
+    <div className="score">
+      <span>{label}</span>
+      <strong>{value ?? '—'}<small>{value === null ? '' : '/100'}</small></strong>
+      <meter
+        min={0}
+        max={100}
+        low={40}
+        high={75}
+        optimum={100}
+        value={displayValue}
+        aria-label={messages.explorer.scoreLabel(label, title, value)}
+      />
+    </div>
   )
 }

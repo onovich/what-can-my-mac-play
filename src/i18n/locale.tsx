@@ -62,6 +62,24 @@ export const messages = {
       sourceRating: 'Source rating',
       steamAppId: 'Steam App ID',
       evidence: 'Evidence',
+      compatibility: 'Compatibility',
+      confidence: 'Confidence',
+      scoreLabel: (label: string, title: string, score: number | null) =>
+        score === null
+          ? `${label} score for ${title}: unavailable`
+          : `${label} score for ${title}: ${score} out of 100`,
+      confidenceBand: (score: number) =>
+        score < 40 ? 'Low confidence' : score < 60 ? 'Medium confidence' : 'Higher confidence',
+      conflictUnknown: 'Conflict unknown · one source',
+      conflictPresent: 'Conflicting evidence detected',
+      noMajorConflict: 'No major cross-source conflict',
+      whyScore: 'Why this score',
+      evidenceBase: (sources: number, reports: number) =>
+        `${sources} source${sources === 1 ? '' : 's'} · ${reports} report${reports === 1 ? '' : 's'}`,
+      evidenceBaseLabel: 'Evidence base',
+      upstreamDate: 'Upstream test date',
+      dateMissing: 'Not reported',
+      modelNotice: 'Derived estimate · algorithm v0.1.0',
       emptyTitle: 'No sample game matches that search.',
       emptyBody: 'Clear the search or choose another evidence filter.',
       reset: 'Reset samples',
@@ -153,6 +171,24 @@ export const messages = {
       sourceRating: '来源评级',
       steamAppId: 'Steam 应用 ID',
       evidence: '查看证据',
+      compatibility: '兼容程度',
+      confidence: '可信度',
+      scoreLabel: (label: string, title: string, score: number | null) =>
+        score === null
+          ? `${title} 的${label}评分：暂无数据`
+          : `${title} 的${label}评分：${score} / 100`,
+      confidenceBand: (score: number) =>
+        score < 40 ? '低可信度' : score < 60 ? '中等可信度' : '较高可信度',
+      conflictUnknown: '冲突未知 · 仅一个来源',
+      conflictPresent: '检测到证据冲突',
+      noMajorConflict: '未发现重大跨来源冲突',
+      whyScore: '为什么是这个分数',
+      evidenceBase: (sources: number, reports: number) =>
+        `${sources} 个来源 · ${reports} 份报告`,
+      evidenceBaseLabel: '证据基础',
+      upstreamDate: '上游测试日期',
+      dateMissing: '未提供',
+      modelNotice: '推导估计值 · 算法 v0.1.0',
       emptyTitle: '没有符合搜索条件的示例游戏。',
       emptyBody: '请清空搜索内容或选择其他证据筛选条件。',
       reset: '重置示例',

@@ -31,6 +31,7 @@ type ReplaySeed = {
 }
 
 export type ResearchReplayCase = {
+  appId: number
   title: string
   evidence: Evidence
   report: CompatibilityReport
@@ -203,5 +204,5 @@ function buildReplayCase(seed: ReplaySeed): ResearchReplayCase {
     calculatedAt: replayCalculatedAt,
   })
 
-  return { title: seed.title, evidence, report, scoringInput, result }
+  return { appId: seed.appId, title: seed.title, evidence, report, scoringInput, result }
 }

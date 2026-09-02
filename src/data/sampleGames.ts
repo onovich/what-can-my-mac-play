@@ -1,4 +1,6 @@
 import type { Locale } from '../i18n/locale'
+import type { ScoringResult } from '../domain/scoring'
+import { researchReplayCases } from './researchReplay'
 
 type LocalizedGameCopy = {
   sourceRating: string
@@ -14,6 +16,17 @@ export type SampleGame = {
   localized: Record<Locale, LocalizedGameCopy>
   steamUrl: string
   sourceUrl: string
+  scoring: ScoringResult
+}
+
+const replayByAppId = new Map(
+  researchReplayCases.map((replay) => [replay.appId, replay.result]),
+)
+
+function getScoring(appId: number) {
+  const scoring = replayByAppId.get(appId)
+  if (!scoring) throw new Error(`Missing research replay for Steam App ID ${appId}`)
+  return scoring
 }
 
 export const sampleGames: SampleGame[] = [
@@ -36,6 +49,7 @@ export const sampleGames: SampleGame[] = [
     },
     steamUrl: 'https://store.steampowered.com/app/881100/',
     sourceUrl: 'https://www.codeweavers.com/compatibility/crossover/noita',
+    scoring: getScoring(881100),
   },
   {
     appId: 292030,
@@ -56,6 +70,7 @@ export const sampleGames: SampleGame[] = [
     },
     steamUrl: 'https://store.steampowered.com/app/292030/',
     sourceUrl: 'https://www.codeweavers.com/compatibility/crossover/the-witcher-3-wild-hunt',
+    scoring: getScoring(292030),
   },
   {
     appId: 814380,
@@ -76,6 +91,7 @@ export const sampleGames: SampleGame[] = [
     },
     steamUrl: 'https://store.steampowered.com/app/814380/',
     sourceUrl: 'https://www.codeweavers.com/compatibility/crossover/sekiro-shadows-die-twice',
+    scoring: getScoring(814380),
   },
   {
     appId: 620,
@@ -96,6 +112,7 @@ export const sampleGames: SampleGame[] = [
     },
     steamUrl: 'https://store.steampowered.com/app/620/',
     sourceUrl: 'https://www.codeweavers.com/compatibility/crossover/portal-2',
+    scoring: getScoring(620),
   },
   {
     appId: 1057090,
@@ -116,6 +133,7 @@ export const sampleGames: SampleGame[] = [
     },
     steamUrl: 'https://store.steampowered.com/app/1057090/',
     sourceUrl: 'https://www.codeweavers.com/compatibility/crossover/ori-and-the-will-of-the-wisps',
+    scoring: getScoring(1057090),
   },
   {
     appId: 1245620,
@@ -136,5 +154,6 @@ export const sampleGames: SampleGame[] = [
     },
     steamUrl: 'https://store.steampowered.com/app/1245620/',
     sourceUrl: 'https://www.codeweavers.com/compatibility/crossover/elden-ring',
+    scoring: getScoring(1245620),
   },
 ]
