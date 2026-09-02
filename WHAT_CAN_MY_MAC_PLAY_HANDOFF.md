@@ -27,7 +27,7 @@
 - GitHub 仓库建议名：`what-can-my-mac-play`
 - 产品初期只做信息聚合与自动分析，不承诺人工复测、论坛或人工技术支持。
 
-当前工程进度：仓库已经包含基于 Vite、React 与 TypeScript 的响应式前端原型，提供设备画像选择、可搜索的静态研究样本和证据外链。尚未实现 Steam 连接、实时兼容数据、后端 API、用户系统或生产部署。
+当前工程进度：Vite、React 与 TypeScript 前端已部署到 `macplay.onovich.com`，支持中英文语言记忆、设备画像、50 款研究样本、兼容性与可信度双评分及证据追溯。Cloudflare Worker 已实现 Steam 官方 App List 的服务端安全边界、分页参数、字段白名单、缓存、错误处理和测试；生产 Steam Secret 尚未配置，因此实时同步暂未启用。用户系统与 Steam 库连接尚未实现。
 
 ## 2. 问题与产品定位
 
@@ -595,8 +595,8 @@ recommendation_score =
 
 ### Day 4：Steam 官方接入
 
-- [ ] 服务端接 IStoreService/GetAppList；
-- [ ] 接 appreviews 汇总；
+- [x] 实现 IStoreService/GetAppList 服务端连接器、API 路由和测试；待配置生产 Steam Secret 后启用实时调用；
+- [ ] 获取 Valve 对 appreviews 自动聚合的许可；获权前保持 HOLD，不做定时采集；
 - [ ] 用测试账号验证 GetOwnedGames 的公开/私密/无结果分支；
 - [ ] 起草隐私政策和数据删除流程。
 

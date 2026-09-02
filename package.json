@@ -9,11 +9,15 @@
   },
   "scripts": {
     "dev": "vite",
+    "dev:worker": "pnpm build && wrangler dev",
     "build": "tsc -b && vite build",
+    "cf:types": "wrangler types worker-configuration.d.ts --env-file .dev.vars.example",
+    "cf:types:check": "wrangler types worker-configuration.d.ts --env-file .dev.vars.example --check",
+    "deploy:dry-run": "pnpm build && wrangler deploy --dry-run --outdir .wrangler/dry-run",
     "lint": "eslint .",
     "typecheck": "tsc -b --pretty false",
     "test": "vitest run",
-    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build"
+    "check": "pnpm cf:types:check && pnpm lint && pnpm typecheck && pnpm test && pnpm build"
   },
   "dependencies": {
     "react": "19.2.8",
