@@ -1,30 +1,47 @@
 import { useEffect } from 'react'
 
 import { GameExplorer } from './components/GameExplorer/GameExplorer'
+import { GameDetailPage } from './components/GameDetail/GameDetailPage'
 import { Header } from './components/Header/Header'
 import { Method } from './components/Method/Method'
 import { PrivacyPage } from './components/Privacy/PrivacyPage'
 import { ProfilePanel } from './components/ProfilePanel/ProfilePanel'
 import { siteHost, siteUrl } from './config/site'
 import { privacyContent } from './content/privacy'
+import { sampleGames } from './data/sampleGames'
 import { useLocale } from './i18n/locale'
+import { resolveAppRoute } from './routes'
 
 export function App() {
   const { locale, messages } = useLocale()
-  const isPrivacyPage = window.location.pathname.replace(/\/+$/, '') === '/privacy'
+  const route = resolveAppRoute(window.location.pathname)
+  const detailGame = route.kind === 'game'
+    ? sampleGames.find((game) => game.appId === route.appId)
+    : undefined
 
   useEffect(() => {
-    const meta = isPrivacyPage
-      ? {
-          title: privacyContent[locale].metaTitle,
-          description: privacyContent[locale].metaDescription,
-        }
-      : messages.meta
+    let meta: { title: string; description: string } = messages.meta
+    if (route.kind === 'privacy') {
+      meta = {
+        title: privacyContent[locale].metaTitle,
+        description: privacyContent[locale].metaDescription,
+      }
+    } else if (route.kind === 'game' && detailGame) {
+      meta = {
+        title: messages.gameDetail.metaTitle(detailGame.title),
+        description: messages.gameDetail.metaDescription(detailGame.title),
+      }
+    } else if (route.kind === 'game' || route.kind === 'not-found') {
+      meta = {
+        title: `${messages.gameDetail.notFoundTitle} · What Can My Mac Play?`,
+        description: messages.gameDetail.notFoundBody,
+      }
+    }
     document.title = meta.title
     document
       .querySelector('meta[name="description"]')
       ?.setAttribute('content', meta.description)
-  }, [isPrivacyPage, locale, messages.meta])
+  }, [detailGame, locale, messages, route.kind])
 
   return (
     <>
@@ -33,8 +50,12 @@ export function App() {
       </a>
       <Header />
       <main id="main-content">
-        {isPrivacyPage ? (
+        {route.kind === 'privacy' ? (
           <PrivacyPage />
+        ) : route.kind === 'game' ? (
+          <GameDetailPage appId={route.appId} />
+        ) : route.kind === 'not-found' ? (
+          <GameDetailPage appId={0} />
         ) : (
           <>
             <section className="hero shell" aria-labelledby="hero-title">

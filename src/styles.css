@@ -268,6 +268,16 @@ select:focus-visible {
   color: var(--navy);
 }
 
+.button--outline {
+  border: 1px solid var(--navy);
+  background: transparent;
+  color: var(--navy);
+}
+
+.button--outline:hover {
+  background: var(--paper-deep);
+}
+
 .text-link {
   text-underline-offset: 0.28rem;
   font-size: 0.9rem;
@@ -636,13 +646,13 @@ select:focus-visible {
   background: var(--jade);
 }
 
-.score:nth-child(2) meter::-webkit-meter-optimum-value,
-.score:nth-child(2) meter::-webkit-meter-suboptimum-value,
-.score:nth-child(2) meter::-webkit-meter-even-less-good-value {
+.score--confidence meter::-webkit-meter-optimum-value,
+.score--confidence meter::-webkit-meter-suboptimum-value,
+.score--confidence meter::-webkit-meter-even-less-good-value {
   background: var(--amber);
 }
 
-.score:nth-child(2) meter::-moz-meter-bar {
+.score--confidence meter::-moz-meter-bar {
   background: var(--amber);
 }
 
@@ -1026,6 +1036,217 @@ select:focus-visible {
   font-weight: 700;
 }
 
+.game-detail,
+.game-not-found {
+  padding-block: 3rem 7rem;
+}
+
+.game-detail__back {
+  display: inline-flex;
+  gap: 0.6rem;
+  align-items: center;
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  font-weight: 720;
+  text-underline-offset: 0.25rem;
+}
+
+.game-detail__hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.35fr);
+  gap: 4rem;
+  align-items: end;
+  padding-block: 4rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.game-detail__hero h1,
+.game-not-found h1 {
+  max-width: 14ch;
+  margin: 0.75rem 0 1rem;
+  font-size: clamp(3.25rem, 8vw, 6.8rem);
+  line-height: 0.92;
+  letter-spacing: -0.065em;
+}
+
+.game-detail__identity {
+  margin: 0;
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+}
+
+.game-detail__hero-score {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  border-top: 2px solid var(--ink);
+  border-bottom: 1px solid var(--line);
+  padding-block: 1.5rem;
+}
+
+.game-detail__hero-score .score strong {
+  font-size: clamp(2rem, 4vw, 3.25rem);
+}
+
+.game-detail__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(17rem, 0.42fr);
+  gap: 0 4rem;
+  padding-top: 4rem;
+}
+
+.game-detail__decision {
+  padding-bottom: 4rem;
+}
+
+.game-detail__decision h2,
+.game-detail__panel h2,
+.game-detail__caveats h2,
+.game-not-found h1 {
+  letter-spacing: -0.045em;
+}
+
+.game-detail__decision h2 {
+  max-width: 18ch;
+  margin: 0.75rem 0 1.25rem;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 1;
+}
+
+.game-detail__lede {
+  max-width: 42rem;
+  color: var(--ink) !important;
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  font-weight: 670;
+  line-height: 1.55;
+}
+
+.game-detail__decision > p:not(.eyebrow) {
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
+.game-detail__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.game-detail__badges span {
+  border: 1px solid #c6a86f;
+  border-radius: 999px;
+  padding: 0.5rem 0.75rem;
+  background: var(--amber-pale);
+  color: #704b15;
+  font-size: 0.72rem;
+  font-weight: 730;
+}
+
+.game-detail__actions {
+  display: grid;
+  gap: 0.75rem;
+  align-content: start;
+  padding: 1.5rem;
+  background: var(--white);
+}
+
+.game-detail__panel {
+  border-top: 1px solid var(--line);
+  padding-block: 3rem;
+}
+
+.game-detail__panel h2,
+.game-detail__caveats h2 {
+  margin: 0 0 1.5rem;
+  font-size: clamp(1.5rem, 3vw, 2.15rem);
+}
+
+.game-detail__facts {
+  display: grid;
+  gap: 0;
+  margin: 0;
+}
+
+.game-detail__facts > div {
+  display: grid;
+  grid-template-columns: minmax(9rem, 0.4fr) 1fr;
+  gap: 1.25rem;
+  border-bottom: 1px solid var(--line);
+  padding-block: 0.85rem;
+}
+
+.game-detail__facts dt {
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 740;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.game-detail__facts dd {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.86rem;
+  font-weight: 660;
+  line-height: 1.5;
+}
+
+.game-detail__model-note {
+  margin: 1rem 0 0;
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+.game-detail__caveats {
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--line);
+  padding-top: 3rem;
+}
+
+.game-detail__caveats ol {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.game-detail__caveats li {
+  border-left: 1px solid var(--line);
+  padding: 0 1.5rem;
+}
+
+.game-detail__caveats li:first-child {
+  border-left: 0;
+  padding-left: 0;
+}
+
+.game-detail__caveats li > span {
+  color: var(--coral-dark);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.72rem;
+}
+
+.game-detail__caveats p,
+.game-not-found > p:not(.eyebrow) {
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+
+.game-not-found {
+  min-height: 65vh;
+}
+
+.game-not-found > p:not(.eyebrow) {
+  max-width: 38rem;
+  margin-bottom: 2rem;
+}
+
 @media (max-width: 68rem) {
   .site-header {
     grid-template-columns: 1fr auto;
@@ -1104,6 +1325,19 @@ select:focus-visible {
   .legal-page__layout {
     grid-template-columns: 1fr;
     gap: 3rem;
+  }
+
+  .game-detail__hero,
+  .game-detail__body {
+    grid-template-columns: 1fr;
+  }
+
+  .game-detail__hero {
+    gap: 2.5rem;
+  }
+
+  .game-detail__actions {
+    margin-bottom: 3rem;
   }
 
   .legal-page__toc {
@@ -1230,6 +1464,36 @@ select:focus-visible {
   .legal-page__action {
     margin-inline: -1rem;
     padding-inline: 1rem !important;
+  }
+
+  .game-detail,
+  .game-not-found {
+    padding-block: 2rem 5rem;
+  }
+
+  .game-detail__hero {
+    padding-block: 3rem;
+  }
+
+  .game-detail__hero h1,
+  .game-not-found h1 {
+    font-size: clamp(3rem, 15vw, 4.5rem);
+  }
+
+  .game-detail__caveats ol {
+    grid-template-columns: 1fr;
+  }
+
+  .game-detail__caveats li,
+  .game-detail__caveats li:first-child {
+    border-top: 1px solid var(--line);
+    border-left: 0;
+    padding: 1rem 0;
+  }
+
+  .game-detail__facts > div {
+    grid-template-columns: 1fr;
+    gap: 0.3rem;
   }
 }
 

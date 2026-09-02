@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { sampleGames, type SampleGame } from '../../data/sampleGames'
 import { useLocale, type Locale } from '../../i18n/locale'
+import { ScoreMeter } from '../ScoreMeter/ScoreMeter'
 
 type SignalFilter = 'all' | SampleGame['signal']
 
@@ -115,15 +116,16 @@ function GameRow({ game, index, locale }: { game: SampleGame; index: number; loc
         <p>{messages.explorer.steamAppId} {game.appId}</p>
       </div>
       <div className="game-row__scores">
-        <Score
+        <ScoreMeter
           label={messages.explorer.compatibility}
           title={game.title}
           value={compatibilityScore}
         />
-        <Score
+        <ScoreMeter
           label={messages.explorer.confidence}
           title={game.title}
           value={assessment.confidenceScore}
+          tone="confidence"
         />
         <p className="game-row__confidence">
           <strong>{messages.explorer.confidenceBand(assessment.confidenceScore)}</strong>
@@ -159,6 +161,9 @@ function GameRow({ game, index, locale }: { game: SampleGame; index: number; loc
         </details>
       </div>
       <div className="game-row__links">
+        <a href={`/games/${game.appId}`}>
+          {messages.explorer.viewDetails} <span aria-hidden="true">→</span>
+        </a>
         <a href={game.sourceUrl} target="_blank" rel="noreferrer">
           {messages.explorer.evidence} <span aria-hidden="true">↗</span>
         </a>
@@ -167,26 +172,5 @@ function GameRow({ game, index, locale }: { game: SampleGame; index: number; loc
         </a>
       </div>
     </article>
-  )
-}
-
-function Score({ label, title, value }: { label: string; title: string; value: number | null }) {
-  const { messages } = useLocale()
-  const displayValue = value ?? 0
-
-  return (
-    <div className="score">
-      <span>{label}</span>
-      <strong>{value ?? '—'}<small>{value === null ? '' : '/100'}</small></strong>
-      <meter
-        min={0}
-        max={100}
-        low={40}
-        high={75}
-        optimum={100}
-        value={displayValue}
-        aria-label={messages.explorer.scoreLabel(label, title, value)}
-      />
-    </div>
   )
 }

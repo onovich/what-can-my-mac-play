@@ -4,14 +4,15 @@ import { App } from './App'
 import { siteUrl } from './config/site'
 import { LocaleProvider } from './i18n/LocaleProvider'
 import { resolveInitialLocale } from './i18n/locale'
+import { resolveAppRoute } from './routes'
 import './styles.css'
 
 const canonicalLink = document.createElement('link')
 canonicalLink.rel = 'canonical'
-const canonicalPath = window.location.pathname.replace(/\/+$/, '') === '/privacy'
-  ? '/privacy'
-  : '/'
-canonicalLink.href = new URL(canonicalPath, siteUrl).href
+canonicalLink.href = new URL(
+  resolveAppRoute(window.location.pathname).canonicalPath,
+  siteUrl,
+).href
 document.head.append(canonicalLink)
 
 const initialLocale = resolveInitialLocale()
