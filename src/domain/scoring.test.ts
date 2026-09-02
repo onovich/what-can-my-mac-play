@@ -16,11 +16,20 @@ function makeReport(
   overrides: Partial<CompatibilityReport> = {},
 ): CompatibilityReport {
   const known = verdict !== 'unknown'
+  const evidenceId = `evidence:${id}`
   return {
     id,
     gameId,
     environmentId: targetEnvironmentId,
-    evidenceIds: [`evidence:${id}`],
+    evidenceIds: [evidenceId],
+    fieldEvidence: known
+      ? {
+          installStatus: [evidenceId],
+          launchStatus: [evidenceId],
+          gameplayStatus: [evidenceId],
+          verdict: [evidenceId],
+        }
+      : {},
     installStatus: known ? 'pass' : 'unknown',
     launchStatus: known ? 'pass' : 'unknown',
     gameplayStatus:

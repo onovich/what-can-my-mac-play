@@ -73,7 +73,9 @@ export function calculateCompatibilityAssessment(input: ScoringInput): ScoringRe
     const score = reportCompatibilityValue(item.report)
     if (score === null) return []
 
-    const freshness = freshnessFactor(item.report.testedAt ?? item.report.assessedAt, calculatedAt, halfLifeDays)
+    const freshness = item.report.testedAt
+      ? freshnessFactor(item.report.testedAt, calculatedAt, halfLifeDays)
+      : 0.5
     const independenceFactor = 1 / (duplicateCounts.get(item.independenceKey) ?? 1)
     const weight =
       item.sourceReliability *

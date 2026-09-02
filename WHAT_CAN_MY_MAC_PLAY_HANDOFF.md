@@ -603,9 +603,9 @@ recommendation_score =
 ### Day 5：评分与透明度
 
 - [x] 实现算法 v0，分别输出 compatibility 与 confidence；
-- [ ] 为每个字段保留 evidence URL；
+- [x] 为每个确定性报告字段保留 evidence ID，并可解析到 evidence URL；
 - [ ] 设计冲突展示，不自动掩盖少数反例；
-- [ ] 用本机已调研的 10 款游戏回放验证排序是否合理。
+- [x] 用本机已调研的 10 款游戏回放验证排序与低置信度边界。
 
 ### Day 6–7：产品原型
 

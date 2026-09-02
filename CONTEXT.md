@@ -19,7 +19,7 @@ A dated, traceable observation from one Source that supports one or more compati
 _Avoid_: Proof, fact, result
 
 **Environment**:
-The concrete Mac hardware, operating system, runner, and graphics configuration in which compatibility was observed or assessed.
+The known Mac hardware, operating system, runner, and graphics characteristics in which compatibility was observed or assessed. Unreported characteristics remain explicitly unknown rather than inferred.
 _Avoid_: Device, setup, profile
 
 **Compatibility Report**:

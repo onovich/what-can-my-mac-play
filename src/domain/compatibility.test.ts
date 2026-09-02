@@ -48,6 +48,12 @@ const report: CompatibilityReport = {
   gameId: game.id,
   environmentId: environment.id,
   evidenceIds: [evidence.id],
+  fieldEvidence: {
+    installStatus: [evidence.id],
+    launchStatus: [evidence.id],
+    gameplayStatus: [evidence.id],
+    verdict: [evidence.id],
+  },
   installStatus: 'pass',
   launchStatus: 'pass',
   gameplayStatus: 'pass',
@@ -63,6 +69,35 @@ describe('compatibility domain validation', () => {
     expect(validateEnvironment(environment)).toEqual([])
     expect(validateEvidence(evidence)).toEqual([])
     expect(validateCompatibilityReport(report)).toEqual([])
+  })
+
+  it('accepts a partial source environment without inventing hardware details', () => {
+    const partialEnvironment: Environment = {
+      id: 'env:partial:crossover-25',
+      chipFamily: 'unknown',
+      runner: { kind: 'crossover', version: '25.0' },
+    }
+
+    expect(validateEnvironment(partialEnvironment)).toEqual([])
+  })
+
+  it('requires every definitive report field to reference declared evidence', () => {
+    expect(validateCompatibilityReport({ ...report, fieldEvidence: {} })).toEqual(
+      expect.arrayContaining([
+        'report.fieldEvidence.installStatus is required',
+        'report.fieldEvidence.launchStatus is required',
+        'report.fieldEvidence.gameplayStatus is required',
+        'report.fieldEvidence.verdict is required',
+      ]),
+    )
+    expect(
+      validateCompatibilityReport({
+        ...report,
+        fieldEvidence: { ...report.fieldEvidence, verdict: ['evidence:undeclared'] },
+      }),
+    ).toContain(
+      'report.fieldEvidence.verdict references unknown evidence evidence:undeclared',
+    )
   })
 
   it('does not allow unknown to hide a known outcome', () => {

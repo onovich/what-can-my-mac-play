@@ -35,7 +35,7 @@ source reliability
 × independence factor
 ```
 
-Freshness uses a 180-day half-life by default. Reports sharing one `independenceKey` divide that evidence item's weight, so mirrors do not masquerade as independent confirmation.
+Freshness uses a 180-day half-life by default. A report with no upstream test date receives a conservative freshness factor of `0.5`; its assessment date is not substituted as though it were the test date. Reports sharing one `independenceKey` divide that evidence item's weight, so mirrors do not masquerade as independent confirmation.
 
 The compatibility result uses a neutral prior of 50 with weight 0.75. This deliberately pulls a single report toward the middle while allowing a larger body of relevant evidence to dominate.
 

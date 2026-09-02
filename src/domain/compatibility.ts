@@ -21,11 +21,11 @@ export type Runner =
 export type Environment = {
   id: EntityId
   deviceModel?: string
-  chipFamily: 'apple-silicon' | 'intel'
-  chipVariant: string
+  chipFamily: 'apple-silicon' | 'intel' | 'unknown'
+  chipVariant?: string
   gpuCores?: number
-  memoryGb: number
-  macOsVersion: string
+  memoryGb?: number
+  macOsVersion?: string
   runner: Runner
   graphicsBackend?: 'metal' | 'd3dmetal' | 'dxvk' | 'wined3d' | 'unknown'
   resolution?: `${number}x${number}`
@@ -46,7 +46,12 @@ export type Evidence = {
   observedAt: string
   publishedAt?: string
   contentHash?: string
-  type: 'official-test' | 'community-report' | 'store-metadata' | 'editorial'
+  type:
+    | 'official-test'
+    | 'community-report'
+    | 'source-aggregate'
+    | 'store-metadata'
+    | 'editorial'
   claims: readonly EvidenceClaim[]
   extractionMethod: 'structured-api' | 'manual-review' | 'rule-based' | 'model-assisted'
 }
@@ -69,11 +74,28 @@ export type FeatureStatus = {
   notes?: string
 }
 
+export type CompatibilityReportField =
+  | 'gameVersion'
+  | 'installStatus'
+  | 'launchStatus'
+  | 'gameplayStatus'
+  | 'completionStatus'
+  | 'averageFps'
+  | 'lowFps'
+  | 'settings'
+  | 'verdict'
+  | `feature:${FeatureName}`
+
+export type FieldEvidence = Partial<
+  Record<CompatibilityReportField, readonly [EntityId, ...EntityId[]]>
+>
+
 export type CompatibilityReport = {
   id: EntityId
   gameId: EntityId
   environmentId: EntityId
   evidenceIds: readonly [EntityId, ...EntityId[]]
+  fieldEvidence: FieldEvidence
   gameVersion?: string
   installStatus: StageStatus
   launchStatus: StageStatus
@@ -118,11 +140,18 @@ export function validateEnvironment(environment: Environment): string[] {
   const errors: string[] = []
 
   if (!environment.id.trim()) errors.push('environment.id is required')
-  if (!environment.chipVariant.trim()) errors.push('environment.chipVariant is required')
-  if (!Number.isFinite(environment.memoryGb) || environment.memoryGb <= 0) {
+  if (environment.chipFamily !== 'unknown' && !environment.chipVariant?.trim()) {
+    errors.push('environment.chipVariant is required when chipFamily is known')
+  }
+  if (
+    environment.memoryGb !== undefined &&
+    (!Number.isFinite(environment.memoryGb) || environment.memoryGb <= 0)
+  ) {
     errors.push('environment.memoryGb must be greater than zero')
   }
-  if (!environment.macOsVersion.trim()) errors.push('environment.macOsVersion is required')
+  if (environment.macOsVersion !== undefined && !environment.macOsVersion.trim()) {
+    errors.push('environment.macOsVersion must not be empty')
+  }
   if (
     (environment.runner.kind === 'crossover' ||
       environment.runner.kind === 'wine' ||
@@ -161,6 +190,7 @@ export function validateCompatibilityReport(report: CompatibilityReport): string
   if (evidenceIds.size !== report.evidenceIds.length) {
     errors.push('report.evidenceIds must not contain duplicates')
   }
+  validateFieldEvidence(report, evidenceIds, errors)
   if (!isIsoDate(report.assessedAt)) errors.push('report.assessedAt must be a valid date')
   if (report.testedAt && !isIsoDate(report.testedAt)) {
     errors.push('report.testedAt must be a valid date')
@@ -184,6 +214,43 @@ export function validateCompatibilityReport(report: CompatibilityReport): string
   }
 
   return errors
+}
+
+function validateFieldEvidence(
+  report: CompatibilityReport,
+  evidenceIds: ReadonlySet<EntityId>,
+  errors: string[],
+) {
+  const requiredFields: CompatibilityReportField[] = []
+
+  if (report.gameVersion) requiredFields.push('gameVersion')
+  if (isDefinitiveStatus(report.installStatus)) requiredFields.push('installStatus')
+  if (isDefinitiveStatus(report.launchStatus)) requiredFields.push('launchStatus')
+  if (isDefinitiveStatus(report.gameplayStatus)) requiredFields.push('gameplayStatus')
+  if (isDefinitiveStatus(report.completionStatus)) requiredFields.push('completionStatus')
+  if (report.averageFps !== undefined) requiredFields.push('averageFps')
+  if (report.lowFps !== undefined) requiredFields.push('lowFps')
+  if (report.settings) requiredFields.push('settings')
+  if (report.verdict !== 'unknown') requiredFields.push('verdict')
+  for (const feature of report.features) requiredFields.push(`feature:${feature.feature}`)
+
+  for (const field of requiredFields) {
+    if (!report.fieldEvidence[field]?.length) {
+      errors.push(`report.fieldEvidence.${field} is required`)
+    }
+  }
+
+  for (const [field, fieldEvidenceIds] of Object.entries(report.fieldEvidence)) {
+    for (const evidenceId of fieldEvidenceIds ?? []) {
+      if (!evidenceIds.has(evidenceId)) {
+        errors.push(`report.fieldEvidence.${field} references unknown evidence ${evidenceId}`)
+      }
+    }
+  }
+}
+
+function isDefinitiveStatus(status: StageStatus) {
+  return status === 'pass' || status === 'degraded' || status === 'fail'
 }
 
 export function validateCompatibilityAssessment(assessment: CompatibilityAssessment): string[] {
