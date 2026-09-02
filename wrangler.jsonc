@@ -7,6 +7,24 @@
   "vars": {
     "STEAM_LIBRARY_LOOKUP_ENABLED": false
   },
+  "ratelimits": [
+    {
+      "name": "STEAM_LIBRARY_ROUTE_RATE_LIMITER",
+      "namespace_id": "597037684",
+      "simple": {
+        "limit": 60,
+        "period": 60
+      }
+    },
+    {
+      "name": "STEAM_LIBRARY_USER_RATE_LIMITER",
+      "namespace_id": "2599512933",
+      "simple": {
+        "limit": 5,
+        "period": 60
+      }
+    }
+  ],
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",

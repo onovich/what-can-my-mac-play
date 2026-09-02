@@ -77,6 +77,16 @@ export async function handleRequest(
       {
         apiKey: env.STEAM_WEB_API_KEY,
         enabled: Boolean(env.STEAM_LIBRARY_LOOKUP_ENABLED),
+        rateLimits: {
+          route: async (key) =>
+            (
+              await env.STEAM_LIBRARY_ROUTE_RATE_LIMITER.limit({ key })
+            ).success,
+          user: async (key) =>
+            (
+              await env.STEAM_LIBRARY_USER_RATE_LIMITER.limit({ key })
+            ).success,
+        },
       },
       requestId,
       fetcher,

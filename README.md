@@ -20,7 +20,7 @@ An evidence-aware Mac game compatibility prototype. It is designed to help playe
 
 The repository is in the **interactive MVP and data-feasibility phase**. The deployed Vite/React prototype includes browser-language detection with a persisted language choice, a local Mac profile selector, searchable evidence samples, stable game detail URLs, a three-state My Library interaction preview, explicit source links, and automated tests.
 
-The sample catalog remains static and comes from the repository's point-in-time research. A Cloudflare Worker now provides a tested Steam app-list boundary and a fail-closed owned-games boundary, but the live owned-games feature is deliberately disabled until rate limiting, approved test accounts, and privacy copy are ready. There is no user account system or automated compatibility-data ingestion pipeline.
+The sample catalog remains static and comes from the repository's point-in-time research. A Cloudflare Worker now provides a tested Steam app-list boundary and a fail-closed owned-games boundary with short-window abuse limits, but the live owned-games feature is deliberately disabled until a hard global daily budget, approved test accounts, and final privacy copy are ready. There is no user account system or automated compatibility-data ingestion pipeline.
 
 ## Run locally
 

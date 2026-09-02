@@ -7,10 +7,18 @@ import {
 import { getSteamOwnedGames, SteamOwnedGamesError } from './getOwnedGames'
 
 const MAX_REQUEST_BODY_BYTES = 1_024
+const RATE_LIMIT_PERIOD_SECONDS = 60
+const ROUTE_RATE_LIMIT_KEY = 'steam-library'
+
+type RateLimitCheck = (key: string) => Promise<boolean>
 
 interface SteamLibraryBindings {
   apiKey: string | undefined
   enabled: boolean
+  rateLimits: {
+    route: RateLimitCheck
+    user: RateLimitCheck
+  }
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -32,6 +40,70 @@ function isJsonRequest(request: Request): boolean {
 
 function errorStatus(error: SteamOwnedGamesError): number {
   return error.code === 'timeout' ? 504 : 502
+}
+
+async function hashedSteamId(steamId: string): Promise<string> {
+  const digest = await crypto.subtle.digest(
+    'SHA-256',
+    new TextEncoder().encode(steamId),
+  )
+  return Array.from(new Uint8Array(digest), (byte) =>
+    byte.toString(16).padStart(2, '0'),
+  ).join('')
+}
+
+function rateLimitResponse(requestId: string): Response {
+  return jsonResponse(
+    { error: { code: 'rate_limit_exceeded', requestId } },
+    429,
+    requestId,
+    'no-store',
+    { 'Retry-After': String(RATE_LIMIT_PERIOD_SECONDS) },
+  )
+}
+
+async function enforceRateLimits(
+  steamId: string,
+  rateLimits: SteamLibraryBindings['rateLimits'],
+  requestId: string,
+): Promise<Response | null> {
+  try {
+    if (!(await rateLimits.route(ROUTE_RATE_LIMIT_KEY))) {
+      console.warn(
+        JSON.stringify({
+          event: 'steam_library_rate_limited',
+          requestId,
+          scope: 'route',
+        }),
+      )
+      return rateLimitResponse(requestId)
+    }
+
+    const userKey = await hashedSteamId(steamId)
+    if (!(await rateLimits.user(userKey))) {
+      console.warn(
+        JSON.stringify({
+          event: 'steam_library_rate_limited',
+          requestId,
+          scope: 'user',
+        }),
+      )
+      return rateLimitResponse(requestId)
+    }
+    return null
+  } catch {
+    console.error(
+      JSON.stringify({
+        event: 'steam_library_rate_limit_failed',
+        requestId,
+      }),
+    )
+    return jsonResponse(
+      { error: { code: 'rate_limit_unavailable', requestId } },
+      503,
+      requestId,
+    )
+  }
 }
 
 export async function handleSteamLibraryRequest(
@@ -96,6 +168,13 @@ export async function handleSteamLibraryRequest(
       requestId,
     )
   }
+
+  const limitedResponse = await enforceRateLimits(
+    steamId,
+    bindings.rateLimits,
+    requestId,
+  )
+  if (limitedResponse !== null) return limitedResponse
 
   try {
     const result = await getSteamOwnedGames(bindings.apiKey, steamId, fetcher)

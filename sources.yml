@@ -65,7 +65,8 @@ sources:
       - Retrieve a user's data only after that user explicitly requests it.
       - Treat private, invalid, and empty libraries as normal product states.
       - Do not log or retain SteamID64 values or raw responses.
-      - Keep the production feature flag disabled until rate limiting and live account tests are complete.
+      - Apply short-window route and SHA-256-keyed per-library abuse limits before calling Steam.
+      - Keep the production feature flag disabled until a hard global daily budget and live account tests are complete.
 
   - id: steam-store-appreviews
     name: Steam Store appreviews

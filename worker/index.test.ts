@@ -12,6 +12,12 @@ function createEnv(
     ASSETS: {
       fetch: vi.fn(async () => assetResponse),
     } as unknown as Fetcher,
+    STEAM_LIBRARY_ROUTE_RATE_LIMITER: {
+      limit: vi.fn(async () => ({ success: true })),
+    },
+    STEAM_LIBRARY_USER_RATE_LIMITER: {
+      limit: vi.fn(async () => ({ success: true })),
+    },
   }
 }
 

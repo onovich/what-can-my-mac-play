@@ -8,15 +8,17 @@ export function jsonResponse(
   status: number,
   requestId: string,
   cacheControl = 'no-store',
+  additionalHeaders?: HeadersInit,
 ): Response {
+  const headers = new Headers(additionalHeaders)
+  headers.set('Cache-Control', cacheControl)
+  headers.set('Content-Type', 'application/json; charset=utf-8')
+  headers.set('X-Content-Type-Options', 'nosniff')
+  headers.set('X-Request-Id', requestId)
+
   return Response.json(body, {
     status,
-    headers: {
-      'Cache-Control': cacheControl,
-      'Content-Type': 'application/json; charset=utf-8',
-      'X-Content-Type-Options': 'nosniff',
-      'X-Request-Id': requestId,
-    },
+    headers,
   })
 }
 
