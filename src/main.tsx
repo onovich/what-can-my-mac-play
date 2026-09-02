@@ -8,7 +8,10 @@ import './styles.css'
 
 const canonicalLink = document.createElement('link')
 canonicalLink.rel = 'canonical'
-canonicalLink.href = siteUrl
+const canonicalPath = window.location.pathname.replace(/\/+$/, '') === '/privacy'
+  ? '/privacy'
+  : '/'
+canonicalLink.href = new URL(canonicalPath, siteUrl).href
 document.head.append(canonicalLink)
 
 const initialLocale = resolveInitialLocale()

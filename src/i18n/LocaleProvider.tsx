@@ -18,10 +18,6 @@ export function LocaleProvider({
 
   useEffect(() => {
     document.documentElement.lang = locale
-    document.title = messages[locale].meta.title
-    document
-      .querySelector('meta[name="description"]')
-      ?.setAttribute('content', messages[locale].meta.description)
 
     try {
       window.localStorage.setItem(localeStorageKey, locale)

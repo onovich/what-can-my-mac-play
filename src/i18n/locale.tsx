@@ -115,6 +115,8 @@ export const messages = {
     footer: {
       statement: 'is an independent product research project.',
       home: 'MVP home:',
+      privacy: 'Privacy',
+      dataDeletion: 'Data deletion',
     },
   },
   'zh-CN': {
@@ -223,6 +225,8 @@ export const messages = {
     footer: {
       statement: '是一个独立的产品研究项目。',
       home: 'MVP 地址：',
+      privacy: '隐私',
+      dataDeletion: '数据删除',
     },
   },
 } as const

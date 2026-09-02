@@ -5,7 +5,7 @@ export function Header() {
 
   return (
     <header className="site-header shell">
-      <a className="brand" href="#main-content" aria-label={messages.header.homeLabel}>
+      <a className="brand" href="/" aria-label={messages.header.homeLabel}>
         <span className="brand__mark" aria-hidden="true">
           W<span>?</span>
         </span>
@@ -14,8 +14,8 @@ export function Header() {
         </span>
       </a>
       <nav aria-label={messages.header.primaryNavigation}>
-        <a href="#sample-library">{messages.header.sampleLibrary}</a>
-        <a href="#method">{messages.header.method}</a>
+        <a href="/#sample-library">{messages.header.sampleLibrary}</a>
+        <a href="/#method">{messages.header.method}</a>
         <a
           href="https://github.com/onovich/what-can-my-mac-play"
           target="_blank"
@@ -28,6 +28,7 @@ export function Header() {
         <label className="language-select">
           <span>{messages.header.language}</span>
           <select
+            aria-label={messages.header.language}
             value={locale}
             onChange={(event) => setLocale(event.target.value as Locale)}
           >
