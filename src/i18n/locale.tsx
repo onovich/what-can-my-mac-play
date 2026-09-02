@@ -16,6 +16,7 @@ export const messages = {
     header: {
       homeLabel: 'What Can My Mac Play? home',
       sampleLibrary: 'Sample library',
+      myLibrary: 'My Library',
       method: 'Method',
       primaryNavigation: 'Primary navigation',
       status: 'Research preview',
@@ -170,6 +171,7 @@ export const messages = {
     header: {
       homeLabel: '我的 Mac 能玩什么？首页',
       sampleLibrary: '示例游戏库',
+      myLibrary: '我的游戏库',
       method: '判断方法',
       primaryNavigation: '主导航',
       status: '研究预览版',

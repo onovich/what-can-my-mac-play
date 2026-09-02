@@ -11,6 +11,13 @@ describe('resolveAppRoute', () => {
     })
   })
 
+  it('resolves the My Library flow', () => {
+    expect(resolveAppRoute('/library/')).toEqual({
+      kind: 'library',
+      canonicalPath: '/library',
+    })
+  })
+
   it('rejects non-positive and non-numeric game identifiers', () => {
     expect(resolveAppRoute('/games/0').kind).toBe('not-found')
     expect(resolveAppRoute('/games/portal-2').kind).toBe('not-found')

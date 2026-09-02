@@ -14,6 +14,7 @@ export function Header() {
         </span>
       </a>
       <nav aria-label={messages.header.primaryNavigation}>
+        <a href="/library">{messages.header.myLibrary}</a>
         <a href="/#sample-library">{messages.header.sampleLibrary}</a>
         <a href="/#method">{messages.header.method}</a>
         <a

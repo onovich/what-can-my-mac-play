@@ -3,11 +3,13 @@ import { useEffect } from 'react'
 import { GameExplorer } from './components/GameExplorer/GameExplorer'
 import { GameDetailPage } from './components/GameDetail/GameDetailPage'
 import { Header } from './components/Header/Header'
+import { LibraryPage } from './components/Library/LibraryPage'
 import { Method } from './components/Method/Method'
 import { PrivacyPage } from './components/Privacy/PrivacyPage'
 import { ProfilePanel } from './components/ProfilePanel/ProfilePanel'
 import { siteHost, siteUrl } from './config/site'
 import { privacyContent } from './content/privacy'
+import { libraryContent } from './content/library'
 import { sampleGames } from './data/sampleGames'
 import { useLocale } from './i18n/locale'
 import { resolveAppRoute } from './routes'
@@ -25,6 +27,11 @@ export function App() {
       meta = {
         title: privacyContent[locale].metaTitle,
         description: privacyContent[locale].metaDescription,
+      }
+    } else if (route.kind === 'library') {
+      meta = {
+        title: libraryContent[locale].metaTitle,
+        description: libraryContent[locale].metaDescription,
       }
     } else if (route.kind === 'game' && detailGame) {
       meta = {
@@ -52,6 +59,8 @@ export function App() {
       <main id="main-content">
         {route.kind === 'privacy' ? (
           <PrivacyPage />
+        ) : route.kind === 'library' ? (
+          <LibraryPage />
         ) : route.kind === 'game' ? (
           <GameDetailPage appId={route.appId} />
         ) : route.kind === 'not-found' ? (
