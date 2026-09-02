@@ -575,21 +575,21 @@ recommendation_score =
 
 ### Day 1：资产与边界
 
-- [ ] 配置 `macplay.onovich.com` DNS 与 HTTPS；
+- [x] 配置 `macplay.onovich.com` DNS 与 HTTPS；
 - [x] 暂缓独立域名购买，保留未来迁移方案；
 - [x] 创建 GitHub 仓库 `what-can-my-mac-play`；
 - [x] 把本文件和现有 `steam-crossover-research.md` 作为最初产品研究资料提交。
 
 ### Day 2：数据合规
 
-- [ ] 创建 `sources.yml` 或等价 source registry；
-- [ ] 逐源记录条款 URL、许可、robots、允许字段、缓存和归因；
+- [x] 创建 `sources.yml` 或等价 source registry；
+- [x] 逐源记录条款 URL、许可、robots、允许字段、缓存和归因；
 - [ ] 给 CodeWeavers 发合作/API/数据许可询问；
 - [ ] 决定 AppleGamingWiki CC BY-NC-SA 内容是否排除、隔离或另行获权。
 
 ### Day 3：数据模型与样本
 
-- [ ] 建立 Game / Evidence / Environment / CompatibilityReport 最小 schema；
+- [x] 建立 Game / Evidence / Environment / CompatibilityReport 最小 schema；
 - [ ] 选 50 款代表性游戏：原生、DX11、DX12、反作弊、启动器、成功/失败/冲突各有样本；
 - [ ] 以 Steam App ID 做第一轮实体对齐。
 

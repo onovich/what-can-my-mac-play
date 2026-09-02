@@ -1,0 +1,183 @@
+schema_version: 1
+audited_at: 2026-09-02
+evidence_document: docs/research/source-registry-evidence.md
+
+policy:
+  unknown_permission: fail_closed
+  raw_content_retention: prohibited_unless_explicitly_approved
+  required_provenance:
+    - source_url
+    - retrieved_at
+    - upstream_observed_at
+    - evidence_class
+    - permission_status
+
+sources:
+  - id: steam-app-list
+    name: Steam IStoreService/GetAppList
+    base_url: https://api.steampowered.com
+    source_type: documented_api
+    decision: approved_with_conditions
+    terms_url: https://steamcommunity.com/dev/apiterms
+    documentation_url: https://partner.steamgames.com/doc/webapi/IStoreService#GetAppList
+    robots_url: null
+    robots_checked_at: null
+    allowed_fields:
+      - appid
+      - name
+      - item_type
+      - last_modified
+      - price_change_number
+    prohibited_fields: []
+    collection: documented_api_only
+    refresh_policy: incremental_if_modified_since
+    cache_policy: retain_only_fields_required_for_catalog_identity
+    attribution: Identify Steam as the source and do not imply Valve endorsement.
+    requirements:
+      - Keep the API key in server-side secrets.
+      - Publish a privacy policy before processing non-public user data.
+      - Enforce a request budget below Valve's published daily limit.
+
+  - id: steam-store-appreviews
+    name: Steam Store appreviews
+    base_url: https://store.steampowered.com/appreviews/
+    source_type: undocumented_endpoint
+    decision: permission_required
+    terms_url: https://steamcommunity.com/dev/apiterms
+    documentation_url: null
+    robots_url: https://store.steampowered.com/robots.txt
+    robots_checked_at: 2026-09-02
+    allowed_fields: []
+    prohibited_fields:
+      - review_text
+      - author_profile
+      - scheduled_collection
+    collection: disabled
+    refresh_policy: none
+    cache_policy: no_retention
+    attribution: Link to the relevant Steam review page.
+    requirements:
+      - Obtain Valve clarification before automated ingestion or republication.
+
+  - id: codeweavers-compatibility-center
+    name: CodeWeavers Compatibility Center
+    base_url: https://www.codeweavers.com/compatibility/
+    source_type: first_party_and_community_database
+    decision: reference_only
+    terms_url: null
+    documentation_url: null
+    robots_url: https://www.codeweavers.com/robots.txt
+    robots_checked_at: 2026-09-02
+    allowed_fields:
+      - source_url
+      - observation_date
+      - named_rating
+      - independently_written_summary
+    prohibited_fields:
+      - bulk_copy
+      - mirrored_ratings
+      - automated_crawl
+    collection: small_manual_validation_sample
+    refresh_policy: manual_only
+    cache_policy: provenance_and_derived_summary_only
+    attribution: Label CodeWeavers or community provenance and link to the source page.
+    requirements:
+      - Obtain written permission before automation, caching, derivative scoring, or commercial use.
+
+  - id: applegamingwiki
+    name: AppleGamingWiki
+    base_url: https://www.applegamingwiki.com/
+    source_type: community_wiki
+    decision: permission_required
+    license: CC-BY-NC-SA
+    terms_url: https://www.applegamingwiki.com/wiki/Home
+    documentation_url: https://www.applegamingwiki.com/wiki/Template:Refdevice/Documentation
+    robots_url: https://www.applegamingwiki.com/robots.txt
+    robots_checked_at: 2026-09-02
+    allowed_fields:
+      - source_url
+      - individually_attributed_fact
+    prohibited_fields:
+      - copied_prose
+      - copied_images
+      - automated_api_collection
+      - unlicensed_commercial_use
+    collection: disabled
+    refresh_policy: none
+    cache_policy: link_and_internal_review_note_only
+    attribution: Follow CC BY-NC-SA attribution and share-alike obligations when applicable.
+    requirements:
+      - Complete a licensing review and obtain site clarification before automation.
+
+  - id: macgamingdb
+    name: MacGamingDB
+    base_url: https://macgamingdb.app/
+    source_type: community_database
+    decision: permission_required
+    license: MIT-software-only
+    terms_url: null
+    documentation_url: https://github.com/neo773/macgamingdb/blob/master/openapi.json
+    robots_url: null
+    robots_checked_at: null
+    allowed_fields:
+      - source_url
+    prohibited_fields:
+      - community_report_ingestion
+      - contributor_identifiers
+      - screenshots
+    collection: disabled
+    refresh_policy: none
+    cache_policy: link_only
+    attribution: Link to the original report.
+    requirements:
+      - Confirm database rights, API policy, caching, attribution, and deletion propagation with the maintainer.
+
+  - id: doesitarm
+    name: DoesItARM
+    base_url: https://doesitarm.com/
+    source_type: attributed_compatibility_list
+    decision: approved_with_conditions
+    license: CC-BY-4.0-for-explicitly-licensed-list-and-individual-verdict-facts
+    terms_url: https://github.com/ThatGuySam/doesitarm/blob/master/LICENSE
+    documentation_url: https://docs.doesitarm.com/api/citation/
+    robots_url: https://doesitarm.com/robots.txt
+    robots_checked_at: 2026-09-02
+    allowed_fields:
+      - individual_verdict
+      - translation_layer
+      - alternative
+      - last_verified
+      - source_url
+    prohibited_fields:
+      - preview_api_dependency
+      - unlicensed_bulk_export
+    collection: licensed_repository_or_individual_citation_only
+    refresh_policy: manual_until_api_launch
+    cache_policy: retain_attributed_facts_and_verification_date
+    attribution: Credit DoesItARM, link to the source, and retain lastVerified.
+    requirements:
+      - Reassess the API tier and redistribution license after the API launches.
+
+  - id: does-it-mac
+    name: Does It Mac
+    base_url: https://doesitmac.com/
+    source_type: mixed_first_party_community_and_external_evidence
+    decision: reference_only
+    terms_url: https://doesitmac.com/terms
+    documentation_url: https://doesitmac.com/api
+    robots_url: https://doesitmac.com/robots.txt
+    robots_checked_at: 2026-09-02
+    allowed_fields:
+      - individual_compatibility_record
+      - evidence_class
+      - record_date
+      - source_url
+    prohibited_fields:
+      - bulk_ingestion
+      - api_collection_before_launch
+    collection: individual_citation_only
+    refresh_policy: manual_only
+    cache_policy: attributed_fact_and_backlink_only
+    attribution: Preserve the evidence class and date and link to the current record.
+    requirements:
+      - Arrange data or API licensing before structured bulk use.
