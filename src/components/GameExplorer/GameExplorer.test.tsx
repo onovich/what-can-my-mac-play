@@ -1,80 +1,40 @@
 import { fireEvent, render, screen, within } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import { LocaleProvider } from '../../i18n/LocaleProvider'
-import type { Locale } from '../../i18n/locale'
 import { GameExplorer } from './GameExplorer'
 
-function renderExplorer(locale: Locale = 'en') {
-  return render(
-    <LocaleProvider initialLocale={locale}>
-      <GameExplorer />
-    </LocaleProvider>,
-  )
+function renderExplorer(locale: 'en' | 'zh-CN' = 'en') {
+  return render(<LocaleProvider initialLocale={locale}><GameExplorer /></LocaleProvider>)
 }
 
-describe('GameExplorer', () => {
-  it('filters sample games by search text', () => {
+describe('decision-first game list', () => {
+  it('filters games by name and resets an empty result', () => {
     renderExplorer()
-
-    fireEvent.change(screen.getByRole('searchbox', { name: /find a sample game/i }), {
-      target: { value: 'Portal' },
-    })
-
+    fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'Portal' } })
     expect(screen.getByRole('heading', { name: 'Portal 2' })).toBeInTheDocument()
+    expect(screen.getByText(/Showing 1 of 6/)).toBeInTheDocument()
+    fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'no match' } })
+    fireEvent.click(screen.getByRole('button', { name: /Reset samples/ }))
+    expect(screen.getByText(/Showing 6 of 6/)).toBeInTheDocument()
+  })
+  it('shows our judgment without source links, uncertainty lists or numeric scores', () => {
+    renderExplorer()
+    const portal = screen.getByRole('article', { name: 'Portal 2' })
+    expect(within(portal).getByText('Choose CrossOver, not the legacy Mac route')).toBeInTheDocument()
+    expect(within(portal).queryByRole('meter')).not.toBeInTheDocument()
+    expect(within(portal).getAllByRole('link')).toHaveLength(1)
+    expect(within(portal).getByRole('link')).toHaveAttribute('href', '/games/620')
+  })
+  it('filters on the editorial decision, not the legacy signal or confidence score', () => {
+    renderExplorer()
+    fireEvent.click(screen.getByRole('button', { name: 'Use with conditions' }))
+    expect(screen.getByRole('heading', { name: 'Sekiro: Shadows Die Twice' })).toBeInTheDocument()
     expect(screen.queryByRole('heading', { name: 'Noita' })).not.toBeInTheDocument()
-    expect(screen.getByText(/showing 1 of 6/i)).toBeInTheDocument()
+    expect(screen.getByText(/Showing 4 of 6/)).toBeInTheDocument()
   })
-
-  it('offers a reset when no sample matches', () => {
-    renderExplorer()
-
-    fireEvent.change(screen.getByRole('searchbox', { name: /find a sample game/i }), {
-      target: { value: 'not in the sample' },
-    })
-    fireEvent.click(screen.getByRole('button', { name: /reset samples/i }))
-
-    expect(screen.getByText(/showing 6 of 6/i)).toBeInTheDocument()
-  })
-
-  it('shows separate, accessible compatibility and confidence scores', () => {
-    renderExplorer()
-    const portal = screen.getByRole('article', { name: 'Portal 2' })
-
-    expect(
-      within(portal).getByRole('meter', {
-        name: 'Compatibility score for Portal 2: 57 out of 100',
-      }),
-    ).toHaveAttribute('value', '57')
-    expect(
-      within(portal).getByRole('meter', {
-        name: 'Confidence score for Portal 2: 37 out of 100',
-      }),
-    ).toHaveAttribute('value', '37')
-    expect(within(portal).getByText('Low confidence')).toBeInTheDocument()
-    expect(within(portal).getByText('Conflict unknown · one source')).toBeInTheDocument()
-  })
-
-  it('reveals the evidence base and source without hiding caveats', () => {
-    renderExplorer()
-    const portal = screen.getByRole('article', { name: 'Portal 2' })
-
-    fireEvent.click(within(portal).getByText('Why this score'))
-
-    expect(within(portal).getByText('1 source · 1 report')).toBeInTheDocument()
-    expect(within(portal).getByText('Not reported')).toBeInTheDocument()
-    expect(within(portal).getByRole('link', { name: /evidence/i })).toHaveAttribute(
-      'href',
-      'https://www.codeweavers.com/compatibility/crossover/portal-2',
-    )
-  })
-
-  it('localizes scoring language in Simplified Chinese', () => {
+  it('gives a direct Chinese conclusion', () => {
     renderExplorer('zh-CN')
-    const portal = screen.getByRole('article', { name: 'Portal 2' })
-
-    expect(within(portal).getByText('兼容程度')).toBeInTheDocument()
-    expect(within(portal).getByText('可信度')).toBeInTheDocument()
-    expect(within(portal).getByText('低可信度')).toBeInTheDocument()
-    expect(within(portal).getByText('冲突未知 · 仅一个来源')).toBeInTheDocument()
+    expect(screen.getByText('只考虑 CrossOver 单人路线')).toBeInTheDocument()
+    expect(screen.queryByText('低可信度')).not.toBeInTheDocument()
   })
 })

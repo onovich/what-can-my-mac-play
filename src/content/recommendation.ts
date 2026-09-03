@@ -1,0 +1,26 @@
+export const recommendationCopy = {
+  en: {
+    heading: 'Our recommendation', choose: 'Check another route', action: 'What to do', conditions: 'Only the conditions that matter',
+    recommended: 'Recommended route', conditional: 'Use with conditions', 'not-supported': 'Not supported in our catalog',
+    unsupportedTitle: 'Do not use this route for this game',
+    unsupportedReason: 'This game and route are not in our supported list. Do not spend money or setup time on this combination.',
+    unsupportedAction: 'Choose the recommended route instead.',
+    scope: '“Not supported” means excluded from our current support list, not proof that running it is technically impossible.',
+    scopeTitle: 'What our recommendation covers',
+    boundary: 'A recommendation of a route, not a guarantee for every Mac or game update. Only the named conditions and features are included.',
+    reviewed: 'Decision reviewed', steam: 'View on Steam', tool: 'Get CrossOver', preferred: 'Preferred route: CrossOver',
+    note: 'Start with the recommended route, then check the conditions that affect your choice.',
+  },
+  'zh-CN': {
+    heading: '我们的结论', choose: '查看其他方案', action: '直接怎么做', conditions: '只看会影响选择的条件',
+    recommended: '推荐方案', conditional: '有条件使用', 'not-supported': '当前清单不支持',
+    unsupportedTitle: '这款游戏，不推荐走此方案',
+    unsupportedReason: '这款游戏与该方案的组合未进入支持清单。不要为这个组合花钱或投入配置时间。',
+    unsupportedAction: '改用首选方案。',
+    scope: '“不支持”表示未纳入当前支持清单，不是断言技术上绝对无法运行。',
+    scopeTitle: '结论适用范围',
+    boundary: '这是运行方案建议，不是对每台 Mac 或每次游戏更新的保证；只覆盖明确列出的条件与功能。',
+    reviewed: '结论复核日期', steam: '查看 Steam 游戏', tool: '获取 CrossOver', preferred: '首选方案：CrossOver',
+    note: '先看推荐方案，再看真正影响选择的条件。',
+  },
+}

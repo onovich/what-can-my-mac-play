@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { libraryContent, type LibraryPreviewState } from '../../content/library'
 import { sampleGames } from '../../data/sampleGames'
 import { useLocale } from '../../i18n/locale'
-import { ScoreMeter } from '../ScoreMeter/ScoreMeter'
+import { recommendations } from '../../data/recommendations'
 
 const previewStates: readonly LibraryPreviewState[] = ['public', 'private', 'empty']
 const demoGames = sampleGames.slice(0, 4)
@@ -107,6 +107,7 @@ export function LibraryPage() {
 }
 
 function PublicLibraryPreview({ content }: { content: (typeof libraryContent)['en'] | (typeof libraryContent)['zh-CN'] }) {
+  const { locale } = useLocale()
   return (
     <div className="library-public">
       <header>
@@ -125,17 +126,7 @@ function PublicLibraryPreview({ content }: { content: (typeof libraryContent)['e
               <p>Steam App ID {game.appId}</p>
             </div>
             <div className="library-public__scores">
-              <ScoreMeter
-                label={content.compatibility}
-                title={game.title}
-                value={game.scoring.assessment.compatibilityScore}
-              />
-              <ScoreMeter
-                label={content.confidence}
-                title={game.title}
-                value={game.scoring.assessment.confidenceScore}
-                tone="confidence"
-              />
+              <p>{recommendations.find((item) => item.appId === game.appId && item.runner === 'crossover')?.copy[locale].title}</p>
             </div>
             <a href={`/games/${game.appId}`}>
               {content.viewGame} <span aria-hidden="true">→</span>

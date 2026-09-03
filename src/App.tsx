@@ -6,7 +6,6 @@ import { Header } from './components/Header/Header'
 import { LibraryPage } from './components/Library/LibraryPage'
 import { Method } from './components/Method/Method'
 import { PrivacyPage } from './components/Privacy/PrivacyPage'
-import { ProfilePanel } from './components/ProfilePanel/ProfilePanel'
 import { siteHost, siteUrl } from './config/site'
 import { privacyContent } from './content/privacy'
 import { libraryContent } from './content/library'
@@ -85,7 +84,11 @@ export function App() {
                 </div>
                 <p className="hero__note">{messages.hero.note}</p>
               </div>
-              <ProfilePanel />
+              <aside className="decision-intro">
+                <p className="eyebrow">{messages.method.eyebrow}</p>
+                <h2>{messages.method.title}</h2>
+                <p>{messages.method.intro}</p>
+              </aside>
             </section>
 
             <GameExplorer />

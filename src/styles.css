@@ -59,6 +59,26 @@
 .runtime-coverage__grid dt { font-weight: 700; }
 .runtime-coverage__grid dd { margin: 0.25rem 0 0; color: var(--ink-soft); }
 .runtime-coverage__grid dd[data-status="reported-failing"] { color: var(--coral-dark); font-weight: 700; }
+.decision-intro { align-self: center; padding: 2rem; background: var(--navy); color: var(--white); border-radius: var(--radius-md); line-height: 1.7; }
+.decision-intro .eyebrow { color: var(--white); }
+.decision-intro h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+.recommendation-panel { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md); padding: clamp(1rem, 3vw, 2.5rem); line-height: 1.7; overflow-wrap: anywhere; }
+.recommendation-panel h2 { font-size: clamp(1.7rem, 4vw, 2.5rem); line-height: 1.25; }
+.recommendation-panel select { font: inherit; width: 100%; max-width: 30rem; min-height: 2.75rem; padding: 0.5rem; color: var(--ink); border: 1px solid var(--line); background: var(--paper); }
+.recommendation-panel__reason { color: var(--ink-soft); max-width: 58rem; }
+.recommendation-panel__action { padding: 1rem 1.25rem; background: var(--jade-pale); border-left: 3px solid var(--jade); margin: 1.5rem 0; }
+.recommendation-panel__action h3 { margin: 0; font-size: 1rem; }
+.recommendation-panel__action p { margin-bottom: 0; }
+.recommendation-panel__links { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 1.5rem 0; }
+.recommendation-panel__scope { border-top: 1px solid var(--line); padding-top: 1rem; font-size: 0.875rem; color: var(--ink-soft); }
+.recommendation-panel__scope summary { cursor: pointer; padding: 0.5rem 0; }
+.recommendation-panel__scope summary:focus-visible { outline: 2px solid var(--coral-dark); outline-offset: 3px; }
+.decision-status { font-weight: 750; font-size: 0.8rem; }
+.decision-status--recommended { color: #28634f; }
+.decision-status--conditional { color: #875b18; }
+.decision-status--not-supported { color: var(--coral-dark); }
+.game-detail__hero.game-detail__hero--decision { grid-template-columns: 1fr; padding-block: 1.5rem; margin-bottom: 1.5rem; }
+.game-detail .game-detail__hero--decision h1 { max-width: 24ch; font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.1; }
 
 html {
   scroll-behavior: smooth;
@@ -559,7 +579,7 @@ select:focus-visible {
 
 .game-row {
   display: grid;
-  grid-template-columns: 2.5rem minmax(13rem, 1.05fr) minmax(16rem, 1fr) minmax(15rem, 1.1fr) auto;
+  grid-template-columns: 2.5rem minmax(13rem, 1fr) minmax(15rem, 1.5fr) auto;
   gap: 1.5rem;
   align-items: center;
   padding-block: 1.5rem;
@@ -1576,7 +1596,7 @@ select:focus-visible {
   }
 
   .game-row {
-    grid-template-columns: 2rem minmax(12rem, 0.8fr) minmax(15rem, 1fr) minmax(14rem, 1fr);
+    grid-template-columns: 2rem minmax(12rem, 0.8fr) minmax(15rem, 1fr);
   }
 
   .game-row__links {
