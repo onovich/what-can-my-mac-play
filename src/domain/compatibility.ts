@@ -14,8 +14,8 @@ export type Game = {
 }
 
 export type Runner =
-  | { kind: 'native' }
-  | { kind: 'crossover' | 'wine' | 'whisky'; version: string }
+  | { kind: 'native' | 'rosetta' }
+  | { kind: 'crossover' | 'wine' | 'whisky' | 'porting-kit' | 'sikarugir'; version: string }
   | { kind: 'virtual-machine'; name: string; version?: string }
 
 export type Environment = {
@@ -27,7 +27,7 @@ export type Environment = {
   memoryGb?: number
   macOsVersion?: string
   runner: Runner
-  graphicsBackend?: 'metal' | 'd3dmetal' | 'dxvk' | 'wined3d' | 'unknown'
+  graphicsBackend?: 'metal' | 'd3dmetal' | 'dxvk' | 'dxmt' | 'wined3d' | 'unknown'
   resolution?: `${number}x${number}`
   displayMode?: 'windowed' | 'borderless' | 'fullscreen'
 }
@@ -155,7 +155,9 @@ export function validateEnvironment(environment: Environment): string[] {
   if (
     (environment.runner.kind === 'crossover' ||
       environment.runner.kind === 'wine' ||
-      environment.runner.kind === 'whisky') &&
+      environment.runner.kind === 'whisky' ||
+      environment.runner.kind === 'porting-kit' ||
+      environment.runner.kind === 'sikarugir') &&
     !environment.runner.version.trim()
   ) {
     errors.push('environment.runner.version is required for this runner')

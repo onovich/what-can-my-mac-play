@@ -26,11 +26,11 @@ export const messages = {
     },
     hero: {
       eyebrow: 'Evidence before guesswork',
-      title: 'Start with the games',
-      emphasis: 'you already own.',
+      title: 'Before you buy,',
+      emphasis: 'check your Mac.',
       lede:
-        'Match a Mac profile with dated compatibility reports, then see what is likely to play—and how much confidence the evidence deserves.',
-      explore: 'Explore sample matches',
+        'Search a game, compare non-VM routes, and check the evidence, extra tool costs and unknowns before spending money.',
+      explore: 'Check a game before buying',
       method: 'See how evidence works',
       note: 'Research preview · No Steam sign-in · No compatibility guarantees',
     },
@@ -45,11 +45,11 @@ export const messages = {
       runners: ['CrossOver 25', 'CrossOver 26', 'Native Mac', 'Not decided'],
       preview: (chip: string, memory: string, runner: string) =>
         `Previewing evidence for ${chip}, ${memory}, using ${runner}.`,
-      privacy: 'Prototype only. These selections are not stored.',
+      privacy: 'Planning preview only. Selections are not stored and do not filter or recalculate the research scores.',
     },
     explorer: {
       eyebrow: 'Research snapshot · September 2026',
-      title: 'A sample library, with the caveats left in.',
+      title: 'Find a game. Check before buying.',
       intro:
         'These are static examples from the repository research—not live compatibility results. Every conclusion still points back to its source.',
       searchLabel: 'Find a sample game',
@@ -181,11 +181,11 @@ export const messages = {
     },
     hero: {
       eyebrow: '先看证据，再下结论',
-      title: '先从你已经拥有的',
-      emphasis: '游戏开始。',
+      title: '购买之前，先确认',
+      emphasis: '你的 Mac 能否胜任。',
       lede:
-        '将你的 Mac 配置与带日期的兼容性报告进行匹配，了解哪些游戏更可能正常运行，以及这些判断有多少证据支撑。',
-      explore: '查看示例匹配',
+        '搜索游戏，对比非虚拟机运行方案，在付款前了解证据、额外工具费用与尚未确认的限制。',
+      explore: '查询游戏购买参考',
       method: '了解证据如何工作',
       note: '研究预览版 · 无需登录 Steam · 不作兼容性保证',
     },
@@ -200,11 +200,11 @@ export const messages = {
       runners: ['CrossOver 25', 'CrossOver 26', 'Mac 原生版', '尚未决定'],
       preview: (chip: string, memory: string, runner: string) =>
         `正在预览 ${chip}、${memory}，使用 ${runner} 时的证据。`,
-      privacy: '仅用于原型预览，这些选择不会被保存。',
+      privacy: '仅用于配置规划预览，选择不会保存，也不会筛选或重新计算研究评分。',
     },
     explorer: {
       eyebrow: '研究快照 · 2026 年 9 月',
-      title: '保留所有限制条件的示例游戏库。',
+      title: '找到游戏，先看购买参考。',
       intro:
         '这些是仓库研究中的静态示例，并非实时兼容性结果。每一项结论仍会链接回原始来源。',
       searchLabel: '查找示例游戏',

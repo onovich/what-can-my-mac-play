@@ -49,6 +49,7 @@ function signal(
   independenceKey = `independent:${report.id}`,
 ): ReportScoringInput {
   return {
+    runnerKind: 'crossover',
     report,
     sourceId,
     independenceKey,
@@ -68,6 +69,15 @@ function score(reports: readonly ReportScoringInput[]) {
 }
 
 describe('compatibility scoring v0', () => {
+  it('excludes VM reports from scores, confidence and provenance', () => {
+    const vm: ReportScoringInput = { ...signal(makeReport('vm', 'excellent')), runnerKind: 'virtual-machine' }
+    const result = score([vm])
+    expect(result.assessment.compatibilityScore).toBeNull()
+    expect(result.assessment.confidenceScore).toBe(0)
+    expect(result.assessment.reportIds).toEqual([])
+    const local = signal(makeReport('local', 'playable'))
+    expect(score([vm, local])).toEqual(score([local]))
+  })
   it('returns unknown compatibility and zero confidence without a known outcome', () => {
     const result = score([signal(makeReport('unknown', 'unknown'))])
 

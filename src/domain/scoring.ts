@@ -3,12 +3,14 @@ import {
   type CompatibilityAssessment,
   type CompatibilityReport,
   type FeatureName,
+  type Runner,
 } from './compatibility'
 
 export const SCORING_ALGORITHM_VERSION = '0.1.0'
 export const DEFAULT_FRESHNESS_HALF_LIFE_DAYS = 180
 
 export type ReportScoringInput = {
+  runnerKind: Runner['kind']
   report: CompatibilityReport
   sourceId: string
   independenceKey: string
@@ -64,6 +66,8 @@ const CONFLICT_SCORE_GAP = 40
 const CONFLICT_CONFIDENCE_MULTIPLIER = 0.65
 
 export function calculateCompatibilityAssessment(input: ScoringInput): ScoringResult {
+  // VM evidence is retained upstream but never contributes to the non-VM product.
+  input = { ...input, reports: input.reports.filter((item) => item.runnerKind !== 'virtual-machine') }
   validateInput(input)
 
   const calculatedAt = new Date(input.calculatedAt)

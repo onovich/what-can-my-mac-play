@@ -190,6 +190,7 @@ function buildReplayCase(seed: ReplaySeed): ResearchReplayCase {
     assessedAt: replayObservedAt,
   }
   const scoringInput: ReportScoringInput = {
+    runnerKind: researchReplayEnvironment.runner.kind,
     report,
     sourceId: evidence.sourceId,
     independenceKey: evidence.id,

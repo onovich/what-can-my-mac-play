@@ -2,6 +2,7 @@ import { researchReplayCases } from '../../data/researchReplay'
 import { sampleGames } from '../../data/sampleGames'
 import { useLocale } from '../../i18n/locale'
 import { ScoreMeter } from '../ScoreMeter/ScoreMeter'
+import { PurchasePanel } from './PurchasePanel'
 
 function claimValue(
   claims: readonly { field: string; value: string | number | boolean | null }[],
@@ -67,6 +68,7 @@ export function GameDetailPage({ appId }: { appId: number }) {
       </header>
 
       <div className="game-detail__body">
+        <PurchasePanel steamUrl={game.steamUrl} />
         <section className="game-detail__decision" aria-labelledby="decision-title">
           <p className="eyebrow">{messages.gameDetail.researchSnapshot}</p>
           <h2 id="decision-title">{messages.gameDetail.decisionTitle}</h2>

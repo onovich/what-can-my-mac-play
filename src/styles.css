@@ -29,6 +29,26 @@
   box-sizing: border-box;
 }
 
+.purchase-panel {
+  grid-column: 1 / -1;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--coral-dark);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  padding: clamp(1rem, 3vw, 2rem);
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+.purchase-panel h2 { font-size: clamp(1.3rem, 3vw, 1.8rem); }
+.purchase-panel h3 { margin-top: 1.5rem; }
+.purchase-panel__select { display: grid; gap: 0.5rem; margin: 1.5rem 0; font-weight: 700; }
+.purchase-panel select { width: 100%; max-width: 32rem; min-height: 2.75rem; padding: 0.5rem; color: var(--ink); background: var(--paper); border: 1px solid var(--line); }
+.purchase-panel li + li { margin-top: 0.5rem; }
+.purchase-panel__scope { border-top: 1px solid var(--line); padding-top: 1rem; }
+.purchase-panel small { color: var(--ink-soft); }
+
 html {
   scroll-behavior: smooth;
 }
