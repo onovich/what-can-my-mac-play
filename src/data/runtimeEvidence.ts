@@ -1,12 +1,14 @@
-import type { RuntimeEvidence } from '../domain/runtimeEvidence'
+import { unreportedRuntimeChecks, type RuntimeEvidence } from '../domain/runtimeEvidence'
 
 // External, historical accounts. Never merged into researchReplay scoring.
-// Reviewed sources and omitted fields: docs/research/sample-runtime-reports.md.
+// Reviewed sources and omitted fields: docs/research/sample-runtime-reports.md
+// and docs/research/recent-runtime-review.md.
 export const runtimeEvidence: readonly RuntimeEvidence[] = [
   {
     id: 'cw-elden-ring-pratik-20240331', appId: 1245620, runner: 'crossover', edition: 'steam',
     sourceUrl: 'https://www.codeweavers.com/compatibility/crossover/forum/elden-ring?msg=300967',
     observedAt: '2026-09-04', publishedAt: '2024-03-31', testedAt: null,
+    checks: { ...unreportedRuntimeChecks, launch: 'reported-working', gameplay: 'reported-working' },
     environment: { chip: 'MacBook Air · M1', memoryGb: 8, macOs: null, runnerVersion: '24.0.0.1', backend: 'D3DMetal', gameVersion: null },
     author: { en: 'Pratik Nichite · CodeWeavers community post #2', 'zh-CN': 'Pratik Nichite · CodeWeavers 社区第 2 楼' },
     finding: {
@@ -22,6 +24,7 @@ export const runtimeEvidence: readonly RuntimeEvidence[] = [
     id: 'cw-elden-ring-finley-20240321', appId: 1245620, runner: 'crossover', edition: 'unknown',
     sourceUrl: 'https://www.codeweavers.com/compatibility/crossover/forum/elden-ring?msg=300967',
     observedAt: '2026-09-04', publishedAt: '2024-03-21', testedAt: null,
+    checks: { ...unreportedRuntimeChecks, launch: 'reported-failing' },
     environment: { chip: 'MacBook Pro 2019 · Intel Core i7 2.6 GHz', memoryGb: null, macOs: '14.4', runnerVersion: '23.7.1', backend: null, gameVersion: null },
     author: { en: 'Finley · CodeWeavers community post #1', 'zh-CN': 'Finley · CodeWeavers 社区第 1 楼' },
     finding: {
@@ -37,6 +40,7 @@ export const runtimeEvidence: readonly RuntimeEvidence[] = [
     id: 'paulthetall-noita-20230812', appId: 881100, runner: 'porting-kit', edition: 'gog',
     sourceUrl: 'https://www.paulthetall.com/noita-for-mac/',
     observedAt: '2026-09-04', publishedAt: '2023-08-12', testedAt: null,
+    checks: { ...unreportedRuntimeChecks, gameplay: 'reported-working' },
     environment: { chip: 'MacBook Pro · Apple silicon (generation unspecified)', memoryGb: null, macOs: null, runnerVersion: null, backend: null, gameVersion: null },
     author: { en: 'paulthetall · Porting Kit maintainer', 'zh-CN': 'paulthetall · Porting Kit 维护者' },
     finding: {
@@ -46,6 +50,25 @@ export const runtimeEvidence: readonly RuntimeEvidence[] = [
     limits: {
       en: 'Historical brief trial, not a benchmark or Steam validation. Chip generation, engine version, saves and completion are unreported. This is the same source as the recipe above, not another independent confirmation.',
       'zh-CN': '属于历史短时尝试，不是性能基准或 Steam 验证。芯片代际、引擎版本、存档和通关情况未提供。这与上方安装配方来自同一篇文章，不是另一份独立验证。',
+    },
+  },
+  {
+    id: 'reddit-sekiro-oztruwa-20250721', appId: 814380, runner: 'crossover', edition: 'unknown',
+    sourceUrl: 'https://www.reddit.com/r/macgaming/comments/1m5b8ey/',
+    observedAt: '2026-09-04', publishedAt: '2025-07-21', testedAt: null,
+    checks: { ...unreportedRuntimeChecks, gameplay: 'reported-with-issues' },
+    environment: {
+      chip: 'MacBook Pro · M4 Pro (12/16)', memoryGb: 24, macOs: '15.5',
+      runnerVersion: 'Preview 20250625', backend: 'D3DMetal', gameVersion: null,
+    },
+    author: { en: 'oztruwa · r/macgaming first-hand post', 'zh-CN': 'oztruwa · r/macgaming 第一手帖子' },
+    finding: {
+      en: 'Using GPTK 3b and MSync alongside the reported CrossOver preview, the author describes gameplay at 1440p with maximum settings, but reports a crash when opening graphics settings in fullscreen on an external monitor. They say this did not happen on the built-in screen with the external display disconnected.',
+      'zh-CN': '作者在所述 CrossOver 预览版中配合 GPTK 3b、MSync，描述了 1440p、最高画质下的游玩，但报告在外接显示器全屏模式中打开图形设置会崩溃；断开外接显示器、使用内置屏幕时没有出现该问题。',
+    },
+    limits: {
+      en: 'The author suggests switching to windowed mode with Command+Enter before changing graphics settings, then switching back. This workaround is not independently verified. Preview/beta components, unknown store/build and no test duration limit applicability. The frame-rate description is not stored as a measured average; saves, completion and online features remain unreported.',
+      'zh-CN': '作者建议先用 Command+Enter 切换到窗口模式再改图形设置，然后切回全屏；该方法未经独立验证。预览/测试版组件、未知商店与游戏构建、缺少测试时长，均限制了适用范围。原文帧率描述不作为实测平均值收录，存档、通关与在线功能仍未报告。',
     },
   },
 ]

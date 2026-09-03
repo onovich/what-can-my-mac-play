@@ -1,12 +1,13 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import { LocaleProvider } from '../../i18n/LocaleProvider'
-import type { RuntimeEvidence } from '../../domain/runtimeEvidence'
+import { unreportedRuntimeChecks, type RuntimeEvidence } from '../../domain/runtimeEvidence'
 import { RuntimeEvidenceList } from './RuntimeEvidenceList'
 
 const report: RuntimeEvidence = {
   id: 'fixture', appId: 881100, runner: 'porting-kit', edition: 'gog',
   sourceUrl: 'https://example.com/firsthand', publishedAt: '2023-08-12', observedAt: '2026-09-04', testedAt: null,
+  checks: { ...unreportedRuntimeChecks, gameplay: 'reported-working' },
   environment: { chip: null, memoryGb: null, macOs: null, runnerVersion: null, backend: null, gameVersion: null },
   author: { en: 'Fixture author', 'zh-CN': '示例作者' },
   finding: { en: 'Brief gameplay reported', 'zh-CN': '作者报告短时游玩' },

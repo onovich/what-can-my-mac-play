@@ -1,10 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { runtimeEvidenceGaps, selectRuntimeEvidence, type RuntimeEvidence } from './runtimeEvidence'
+import { runtimeEvidenceGaps, selectRuntimeEvidence, unreportedRuntimeChecks, type RuntimeEvidence } from './runtimeEvidence'
 
 const report: RuntimeEvidence = {
   id: 'test-report', appId: 1245620, runner: 'crossover', edition: 'steam',
   sourceUrl: 'https://example.com/report', observedAt: '2026-09-04',
   publishedAt: '2024-03-31', testedAt: null,
+  checks: unreportedRuntimeChecks,
   environment: { chip: 'M1', memoryGb: 8, macOs: null, runnerVersion: '24.0.0.1', backend: 'D3DMetal', gameVersion: null },
   author: { en: 'Test author', 'zh-CN': '测试作者' },
   finding: { en: 'Reported gameplay', 'zh-CN': '报告进入游戏' },

@@ -66,4 +66,11 @@ describe('GameDetailPage', () => {
     expect(screen.queryByText(/Pratik Nichite/)).not.toBeInTheDocument()
     expect(screen.getByText(/No first-hand test record has been curated/)).toBeInTheDocument()
   })
+  it('shows the Sekiro failure condition beside feature coverage', () => {
+    renderPage(814380, 'zh-CN')
+    expect(screen.getByText(/oztruwa/)).toBeInTheDocument()
+    expect(screen.getByText(/外接显示器全屏模式中打开图形设置会崩溃/)).toBeInTheDocument()
+    expect(screen.getByText('作者报告存在问题')).toBeInTheDocument()
+    expect(screen.getAllByText('未报告')).toHaveLength(5)
+  })
 })

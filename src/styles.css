@@ -54,6 +54,11 @@
 .runtime-evidence summary { cursor: pointer; padding: 0.75rem 0; font-weight: 700; }
 .runtime-evidence details { margin-bottom: 0.75rem; }
 .runtime-evidence summary:focus-visible { outline: 2px solid var(--coral-dark); outline-offset: 3px; }
+.runtime-coverage { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin: 1rem 0; padding: 0.75rem 0; }
+.runtime-coverage__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); gap: 1rem; }
+.runtime-coverage__grid dt { font-weight: 700; }
+.runtime-coverage__grid dd { margin: 0.25rem 0 0; color: var(--ink-soft); }
+.runtime-coverage__grid dd[data-status="reported-failing"] { color: var(--coral-dark); font-weight: 700; }
 
 html {
   scroll-behavior: smooth;

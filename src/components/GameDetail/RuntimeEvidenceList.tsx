@@ -1,5 +1,6 @@
 import { runtimeEvidenceGaps, type RuntimeEvidence } from '../../domain/runtimeEvidence'
 import { useLocale } from '../../i18n/locale'
+import { RuntimeCheckCoverage } from './RuntimeCheckCoverage'
 
 const copy = {
   en: {
@@ -45,6 +46,7 @@ export function RuntimeEvidenceList({ reports }: { reports: readonly RuntimeEvid
               <p><small>{text.publishedAt}: {report.publishedAt ?? text.unknown}</small></p>
               <p>{report.finding[locale]}</p>
               <p>{report.limits[locale]}</p>
+              <RuntimeCheckCoverage checks={report.checks} />
               <p><strong>{text.edition}: {report.edition === 'unknown' ? text.unknown : text[report.edition]}</strong></p>
               {report.edition !== 'steam' && <p>{report.edition === 'unknown' ? text.unknownEdition : text.mismatch}</p>}
               {runtimeEvidenceGaps(report).length > 0 && <p>{text.gaps}: {runtimeEvidenceGaps(report).map((field) => text[field]).join(' · ')}</p>}

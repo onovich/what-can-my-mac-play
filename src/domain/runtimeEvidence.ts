@@ -1,6 +1,14 @@
 import type { Runner } from './compatibility'
 import type { Locale } from '../i18n/locale'
 
+export const runtimeChecks = ['launch', 'gameplay', 'save', 'completion', 'multiplayer', 'anticheat'] as const
+export type RuntimeCheck = typeof runtimeChecks[number]
+export type RuntimeCheckStatus = 'reported-working' | 'reported-with-issues' | 'reported-failing' | 'not-reported'
+export const unreportedRuntimeChecks: Readonly<Record<RuntimeCheck, RuntimeCheckStatus>> = {
+  launch: 'not-reported', gameplay: 'not-reported', save: 'not-reported',
+  completion: 'not-reported', multiplayer: 'not-reported', anticheat: 'not-reported',
+}
+
 // A first-hand source's account, not a project playtest or scoring input.
 export type RuntimeEvidence = {
   id: string
@@ -11,6 +19,7 @@ export type RuntimeEvidence = {
   observedAt: string
   publishedAt: string | null
   testedAt: string | null
+  checks: Readonly<Record<RuntimeCheck, RuntimeCheckStatus>>
   environment: {
     chip: string | null
     memoryGb: number | null
