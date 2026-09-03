@@ -1,6 +1,7 @@
 import { researchReplayCases } from '../../data/researchReplay'
 import { sampleGames } from '../../data/sampleGames'
 import { gamePurchaseFacts } from '../../data/gamePurchaseFacts'
+import { runtimeEvidence } from '../../data/runtimeEvidence'
 import { useLocale } from '../../i18n/locale'
 import { ScoreMeter } from '../ScoreMeter/ScoreMeter'
 import { PurchasePanel } from './PurchasePanel'
@@ -73,6 +74,7 @@ export function GameDetailPage({ appId }: { appId: number }) {
           steamUrl={game.steamUrl}
           evidencedRunners={[replay.scoringInput.runnerKind]}
           facts={gamePurchaseFacts.find((fact) => fact.appId === appId)}
+          runtimeReports={runtimeEvidence}
         />
         <section className="game-detail__decision" aria-labelledby="decision-title">
           <p className="eyebrow">{messages.gameDetail.researchSnapshot}</p>

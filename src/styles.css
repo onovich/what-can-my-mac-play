@@ -51,6 +51,9 @@
 .purchase-facts { list-style: none; padding: 0; }
 .purchase-facts li { border-left: 3px solid var(--line); padding: 0.75rem 1rem; background: var(--paper); }
 .purchase-facts p { margin: 0.5rem 0; }
+.runtime-evidence summary { cursor: pointer; padding: 0.75rem 0; font-weight: 700; }
+.runtime-evidence details { margin-bottom: 0.75rem; }
+.runtime-evidence summary:focus-visible { outline: 2px solid var(--coral-dark); outline-offset: 3px; }
 
 html {
   scroll-behavior: smooth;

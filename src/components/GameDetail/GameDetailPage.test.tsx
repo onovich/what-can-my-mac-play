@@ -57,4 +57,13 @@ describe('GameDetailPage', () => {
     expect(screen.getByText(/残留字段不能证明当前原生或 Rosetta 支持/)).toBeInTheDocument()
     expect(screen.getByText(/尚未验证这款游戏在此方案下的表现/)).toBeInTheDocument()
   })
+  it('keeps historical runtime reports scoped to the selected game and runner', () => {
+    renderPage(1245620)
+    expect(screen.getByText(/Pratik Nichite/)).toBeInTheDocument()
+    expect(screen.getByText(/Finley/)).toBeInTheDocument()
+    expect(screen.queryByText(/paulthetall/)).not.toBeInTheDocument()
+    fireEvent.change(screen.getByRole('combobox'), { target: { value: 'porting-kit' } })
+    expect(screen.queryByText(/Pratik Nichite/)).not.toBeInTheDocument()
+    expect(screen.getByText(/No first-hand test record has been curated/)).toBeInTheDocument()
+  })
 })

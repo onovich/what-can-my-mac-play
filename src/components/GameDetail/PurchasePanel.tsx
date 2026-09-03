@@ -4,11 +4,14 @@ import { purchaseEvidence, type GamePurchaseFacts } from '../../domain/purchase'
 import type { Runner } from '../../domain/compatibility'
 import { useLocale } from '../../i18n/locale'
 import { PurchaseFactList } from './PurchaseFactList'
+import { RuntimeEvidenceList } from './RuntimeEvidenceList'
+import { selectRuntimeEvidence, type RuntimeEvidence } from '../../domain/runtimeEvidence'
 
-export function PurchasePanel({ steamUrl, evidencedRunners, facts }: {
+export function PurchasePanel({ steamUrl, evidencedRunners, facts, runtimeReports = [] }: {
   steamUrl: string
   evidencedRunners: readonly Runner['kind'][]
   facts?: GamePurchaseFacts
+  runtimeReports?: readonly RuntimeEvidence[]
 }) {
   const { locale } = useLocale()
   const copy = purchaseCopy[locale]
@@ -17,6 +20,7 @@ export function PurchasePanel({ steamUrl, evidencedRunners, facts }: {
   const routeCopy = route.copy[locale]
   const evidence = purchaseEvidence(route.id, evidencedRunners)
   const routeFacts = facts?.routes[route.id] ?? []
+  const selectedReports = facts ? selectRuntimeEvidence(runtimeReports, facts.appId, route.id) : []
 
   return (
     <section className="purchase-panel" aria-labelledby="purchase-title">
@@ -42,6 +46,7 @@ export function PurchasePanel({ steamUrl, evidencedRunners, facts }: {
         {routeFacts.length > 0 && <PurchaseFactList facts={routeFacts} />}
         <a href={route.url ?? steamUrl} target="_blank" rel="noreferrer">{copy.source} ↗</a>
       </div>
+      <RuntimeEvidenceList reports={selectedReports} />
       <h3>{copy.checklist}</h3>
       <ul>{copy.checks.map((check) => <li key={check}>{check}</li>)}</ul>
       <p className="purchase-panel__scope">{copy.scope}</p>
