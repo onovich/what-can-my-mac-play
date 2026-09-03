@@ -13,6 +13,9 @@ export const purchaseCopy = {
     partial: 'Partial CrossOver evidence only. Hardware, macOS, backend, game version and full-playthrough coverage are not established.',
     missing: 'Not verified for this game. This does not mean it cannot run; no score or purchase recommendation is inferred.',
     source: 'Official route information',
+    storeTitle: 'This store edition',
+    storeUnknown: 'Store requirements have not been checked for this game yet.',
+    factsBoundary: 'Store requirements and installation recipes do not establish performance on your Mac and do not change the scores.',
     scope: 'Virtual machines, cloud gaming and remote streaming are excluded. Whisky is historical-only because it is unmaintained. GPTK is a developer toolkit; D3DMetal, DXVK and DXMT are graphics backends, not separate consumer routes.',
     checklist: 'Check these before paying',
     checks: [
@@ -34,6 +37,9 @@ export const purchaseCopy = {
     partial: '仅有不完整的 CrossOver 证据。硬件、macOS、图形后端、游戏版本及通关覆盖尚未确认。',
     missing: '尚未验证这款游戏在此方案下的表现。不代表不能运行，也不会据此生成评分或购买建议。',
     source: '查看方案官方说明',
+    storeTitle: '这款游戏的商店版本',
+    storeUnknown: '尚未核对这款游戏的商店要求。',
+    factsBoundary: '商店要求和安装配方不能证明在你的 Mac 上的运行表现，也不参与评分。',
     scope: '排除虚拟机、云游戏和远程串流。Whisky 已停止维护，仅保留历史参考。GPTK 是开发者工具包；D3DMetal、DXVK 和 DXMT 是图形后端，不是独立的玩家运行方案。',
     checklist: '付款前需要确认',
     checks: [
@@ -55,8 +61,8 @@ type PurchaseRoute = {
 
 export const purchaseRoutes: readonly PurchaseRoute[] = [
   { id: 'native', url: null, copy: {
-    en: { name: 'Native macOS', cost: 'No separate Windows compatibility tool', setup: 'Check this exact edition, chip architecture and supported macOS versions on the store page. Native availability is not verified in this sample.' },
-    'zh-CN': { name: '原生 macOS', cost: '无需另购 Windows 兼容工具', setup: '在商店页核对具体版本、芯片架构与支持的 macOS。本样本尚未验证原生版本可用性。' },
+    en: { name: 'Native macOS', cost: 'No separate Windows compatibility tool', setup: 'Check the store evidence below for this exact edition, chip architecture and supported macOS versions. A Mac listing alone does not establish Apple silicon compatibility.' },
+    'zh-CN': { name: '原生 macOS', cost: '无需另购 Windows 兼容工具', setup: '结合商店证据核对具体版本、芯片架构与支持的 macOS。商店列出 Mac 版本，不等于已经支持 Apple silicon。' },
   } },
   { id: 'rosetta', url: 'https://support.apple.com/en-us/102527', copy: {
     en: { name: 'Intel Mac app via Rosetta 2', cost: 'No separately purchased runner', setup: 'For compatible Intel Mac apps on Apple silicon, not Windows executables. Does not restore support for old 32-bit Mac apps.' },

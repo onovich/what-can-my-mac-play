@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
 import { LocaleProvider } from '../../i18n/LocaleProvider'
@@ -49,5 +49,12 @@ describe('GameDetailPage', () => {
       'href',
       '/#sample-library',
     )
+  })
+  it('shows game-specific store context and keeps stale Mac fields out of support claims', () => {
+    renderPage(620, 'zh-CN')
+    expect(screen.getByText(/当前 Steam 页面列出 Windows 和 Linux 要求/)).toBeInTheDocument()
+    fireEvent.change(screen.getByRole('combobox'), { target: { value: 'rosetta' } })
+    expect(screen.getByText(/残留字段不能证明当前原生或 Rosetta 支持/)).toBeInTheDocument()
+    expect(screen.getByText(/尚未验证这款游戏在此方案下的表现/)).toBeInTheDocument()
   })
 })

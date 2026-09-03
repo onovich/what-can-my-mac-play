@@ -1,5 +1,6 @@
 import { researchReplayCases } from '../../data/researchReplay'
 import { sampleGames } from '../../data/sampleGames'
+import { gamePurchaseFacts } from '../../data/gamePurchaseFacts'
 import { useLocale } from '../../i18n/locale'
 import { ScoreMeter } from '../ScoreMeter/ScoreMeter'
 import { PurchasePanel } from './PurchasePanel'
@@ -68,7 +69,11 @@ export function GameDetailPage({ appId }: { appId: number }) {
       </header>
 
       <div className="game-detail__body">
-        <PurchasePanel steamUrl={game.steamUrl} />
+        <PurchasePanel
+          steamUrl={game.steamUrl}
+          evidencedRunners={[replay.scoringInput.runnerKind]}
+          facts={gamePurchaseFacts.find((fact) => fact.appId === appId)}
+        />
         <section className="game-detail__decision" aria-labelledby="decision-title">
           <p className="eyebrow">{messages.gameDetail.researchSnapshot}</p>
           <h2 id="decision-title">{messages.gameDetail.decisionTitle}</h2>
