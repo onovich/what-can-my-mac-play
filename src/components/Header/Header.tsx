@@ -15,15 +15,6 @@ export function Header() {
       </a>
       <nav aria-label={messages.header.primaryNavigation}>
         <a href="/#sample-library">{messages.header.sampleLibrary}</a>
-        <a href="/library">{messages.header.myLibrary}</a>
-        <a href="/#method">{messages.header.method}</a>
-        <a
-          href="https://github.com/onovich/what-can-my-mac-play"
-          target="_blank"
-          rel="noreferrer"
-        >
-          GitHub <span aria-hidden="true">↗</span>
-        </a>
       </nav>
       <div className="site-header__actions">
         <label className="language-select">
@@ -37,9 +28,6 @@ export function Header() {
             <option value="zh-CN">{messages.header.chinese}</option>
           </select>
         </label>
-        <span className="status-pill">
-          <span aria-hidden="true" /> {messages.header.status}
-        </span>
       </div>
     </header>
   )

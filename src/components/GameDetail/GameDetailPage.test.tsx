@@ -10,7 +10,10 @@ function renderPage(appId: number, locale: 'en' | 'zh-CN' = 'en') {
 describe('decision-first game details', () => {
   it('gives a preferred route instead of scores and research work', () => {
     renderPage(620)
-    expect(screen.getByRole('heading', { name: 'Choose CrossOver, not the legacy Mac route' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Use the Steam Windows edition, not the legacy Mac edition.' })).toBeInTheDocument()
+    expect(screen.getByText(/Paid software/)).toBeInTheDocument()
+    expect(screen.getByRole('combobox')).not.toBeVisible()
+    expect(screen.queryByText(/Our recommendation|What to do|Only the conditions/)).not.toBeInTheDocument()
     expect(screen.queryByRole('meter')).not.toBeInTheDocument()
     expect(screen.queryByText(/Low confidence|Not reported|First-hand source reports/)).not.toBeInTheDocument()
     for (const link of screen.getAllByRole('link')) {
@@ -20,11 +23,11 @@ describe('decision-first game details', () => {
   })
   it('defaults unlisted routes to not supported with a direct alternative', () => {
     renderPage(620, 'zh-CN')
+    screen.getByText('其他方案').parentElement?.setAttribute('open', '')
     fireEvent.change(screen.getByRole('combobox'), { target: { value: 'rosetta' } })
-    expect(screen.getByText('当前清单不支持')).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: '这款游戏，不推荐走此方案' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: '此方案不支持这款游戏' })).toBeInTheDocument()
     fireEvent.click(screen.getByRole('button', { name: '首选方案：CrossOver' }))
-    expect(screen.getByRole('heading', { name: '首选 CrossOver，不走旧 Mac 版' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: '使用 Steam Windows 版，不走旧 Mac 版。' })).toBeInTheDocument()
   })
   it('makes the multiplayer purchasing decision instead of listing unknowns', () => {
     renderPage(1245620, 'zh-CN')
@@ -39,12 +42,24 @@ describe('decision-first game details', () => {
   })
   it('does not transfer a GOG recipe to Steam support', () => {
     renderPage(881100)
+    screen.getByText('Other routes').parentElement?.setAttribute('open', '')
     fireEvent.change(screen.getByRole('combobox'), { target: { value: 'porting-kit' } })
-    expect(screen.getByText('Not supported in our catalog')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'This route is not supported' })).toBeInTheDocument()
   })
   it('does not invent a recommendation for an unknown game', () => {
     renderPage(999999, 'zh-CN')
-    expect(screen.getByRole('heading', { name: '这款游戏不在当前研究预览中。' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: '清单中没有这款游戏。' })).toBeInTheDocument()
     expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+  })
+  it('keeps the Witcher purchase hold and update date', () => {
+    renderPage(292030, 'zh-CN')
+    expect(screen.getByRole('heading', { name: /等待更新复核结果/ })).toBeInTheDocument()
+    expect(screen.getByText(/2026 年 9 月 29 日/)).toBeInTheDocument()
+    expect(screen.getByText(/不要为了 DX12 或光追/)).toBeInTheDocument()
+  })
+  it('keeps the Ori version-specific purchase restriction', () => {
+    renderPage(1057090, 'zh-CN')
+    expect(screen.getByRole('heading', { name: /25.0.1.*25.0.0/ })).toBeInTheDocument()
+    expect(screen.getByText(/未经复核的更新版本/)).toBeInTheDocument()
   })
 })

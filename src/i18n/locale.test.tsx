@@ -41,6 +41,6 @@ describe('locale resolution', () => {
 
     expect(window.localStorage.getItem(localeStorageKey)).toBe('zh-CN')
     expect(document.documentElement.lang).toBe('zh-CN')
-    expect(screen.getByRole('link', { name: '示例游戏库' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: '查找游戏' })).toBeInTheDocument()
   })
 })

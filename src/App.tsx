@@ -4,11 +4,8 @@ import { GameExplorer } from './components/GameExplorer/GameExplorer'
 import { GameDetailPage } from './components/GameDetail/GameDetailPage'
 import { Header } from './components/Header/Header'
 import { LibraryPage } from './components/Library/LibraryPage'
-import { Method } from './components/Method/Method'
 import { PrivacyPage } from './components/Privacy/PrivacyPage'
-import { siteHost, siteUrl } from './config/site'
 import { privacyContent } from './content/privacy'
-import { libraryContent } from './content/library'
 import { sampleGames } from './data/sampleGames'
 import { useLocale } from './i18n/locale'
 import { resolveAppRoute } from './routes'
@@ -29,8 +26,8 @@ export function App() {
       }
     } else if (route.kind === 'library') {
       meta = {
-        title: libraryContent[locale].metaTitle,
-        description: libraryContent[locale].metaDescription,
+        title: locale === 'zh-CN' ? 'Steam 游戏库 · What Can My Mac Play?' : 'Steam library · What Can My Mac Play?',
+        description: locale === 'zh-CN' ? 'Steam 游戏库暂未开放。' : 'Steam library connection is not available yet.',
       }
     } else if (route.kind === 'game' && detailGame) {
       meta = {
@@ -66,64 +63,19 @@ export function App() {
           <GameDetailPage appId={0} />
         ) : (
           <>
-            <section className="hero shell" aria-labelledby="hero-title">
-              <div className="hero__copy">
-                <p className="eyebrow">{messages.hero.eyebrow}</p>
-                <h1 id="hero-title">
-                  {messages.hero.title} <em>{messages.hero.emphasis}</em>
-                </h1>
-                <p className="hero__lede">{messages.hero.lede}</p>
-                <div className="hero__actions">
-                  <a className="button button--primary" href="#sample-library">
-                    {messages.hero.explore}
-                    <span aria-hidden="true">↓</span>
-                  </a>
-                  <a className="text-link" href="#method">
-                    {messages.hero.method}
-                  </a>
-                </div>
-                <p className="hero__note">{messages.hero.note}</p>
-              </div>
-              <aside className="decision-intro">
-                <p className="eyebrow">{messages.method.eyebrow}</p>
-                <h2>{messages.method.title}</h2>
-                <p>{messages.method.intro}</p>
-              </aside>
+            <section className="search-intro shell" aria-labelledby="hero-title">
+              <h1 id="hero-title">{locale === 'zh-CN' ? '查找 Mac 游戏运行方案' : 'Find a Mac gaming route'}</h1>
             </section>
-
             <GameExplorer />
-            <Method />
-
-            <section className="closing shell" aria-labelledby="closing-title">
-              <p className="eyebrow">{messages.closing.eyebrow}</p>
-              <h2 id="closing-title">{messages.closing.title}</h2>
-              <a
-                className="button button--light"
-                href="https://github.com/onovich/what-can-my-mac-play"
-                target="_blank"
-                rel="noreferrer"
-              >
-                {messages.closing.github}
-                <span aria-hidden="true">↗</span>
-              </a>
-            </section>
           </>
         )}
       </main>
 
       <footer className="site-footer shell">
-        <p>
-          <strong>What Can My Mac Play?</strong> {messages.footer.statement}
-        </p>
+        <p>What Can My Mac Play?</p>
         <div className="site-footer__links">
           <a href="/privacy">{messages.footer.privacy}</a>
-          <a href="/privacy#data-deletion">{messages.footer.dataDeletion}</a>
-          <span>
-            {messages.footer.home}{' '}
-            <a href={siteUrl} rel="noreferrer">
-              {siteHost}
-            </a>
-          </span>
+          <a href="https://github.com/onovich/what-can-my-mac-play" target="_blank" rel="noreferrer">GitHub ↗</a>
         </div>
       </footer>
     </>

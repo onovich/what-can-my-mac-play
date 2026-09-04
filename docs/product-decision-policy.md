@@ -12,6 +12,9 @@ Positive route recommendations are choices among running methods, not unconditio
 
 ## Presentation
 
+- Start with a short task title and the search input. No manifesto, methodology card, self-promotion, or separate anchor-button detour before search.
+- State each game's decision once. Use neutral labels such as Route and Conditions, not “our conclusion” or instructions on how to read the page. Put alternatives behind a native collapsed disclosure.
+- Unavailable features have no primary navigation entry. The library URL shows availability and a search link, not simulated account states or an implementation roadmap.
 - Player entry points show our synthesis, not original posts, author names, source ratings, field gaps, or numerical compatibility/confidence scores.
 - Keep known cost, version, display-mode and single-player restrictions when they change the action. Do not hide a material failure to make a recommendation sound stronger.
 - Keep one small, folded explanation of what the catalog covers. Do not repeat disclaimers throughout the page.

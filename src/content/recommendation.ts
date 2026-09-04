@@ -1,8 +1,8 @@
 export const recommendationCopy = {
   en: {
-    heading: 'Our recommendation', choose: 'Check another route', action: 'What to do', conditions: 'Only the conditions that matter',
+    heading: 'Recommendation', choose: 'Other routes', action: 'Route', conditions: 'Conditions', route: 'Route', paid: 'Paid software',
     recommended: 'Recommended route', conditional: 'Use with conditions', 'not-supported': 'Not supported in our catalog',
-    unsupportedTitle: 'Do not use this route for this game',
+    unsupportedTitle: 'This route is not supported',
     unsupportedReason: 'This game and route are not in our supported list. Do not spend money or setup time on this combination.',
     unsupportedAction: 'Choose the recommended route instead.',
     scope: '“Not supported” means excluded from our current support list, not proof that running it is technically impossible.',
@@ -12,9 +12,9 @@ export const recommendationCopy = {
     note: 'Start with the recommended route, then check the conditions that affect your choice.',
   },
   'zh-CN': {
-    heading: '我们的结论', choose: '查看其他方案', action: '直接怎么做', conditions: '只看会影响选择的条件',
+    heading: '使用建议', choose: '其他方案', action: '运行方案', conditions: '使用条件', route: '运行方案', paid: '付费软件',
     recommended: '推荐方案', conditional: '有条件使用', 'not-supported': '当前清单不支持',
-    unsupportedTitle: '这款游戏，不推荐走此方案',
+    unsupportedTitle: '此方案不支持这款游戏',
     unsupportedReason: '这款游戏与该方案的组合未进入支持清单。不要为这个组合花钱或投入配置时间。',
     unsupportedAction: '改用首选方案。',
     scope: '“不支持”表示未纳入当前支持清单，不是断言技术上绝对无法运行。',
