@@ -2,7 +2,8 @@ import type { Runner } from './compatibility'
 import type { Locale } from '../i18n/locale'
 
 export type RecommendationStatus = 'recommended' | 'conditional' | 'not-supported'
-export type RecommendationCopy = { title: string; reason: string; action: string; conditions: readonly string[] }
+// Route identity comes from runner; notes contain only game-specific constraints.
+export type RecommendationCopy = { note?: string; reason: string; action: string; conditions: readonly string[] }
 export type RouteRecommendation = {
   appId: number
   runner: Runner['kind']

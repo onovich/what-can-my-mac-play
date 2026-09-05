@@ -3,6 +3,7 @@ import { catalogGames, type CatalogGame } from '../../data/catalogGames'
 import { recommendations } from '../../data/recommendations'
 import { getRouteRecommendation } from '../../domain/recommendation'
 import { recommendationCopy } from '../../content/recommendation'
+import { routeName } from '../../content/purchase'
 import { findCatalogGames } from '../../domain/catalogSearch'
 import { useLocale, type Locale } from '../../i18n/locale'
 
@@ -48,7 +49,8 @@ function GameRow({ game, index, locale }: { game: CatalogGame; index: number; lo
         {game.description && <p>{game.description[locale]}</p>}
       </div>
       <div className="game-row__evidence">
-        <strong>{decision?.copy[locale].title ?? text.unsupportedTitle}</strong>
+        <strong>{decision ? routeName(decision.runner, locale) : text.unsupportedTitle}</strong>
+        {decision?.copy[locale].note && <p>{decision.copy[locale].note}</p>}
       </div>
       <div className="game-row__links"><a href={`/games/${game.appId}`}>{messages.explorer.viewDetails} →</a></div>
     </article>

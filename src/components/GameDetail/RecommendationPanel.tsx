@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { recommendations } from '../../data/recommendations'
 import { getRouteRecommendation, routeSupportStatus } from '../../domain/recommendation'
 import type { Runner } from '../../domain/compatibility'
-import { purchaseRoutes } from '../../content/purchase'
+import { purchaseRoutes, routeName as localizedRouteName } from '../../content/purchase'
 import { recommendationCopy } from '../../content/recommendation'
 import { useLocale } from '../../i18n/locale'
 
@@ -10,7 +10,7 @@ export function RecommendationPanel({ appId, steamUrl, preferredRunner }: { appI
   const { locale } = useLocale()
   const text = recommendationCopy[locale]
   const [runner, setRunner] = useState<Runner['kind']>(preferredRunner)
-  const routeName = (kind: Runner['kind']) => kind === 'native' ? text.macEdition : purchaseRoutes.find((route) => route.id === kind)?.copy[locale].name ?? kind
+  const routeName = (kind: Runner['kind']) => localizedRouteName(kind, locale)
   const decision = getRouteRecommendation(recommendations, appId, runner)
   const status = routeSupportStatus(recommendations, appId, runner)
   const copy = decision?.copy[locale]

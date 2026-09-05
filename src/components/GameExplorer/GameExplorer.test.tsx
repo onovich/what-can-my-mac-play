@@ -8,11 +8,20 @@ function renderExplorer(locale: 'en' | 'zh-CN' = 'en') {
 }
 
 describe('decision-first game list', () => {
+  it.each(['en', 'zh-CN'] as const)('uses one runner label across editions in %s', (locale) => {
+    renderExplorer(locale)
+    for (const row of screen.getAllByRole('article')) {
+      expect(within(row).getByText('CrossOver', { selector: 'strong' })).toBeInTheDocument()
+    }
+    expect(screen.queryByText(/Steam.* · CrossOver|特别版 ·|Special Edition ·/)).not.toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'The Elder Scrolls V: Skyrim Special Edition' })).toBeInTheDocument()
+    expect(screen.getByText(locale === 'en' ? 'macOS 15 or later' : '适用 macOS 15 及以上', { selector: 'p' })).toBeInTheDocument()
+  })
   it('searches supported games outside the homepage selection by Chinese alias', () => {
     renderExplorer('zh-CN')
     fireEvent.change(screen.getByRole('searchbox'), { target: { value: ' 星露谷物语 ' } })
     expect(screen.getByRole('heading', { name: 'Stardew Valley' })).toBeInTheDocument()
-    expect(screen.getByText('Mac 版 · 无需 CrossOver')).toBeInTheDocument()
+    expect(screen.getByText('Mac 版')).toBeInTheDocument()
   })
   it('filters games by name and resets an empty result', () => {
     renderExplorer()
@@ -51,7 +60,8 @@ describe('decision-first game list', () => {
   it('gives a direct Chinese conclusion', () => {
     renderExplorer('zh-CN')
     fireEvent.change(screen.getByRole('searchbox'), { target: { value: '艾尔登法环' } })
-    expect(screen.getByText('CrossOver · 仅限单人')).toBeInTheDocument()
+    expect(screen.getByText('CrossOver')).toBeInTheDocument()
+    expect(screen.getByText('仅限单人')).toBeInTheDocument()
     expect(screen.queryByText('低可信度')).not.toBeInTheDocument()
     expect(screen.queryByText('推荐方案')).not.toBeInTheDocument()
     expect(screen.queryByText('有条件使用')).not.toBeInTheDocument()

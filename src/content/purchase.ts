@@ -53,6 +53,11 @@ export const purchaseCopy = {
 } satisfies Record<Locale, unknown>
 
 type RouteCopy = { name: string; cost: string; setup: string }
+export function routeName(kind: Runner['kind'], locale: Locale): string {
+  if (kind === 'native') return locale === 'zh-CN' ? 'Mac 版' : 'Mac edition'
+  return purchaseRoutes.find((route) => route.id === kind)?.copy[locale].name ?? kind
+}
+
 type PurchaseRoute = {
   id: Exclude<Runner['kind'], 'virtual-machine' | 'whisky'>
   url: string | null

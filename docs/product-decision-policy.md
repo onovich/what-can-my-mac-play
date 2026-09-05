@@ -12,6 +12,8 @@ Positive route recommendations are choices among running methods, not unconditio
 
 ## Presentation
 
+- Route labels are generated from the structured `runner` through one shared localized lookup in list and detail views. Never handwrite composite route titles per game. Edition names belong in game titles; material restrictions belong in an optional separate `note`, not in the route identity. Steam is common catalog context and is not repeated in every route label.
+
 - Featured order is an explicit editorial order, considering support quality, material restrictions and gameplay variety; it is not a measured performance leaderboard. Search ranks exact names/aliases before prefix and substring matches and normalizes punctuation/spacing without equating different editions.
 - The expansion reviewed on 2026-09-05 is recorded in `docs/research/catalog-expansion-2026-09-05.md`, resolving its `store:<appId>:2026-09-05` and `codeweavers:<appId>:2026-09-05` references. P5R's macOS 15+ recommendation is an editorial supported scope grounded in recorded configurations, not a claimed publisher Mac requirement.
 
