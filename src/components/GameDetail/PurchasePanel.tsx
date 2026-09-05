@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { purchaseCopy, purchaseRoutes } from '../../content/purchase'
+import { routeName } from '../../content/routeNames'
 import { purchaseEvidence, type GamePurchaseFacts } from '../../domain/purchase'
 import type { Runner } from '../../domain/compatibility'
 import { useLocale } from '../../i18n/locale'
@@ -33,11 +34,11 @@ export function PurchasePanel({ steamUrl, evidencedRunners, facts, runtimeReport
       <label className="purchase-panel__select">
         {copy.choose}
         <select value={selected} onChange={(event) => setSelected(event.target.value)}>
-          {purchaseRoutes.map((item) => <option key={item.id} value={item.id}>{item.copy[locale].name}</option>)}
+          {purchaseRoutes.map((item) => <option key={item.id} value={item.id}>{routeName(item.id, locale)}</option>)}
         </select>
       </label>
       <div aria-live="polite" aria-atomic="true">
-        <h3>{routeCopy.name}</h3>
+        <h3>{routeName(route.id, locale)}</h3>
         <dl className="game-detail__facts">
           <div><dt>{copy.cost}</dt><dd>{routeCopy.cost}</dd></div>
           <div><dt>{copy.setup}</dt><dd>{routeCopy.setup}</dd></div>

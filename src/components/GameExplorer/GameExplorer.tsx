@@ -3,7 +3,7 @@ import { catalogGames, type CatalogGame } from '../../data/catalogGames'
 import { recommendations } from '../../data/recommendations'
 import { getRouteRecommendation } from '../../domain/recommendation'
 import { recommendationCopy } from '../../content/recommendation'
-import { routeName } from '../../content/purchase'
+import { routeName } from '../../content/routeNames'
 import { findCatalogGames } from '../../domain/catalogSearch'
 import { useLocale, type Locale } from '../../i18n/locale'
 

@@ -52,11 +52,7 @@ export const purchaseCopy = {
   },
 } satisfies Record<Locale, unknown>
 
-type RouteCopy = { name: string; cost: string; setup: string }
-export function routeName(kind: Runner['kind'], locale: Locale): string {
-  if (kind === 'native') return locale === 'zh-CN' ? 'Mac 版' : 'Mac edition'
-  return purchaseRoutes.find((route) => route.id === kind)?.copy[locale].name ?? kind
-}
+type RouteCopy = { cost: string; setup: string }
 
 type PurchaseRoute = {
   id: Exclude<Runner['kind'], 'virtual-machine' | 'whisky'>
@@ -66,27 +62,27 @@ type PurchaseRoute = {
 
 export const purchaseRoutes: readonly PurchaseRoute[] = [
   { id: 'native', url: null, copy: {
-    en: { name: 'Native macOS', cost: 'No separate Windows compatibility tool', setup: 'Check the store evidence below for this exact edition, chip architecture and supported macOS versions. A Mac listing alone does not establish Apple silicon compatibility.' },
-    'zh-CN': { name: '原生 macOS', cost: '无需另购 Windows 兼容工具', setup: '结合商店证据核对具体版本、芯片架构与支持的 macOS。商店列出 Mac 版本，不等于已经支持 Apple silicon。' },
+    en: { cost: 'No separate Windows compatibility tool', setup: 'Check the store evidence below for this exact edition, chip architecture and supported macOS versions. A Mac listing alone does not establish Apple silicon compatibility.' },
+    'zh-CN': { cost: '无需另购 Windows 兼容工具', setup: '结合商店证据核对具体版本、芯片架构与支持的 macOS。商店列出 Mac 版本，不等于已经支持 Apple silicon。' },
   } },
   { id: 'rosetta', url: 'https://support.apple.com/en-us/102527', copy: {
-    en: { name: 'Intel Mac app via Rosetta 2', cost: 'No separately purchased runner', setup: 'For compatible Intel Mac apps on Apple silicon, not Windows executables. Does not restore support for old 32-bit Mac apps.' },
-    'zh-CN': { name: 'Intel Mac 应用 + Rosetta 2', cost: '无需另购运行器', setup: '用于在 Apple silicon 上运行符合条件的 Intel Mac 应用，不用于 Windows 程序，也不会恢复旧 32 位 Mac 应用支持。' },
+    en: { cost: 'No separately purchased runner', setup: 'For compatible Intel Mac apps on Apple silicon, not Windows executables. Does not restore support for old 32-bit Mac apps.' },
+    'zh-CN': { cost: '无需另购运行器', setup: '用于在 Apple silicon 上运行符合条件的 Intel Mac 应用，不用于 Windows 程序，也不会恢复旧 32 位 Mac 应用支持。' },
   } },
   { id: 'crossover', url: 'https://www.codeweavers.com/crossover', copy: {
-    en: { name: 'CrossOver', cost: 'Paid; trial available — check current terms', setup: 'Consumer-facing Wine-based tool. Bottle, runner and backend versions still matter; no Windows installation required.' },
-    'zh-CN': { name: 'CrossOver', cost: '付费；提供试用，以当前条款为准', setup: '面向普通用户的 Wine 类兼容工具。仍需匹配 Bottle、运行器与图形后端版本；无需安装 Windows。' },
+    en: { cost: 'Paid; trial available — check current terms', setup: 'Consumer-facing Wine-based tool. Bottle, runner and backend versions still matter; no Windows installation required.' },
+    'zh-CN': { cost: '付费；提供试用，以当前条款为准', setup: '面向普通用户的 Wine 类兼容工具。仍需匹配 Bottle、运行器与图形后端版本；无需安装 Windows。' },
   } },
   { id: 'porting-kit', url: 'https://www.paulthetall.com/portingkit-2/', copy: {
-    en: { name: 'Porting Kit', cost: 'Free tool; game purchase separate', setup: 'Game/store-specific installation recipes. Check whether the supported port matches your store edition and engine.' },
-    'zh-CN': { name: 'Porting Kit', cost: '工具免费；游戏另购', setup: '按游戏与商店提供安装方案。需核对是否存在适用于你的商店版本与引擎的 Port。' },
+    en: { cost: 'Free tool; game purchase separate', setup: 'Game/store-specific installation recipes. Check whether the supported port matches your store edition and engine.' },
+    'zh-CN': { cost: '工具免费；游戏另购', setup: '按游戏与商店提供安装方案。需核对是否存在适用于你的商店版本与引擎的 Port。' },
   } },
   { id: 'wine', url: 'https://www.winehq.org/', copy: {
-    en: { name: 'Wine — advanced setup', cost: 'Open-source foundation; distribution-dependent', setup: 'A compatibility layer, not a turnkey game installer. Pin the distribution, build, dependencies and graphics configuration.' },
-    'zh-CN': { name: 'Wine — 高级配置', cost: '开源基础组件；具体发行方式不同', setup: '兼容层而非开箱即用的游戏安装器。需明确发行版、构建版本、依赖与图形配置。' },
+    en: { cost: 'Open-source foundation; distribution-dependent', setup: 'A compatibility layer, not a turnkey game installer. Pin the distribution, build, dependencies and graphics configuration.' },
+    'zh-CN': { cost: '开源基础组件；具体发行方式不同', setup: '兼容层而非开箱即用的游戏安装器。需明确发行版、构建版本、依赖与图形配置。' },
   } },
   { id: 'sikarugir', url: 'https://github.com/Sikarugir-App/Sikarugir', copy: {
-    en: { name: 'Sikarugir — advanced wrapper', cost: 'Check project and component terms', setup: 'Wineskin successor for custom wrappers, not a drop-in CrossOver replacement. Requires recipe/engine-specific verification. Use the official repository, not lookalike sites.' },
-    'zh-CN': { name: 'Sikarugir — 高级封装工具', cost: '以项目及各组件条款为准', setup: 'Wineskin 的后继工具，用于自定义封装，不能直接替代 CrossOver。需按配方与引擎验证；仅使用官方仓库，避免同名仿冒站。' },
+    en: { cost: 'Check project and component terms', setup: 'Wineskin successor for custom wrappers, not a drop-in CrossOver replacement. Requires recipe/engine-specific verification. Use the official repository, not lookalike sites.' },
+    'zh-CN': { cost: '以项目及各组件条款为准', setup: 'Wineskin 的后继工具，用于自定义封装，不能直接替代 CrossOver。需按配方与引擎验证；仅使用官方仓库，避免同名仿冒站。' },
   } },
 ]
