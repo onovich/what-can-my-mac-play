@@ -5,6 +5,14 @@ import { catalogGames } from '../data/catalogGames'
 import { getRouteRecommendation, routeSupportStatus } from './recommendation'
 
 describe('closed support catalog', () => {
+  it('admits new Windows games only on their reviewed route', () => {
+    for (const appId of [489830, 1687950, 894020, 374320]) {
+      expect(getRouteRecommendation(recommendations, appId, 'crossover')).toBeDefined()
+      for (const runner of ['native', 'porting-kit', 'wine', 'virtual-machine'] as const) {
+        expect(routeSupportStatus(recommendations, appId, runner)).toBe('not-supported')
+      }
+    }
+  })
   it('limits homepage picks to supported CrossOver games without a Mac-edition route', () => {
     const featured = catalogGames.filter((game) => game.featured)
     expect(featured.length).toBeGreaterThan(0)

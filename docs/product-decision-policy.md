@@ -12,6 +12,9 @@ Positive route recommendations are choices among running methods, not unconditio
 
 ## Presentation
 
+- Featured order is an explicit editorial order, considering support quality, material restrictions and gameplay variety; it is not a measured performance leaderboard. Search ranks exact names/aliases before prefix and substring matches and normalizes punctuation/spacing without equating different editions.
+- The expansion reviewed on 2026-09-05 is recorded in `docs/research/catalog-expansion-2026-09-05.md`, resolving its `store:<appId>:2026-09-05` and `codeweavers:<appId>:2026-09-05` references. P5R's macOS 15+ recommendation is an editorial supported scope grounded in recorded configurations, not a claimed publisher Mac requirement.
+
 - Homepage discovery prioritizes Windows games that lack a current Steam Mac edition but have an explicitly supported compatibility route. Official Mac editions remain searchable fallback data; they are not homepage picks. This is the product's core service, rather than repeating Steam's Mac catalog.
 
 - With an empty search, show separately selected featured games. Searching queries the complete published catalog, including games with purchase restrictions. A recommended route alone does not qualify a game for homepage selection.

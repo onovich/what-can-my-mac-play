@@ -3,16 +3,14 @@ import { catalogGames, type CatalogGame } from '../../data/catalogGames'
 import { recommendations } from '../../data/recommendations'
 import { getRouteRecommendation } from '../../domain/recommendation'
 import { recommendationCopy } from '../../content/recommendation'
+import { findCatalogGames } from '../../domain/catalogSearch'
 import { useLocale, type Locale } from '../../i18n/locale'
 
 export function GameExplorer() {
   const { locale, messages } = useLocale()
   const [query, setQuery] = useState('')
   const search = query.trim().toLocaleLowerCase()
-  const visibleGames = useMemo(() => catalogGames.filter((game) => search
-    ? [game.title, ...game.aliases].some((name) => name.toLocaleLowerCase().includes(search))
-    : game.featured,
-  ), [search])
+  const visibleGames = useMemo(() => findCatalogGames(catalogGames, search), [search])
 
   return (
     <section className="explorer explorer--compact" id="sample-library" aria-label={messages.explorer.searchLabel}>

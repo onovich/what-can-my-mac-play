@@ -5,6 +5,38 @@ import type { RouteRecommendation } from '../domain/recommendation'
 // Not listed => not supported by our current catalog. Never infer support across runners/stores.
 export const recommendations: readonly RouteRecommendation[] = [
   {
+    appId: 489830, runner: 'crossover', status: 'recommended', reviewedAt: '2026-09-05',
+    basisIds: ['codeweavers:489830:2026-09-05', 'store:489830:2026-09-05'],
+    copy: {
+      en: { title: 'Special Edition · CrossOver', reason: 'CodeWeavers rates the Mac route Runs Great, tested with 26.3.0.', action: 'Play Skyrim Special Edition through CrossOver.', conditions: [] },
+      'zh-CN': { title: '特别版 · CrossOver', reason: 'CodeWeavers 的 Mac 路线评级为 Runs Great，测试版本 26.3.0。', action: '使用 CrossOver 游玩《天际特别版》。', conditions: [] },
+    },
+  },
+  {
+    appId: 374320, runner: 'crossover', status: 'conditional', reviewedAt: '2026-09-05',
+    basisIds: ['codeweavers:374320:2026-09-05', 'store:374320:2026-09-05'],
+    copy: {
+      en: { title: 'Steam Windows edition · CrossOver', reason: 'CodeWeavers rates the Mac route Runs Well, tested with 26.2.0; kept outside the stronger homepage picks.', action: 'Use CrossOver for the Steam Windows edition.', conditions: [] },
+      'zh-CN': { title: 'Steam Windows 版 · CrossOver', reason: 'CodeWeavers 的 Mac 路线评级为 Runs Well，测试版本 26.2.0；不纳入首页优先精选。', action: 'Steam Windows 版使用 CrossOver。', conditions: [] },
+    },
+  },
+  {
+    appId: 1687950, runner: 'crossover', status: 'recommended', reviewedAt: '2026-09-05',
+    basisIds: ['codeweavers:1687950:2026-09-05', 'store:1687950:2026-09-05'],
+    copy: {
+      en: { title: 'CrossOver · macOS 15 or later', reason: 'CodeWeavers rates the Mac route Runs Great with 26.3.0. Our supported macOS 15+ scope follows its recorded Mac setups for this AVX game.', action: 'Play the Steam Windows edition with CrossOver.', conditions: ['Use macOS 15 or later for this route.'] },
+      'zh-CN': { title: 'CrossOver · 适用 macOS 15 及以上', reason: 'CodeWeavers 的 Mac 路线评级为 Runs Great，测试版本 26.3.0。此 AVX 游戏的推荐系统范围取自已记录的 macOS 15 配置。', action: '使用 CrossOver 游玩 Steam Windows 版。', conditions: ['本方案适用 macOS 15 或更新系统。'] },
+    },
+  },
+  {
+    appId: 894020, runner: 'crossover', status: 'recommended', reviewedAt: '2026-09-05',
+    basisIds: ['codeweavers:894020:2026-09-05', 'store:894020:2026-09-05'],
+    copy: {
+      en: { title: 'Steam Windows edition · CrossOver', reason: 'CodeWeavers rates the Mac route Runs Great, tested with 26.3.0.', action: 'Play the Steam Windows edition with CrossOver.', conditions: [] },
+      'zh-CN': { title: 'Steam Windows 版 · CrossOver', reason: 'CodeWeavers 的 Mac 路线评级为 Runs Great，测试版本 26.3.0。', action: '使用 CrossOver 游玩 Steam Windows 版。', conditions: [] },
+    },
+  },
+  {
     appId: 570940, runner: 'crossover', status: 'recommended', reviewedAt: '2026-09-05',
     basisIds: ['codeweavers:570940:2026-09-05', 'store:570940:2026-09-05'],
     copy: {
