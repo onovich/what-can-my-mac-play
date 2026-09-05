@@ -8,7 +8,7 @@ export const recommendationCopy = {
     scope: '“Not supported” means excluded from our current support list, not proof that running it is technically impossible.',
     scopeTitle: 'What our recommendation covers',
     boundary: 'A recommendation of a route, not a guarantee for every Mac or game update. Only the named conditions and features are included.',
-    reviewed: 'Decision reviewed', steam: 'View on Steam', tool: 'Get CrossOver', preferred: 'Preferred route: CrossOver',
+    reviewed: 'Decision reviewed', steam: 'View on Steam', tool: 'Get CrossOver', preferred: 'Preferred route', macEdition: 'Mac edition',
     note: 'Start with the recommended route, then check the conditions that affect your choice.',
   },
   'zh-CN': {
@@ -20,7 +20,7 @@ export const recommendationCopy = {
     scope: '“不支持”表示未纳入当前支持清单，不是断言技术上绝对无法运行。',
     scopeTitle: '结论适用范围',
     boundary: '这是运行方案建议，不是对每台 Mac 或每次游戏更新的保证；只覆盖明确列出的条件与功能。',
-    reviewed: '结论复核日期', steam: '查看 Steam 游戏', tool: '获取 CrossOver', preferred: '首选方案：CrossOver',
+    reviewed: '结论复核日期', steam: '查看 Steam 游戏', tool: '获取 CrossOver', preferred: '首选方案', macEdition: 'Mac 版',
     note: '先看推荐方案，再看真正影响选择的条件。',
   },
 }

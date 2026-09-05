@@ -1,10 +1,10 @@
-import { sampleGames } from '../../data/sampleGames'
+import { catalogGames } from '../../data/catalogGames'
 import { useLocale } from '../../i18n/locale'
 import { RecommendationPanel } from './RecommendationPanel'
 
 export function GameDetailPage({ appId }: { appId: number }) {
   const { messages } = useLocale()
-  const game = sampleGames.find((candidate) => candidate.appId === appId)
+  const game = catalogGames.find((candidate) => candidate.appId === appId)
   if (!game) {
     return (
       <section className="game-not-found shell" aria-labelledby="game-not-found-title">
@@ -22,7 +22,7 @@ export function GameDetailPage({ appId }: { appId: number }) {
           <h1 id="game-detail-title">{game.title}</h1>
         </div>
       </header>
-      <RecommendationPanel key={appId} appId={appId} steamUrl={game.steamUrl} />
+      <RecommendationPanel key={appId} appId={appId} steamUrl={game.steamUrl} preferredRunner={game.preferredRunner} />
     </article>
   )
 }

@@ -1,6 +1,15 @@
 # What Can My Mac Play? 项目交接文档
 
-## 2026-09-04 搜索优先与文案精简（最新）
+## 2026-09-05 首页精选与完整搜索（最新）
+
+- 首页聚焦 Steam 无 Mac 版、但可通过 CrossOver 等明确支持方案游玩的 Windows 游戏；精选 Noita、DARK SOULS: REMASTERED、Deep Rock Galactic: Survivor。原生 Mac 游戏保留为搜索兜底，不进入精选。
+- 搜索覆盖全部 12 款（原 6 款、2 款新增 Windows 游戏与 4 款 Mac 游戏），支持中文别名。新增两款 CrossOver 路线分别记录 26.1.0、26.2.0 的官方支持记录，无帧率保证或未证实的联机禁令。
+- 新增轻量 `catalogGames`，首页选择与运行方案状态分离，无需为新游戏伪造历史评分。详情及页面元信息使用完整目录；默认运行方案按游戏选择，Mac 版不出现购买 CrossOver 按钮。
+- Steam 当前明确列出 macOS 支持即可准入 Mac 版；未列出则不准入，旧要求残留不能替代当前支持。`native` 表示官方 Mac 发行版，不代表 ARM 原生。Hades II 明示需要 M1 或更新 Apple 芯片，不能套用至 Intel。
+- 巫师与 Portal 的购买限制改为完整易懂句子，保留在搜索及详情。研究依据见 `docs/research/homepage-crossover-picks.md` 和 `docs/research/homepage-native-picks.md`；仅整合官方支持信息，没有新增实测或帧率保证。
+- 当前优先级是发现推荐和购买前查询；Steam 游戏库接入仍未开放。
+
+## 2026-09-04 搜索优先与文案精简（历史）
 
 - 首页仅保留短标题、名称搜索、6 款游戏结果与简洁页脚；移除 hero 宣言、方法卡、方法区、closing 与未开放游戏库导航。不向玩家展示内部“推荐/有条件”分类徽标或筛选，各游戏仅显示具体短判断。
 - 详情仅展示一次具体建议，随后是运行方案/费用和必要条件；其他方案默认折叠，支持白名单、返回首选路线、适用范围仍保留。

@@ -6,10 +6,11 @@ import { purchaseRoutes } from '../../content/purchase'
 import { recommendationCopy } from '../../content/recommendation'
 import { useLocale } from '../../i18n/locale'
 
-export function RecommendationPanel({ appId, steamUrl }: { appId: number; steamUrl: string }) {
+export function RecommendationPanel({ appId, steamUrl, preferredRunner }: { appId: number; steamUrl: string; preferredRunner: Runner['kind'] }) {
   const { locale } = useLocale()
   const text = recommendationCopy[locale]
-  const [runner, setRunner] = useState<Runner['kind']>('crossover')
+  const [runner, setRunner] = useState<Runner['kind']>(preferredRunner)
+  const routeName = (kind: Runner['kind']) => kind === 'native' ? text.macEdition : purchaseRoutes.find((route) => route.id === kind)?.copy[locale].name ?? kind
   const decision = getRouteRecommendation(recommendations, appId, runner)
   const status = routeSupportStatus(recommendations, appId, runner)
   const copy = decision?.copy[locale]
@@ -18,7 +19,7 @@ export function RecommendationPanel({ appId, steamUrl }: { appId: number; steamU
       <div aria-live="polite" aria-atomic="true">
         <h2 id="recommendation-title">{copy?.action ?? text.unsupportedTitle}</h2>
         {!copy && <p>{text.unsupportedReason}</p>}
-        {copy && <p className="recommendation-panel__route">{text.route}: CrossOver · {text.paid}</p>}
+        {copy && <p className="recommendation-panel__route">{text.route}: {routeName(runner)}{runner === 'crossover' ? ` · ${text.paid}` : ''}</p>}
         {copy && copy.conditions.length > 0 && <>
           <h3>{text.conditions}</h3>
           <ul>{copy.conditions.map((condition) => <li key={condition}>{condition}</li>)}</ul>
@@ -26,8 +27,8 @@ export function RecommendationPanel({ appId, steamUrl }: { appId: number; steamU
       </div>
       <div className="recommendation-panel__links">
         {status === 'not-supported'
-          ? <button className="button button--primary" onClick={() => setRunner('crossover')}>{text.preferred}</button>
-          : <a className="button button--primary" href="https://www.codeweavers.com/crossover" target="_blank" rel="noreferrer">{text.tool} ↗</a>}
+          ? <button className="button button--primary" onClick={() => setRunner(preferredRunner)}>{text.preferred}: {routeName(preferredRunner)}</button>
+          : runner === 'crossover' && <a className="button button--primary" href="https://www.codeweavers.com/crossover" target="_blank" rel="noreferrer">{text.tool} ↗</a>}
         <a className="button button--outline" href={steamUrl} target="_blank" rel="noreferrer">{text.steam} ↗</a>
       </div>
       <details className="recommendation-panel__scope">
@@ -35,7 +36,7 @@ export function RecommendationPanel({ appId, steamUrl }: { appId: number; steamU
         <label className="purchase-panel__select">
           {text.route}
           <select value={runner} onChange={(event) => setRunner(event.target.value as Runner['kind'])}>
-            {purchaseRoutes.map((route) => <option key={route.id} value={route.id}>{route.copy[locale].name}</option>)}
+            {purchaseRoutes.map((route) => <option key={route.id} value={route.id}>{routeName(route.id)}</option>)}
           </select>
         </label>
       </details>

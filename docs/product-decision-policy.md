@@ -12,6 +12,12 @@ Positive route recommendations are choices among running methods, not unconditio
 
 ## Presentation
 
+- Homepage discovery prioritizes Windows games that lack a current Steam Mac edition but have an explicitly supported compatibility route. Official Mac editions remain searchable fallback data; they are not homepage picks. This is the product's core service, rather than repeating Steam's Mac catalog.
+
+- With an empty search, show separately selected featured games. Searching queries the complete published catalog, including games with purchase restrictions. A recommended route alone does not qualify a game for homepage selection.
+- The current Steam listing explicitly offering macOS support admits the Steam Mac edition. If current macOS support is absent, do not admit it from legacy requirement text alone (for example Portal 2). Missing CPU architecture is not a reason to deny a listed Mac edition; only state architecture restrictions actually published by the source.
+- The internal `native` route means the official Mac edition, not necessarily an ARM-native binary. Display “Mac edition” / “Mac 版”. Apply the Steam client macOS requirement as well as the game requirements.
+
 - Start with a short task title and the search input. No manifesto, methodology card, self-promotion, or separate anchor-button detour before search.
 - State each game's decision once. Use neutral labels such as Route and Conditions, not “our conclusion” or instructions on how to read the page. Put alternatives behind a native collapsed disclosure.
 - Unavailable features have no primary navigation entry. The library URL shows availability and a search link, not simulated account states or an implementation roadmap.
@@ -25,7 +31,7 @@ Positive route recommendations are choices among running methods, not unconditio
 
 Original observations, provenance, uncertainty, and scoring replay remain in the repository for audit. This change creates no new test results and does not increase evidence confidence. The older report components are no longer routed into player pages; their data and tests remain available internally.
 
-`src/data/recommendations.ts` is an explicit reviewed support list. `basisIds` resolve to existing research replay evidence IDs, runtime report IDs, or `store:<appId>:<review date>` snapshots in `src/data/gamePurchaseFacts.ts`. Sources remain in the referenced records and research documents. No source URL is required in the player-facing copy.
+`src/data/recommendations.ts` is an explicit reviewed support list. `basisIds` resolve to existing research replay evidence IDs, runtime report IDs, or `store:<appId>:<review date>` snapshots in `src/data/gamePurchaseFacts.ts`, `docs/research/homepage-native-picks.md`, and `docs/research/homepage-crossover-picks.md`. The Mac-edition research records `steam:macos-client:2026-09-05` and `factorio:fff-371`; the CrossOver research records `codeweavers:<appId>:2026-09-05`. Sources remain internal; no source URL is required in the player-facing copy.
 
 Current editorial choices: Noita and Portal 2 prefer CrossOver; Witcher 3, Sekiro, Ori and Elden Ring require the listed conditions. These are editorial inferences from the already reviewed corpus, not fresh or independently verified gameplay claims. A positive aggregate supports considering a route, not claiming every feature works. Unlisted alternative routes stay outside the supported Steam catalog; the historical Noita GOG recipe does not admit a Steam/Porting Kit entry.
 

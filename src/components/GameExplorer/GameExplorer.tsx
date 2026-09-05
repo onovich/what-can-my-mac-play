@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { sampleGames, type SampleGame } from '../../data/sampleGames'
+import { catalogGames, type CatalogGame } from '../../data/catalogGames'
 import { recommendations } from '../../data/recommendations'
 import { getRouteRecommendation } from '../../domain/recommendation'
 import { recommendationCopy } from '../../content/recommendation'
@@ -8,9 +8,11 @@ import { useLocale, type Locale } from '../../i18n/locale'
 export function GameExplorer() {
   const { locale, messages } = useLocale()
   const [query, setQuery] = useState('')
-  const visibleGames = useMemo(() => sampleGames.filter((game) =>
-    game.title.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase()),
-  ), [query])
+  const search = query.trim().toLocaleLowerCase()
+  const visibleGames = useMemo(() => catalogGames.filter((game) => search
+    ? [game.title, ...game.aliases].some((name) => name.toLocaleLowerCase().includes(search))
+    : game.featured,
+  ), [search])
 
   return (
     <section className="explorer explorer--compact" id="sample-library" aria-label={messages.explorer.searchLabel}>
@@ -24,7 +26,7 @@ export function GameExplorer() {
             </span>
           </label>
         </div>
-        <p className="result-count" role="status" aria-live="polite">{messages.explorer.count(visibleGames.length, sampleGames.length)}</p>
+        <p className="result-count" role="status" aria-live="polite">{search ? messages.explorer.count(visibleGames.length, catalogGames.length) : messages.explorer.featured}</p>
         {visibleGames.length > 0 ? <div className="game-list">
           {visibleGames.map((game, index) => <GameRow key={game.appId} game={game} index={index + 1} locale={locale} />)}
         </div> : <div className="empty-state" role="status">
@@ -36,15 +38,16 @@ export function GameExplorer() {
   )
 }
 
-function GameRow({ game, index, locale }: { game: SampleGame; index: number; locale: Locale }) {
+function GameRow({ game, index, locale }: { game: CatalogGame; index: number; locale: Locale }) {
   const { messages } = useLocale()
-  const decision = getRouteRecommendation(recommendations, game.appId, 'crossover')
+  const decision = getRouteRecommendation(recommendations, game.appId, game.preferredRunner)
   const text = recommendationCopy[locale]
   return (
     <article className="game-row game-row--decision" aria-labelledby={`game-${game.appId}-title`}>
       <span className="game-row__index" aria-hidden="true">{String(index).padStart(2, '0')}</span>
       <div className="game-row__title">
         <h2 id={`game-${game.appId}-title`}>{game.title}</h2>
+        {game.description && <p>{game.description[locale]}</p>}
       </div>
       <div className="game-row__evidence">
         <strong>{decision?.copy[locale].title ?? text.unsupportedTitle}</strong>

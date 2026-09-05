@@ -53,7 +53,8 @@ export const messages = {
       intro:
         'One preferred route per game. See the recommendation first, and the important conditions second.',
       searchLabel: 'Game name',
-      searchPlaceholder: 'Try Portal 2',
+      searchPlaceholder: 'Search Noita, Portal 2…',
+      featured: 'Featured games',
       filterLabel: 'Filter recommendations',
       filters: { all: 'All games', strong: 'Stronger evidence', caution: 'Needs caution' },
       count: (visible: number, total: number) =>
@@ -208,7 +209,8 @@ export const messages = {
       intro:
         '每款游戏给出一个首选方案。先看结论，再看真正影响选择的条件。',
       searchLabel: '游戏名称',
-      searchPlaceholder: '试试 Portal 2',
+      searchPlaceholder: '搜索 Noita、传送门 2…',
+      featured: '精选游戏',
       filterLabel: '筛选使用建议',
       filters: { all: '全部游戏', strong: '证据较强', caution: '需要谨慎' },
       count: (visible: number, total: number) => `显示 ${visible} / ${total} 款已评估游戏`,

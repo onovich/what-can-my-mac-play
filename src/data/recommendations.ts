@@ -5,6 +5,54 @@ import type { RouteRecommendation } from '../domain/recommendation'
 // Not listed => not supported by our current catalog. Never infer support across runners/stores.
 export const recommendations: readonly RouteRecommendation[] = [
   {
+    appId: 570940, runner: 'crossover', status: 'recommended', reviewedAt: '2026-09-05',
+    basisIds: ['codeweavers:570940:2026-09-05', 'store:570940:2026-09-05'],
+    copy: {
+      en: { title: 'Steam Windows edition · CrossOver', reason: 'CodeWeavers lists the Mac route as Runs Great on CrossOver 26.1.0.', action: 'Play the Steam Windows edition with CrossOver.', conditions: [] },
+      'zh-CN': { title: 'Steam Windows 版 · CrossOver', reason: 'CodeWeavers 将 CrossOver 26.1.0 的 Mac 路线列为运行出色。', action: '使用 CrossOver 游玩 Steam Windows 版。', conditions: [] },
+    },
+  },
+  {
+    appId: 2321470, runner: 'crossover', status: 'recommended', reviewedAt: '2026-09-05',
+    basisIds: ['codeweavers:2321470:2026-09-05', 'store:2321470:2026-09-05'],
+    copy: {
+      en: { title: 'Steam Windows edition · CrossOver', reason: 'CodeWeavers lists the Mac route as Runs Great on CrossOver 26.2.0.', action: 'Play the Steam Windows edition with CrossOver.', conditions: [] },
+      'zh-CN': { title: 'Steam Windows 版 · CrossOver', reason: 'CodeWeavers 将 CrossOver 26.2.0 的 Mac 路线列为运行出色。', action: '使用 CrossOver 游玩 Steam Windows 版。', conditions: [] },
+    },
+  },
+  {
+    appId: 413150, runner: 'native', status: 'recommended', reviewedAt: '2026-09-05',
+    basisIds: ['store:413150:2026-09-05', 'steam:macos-client:2026-09-05'],
+    copy: {
+      en: { title: 'Mac edition · No CrossOver needed', reason: 'Steam lists a supported Mac edition.', action: 'Install the Steam Mac edition to start your farm.', conditions: ['macOS 12 or later, a 2 GHz CPU and at least 2 GB RAM.', '500 MB storage and OpenGL 2 graphics with 256 MB video memory; no CrossOver is needed.'] },
+      'zh-CN': { title: 'Mac 版 · 无需 CrossOver', reason: 'Steam 当前列出受支持的 Mac 版。', action: '安装 Steam 的 Mac 版，开始经营农场。', conditions: ['macOS 12 或更新版本、2 GHz 处理器，至少 2 GB 内存。', '500 MB 存储空间，支持 OpenGL 2 的显卡与 256 MB 显存；无需 CrossOver。'] },
+    },
+  },
+  {
+    appId: 2379780, runner: 'native', status: 'recommended', reviewedAt: '2026-09-05',
+    basisIds: ['store:2379780:2026-09-05', 'steam:macos-client:2026-09-05'],
+    copy: {
+      en: { title: 'Mac edition · No CrossOver needed', reason: 'The publisher supports Intel and Apple silicon Macs.', action: 'Install the Steam Mac edition and start playing.', conditions: ['macOS 12 or later; Intel and Apple silicon are supported.', 'We recommend at least 4 GB RAM.'] },
+      'zh-CN': { title: 'Mac 版 · 无需 CrossOver', reason: '发行商明确支持 Intel 和 Apple 芯片 Mac。', action: '安装 Steam 的 Mac 版即可开始游玩。', conditions: ['macOS 12 或更新版本；支持 Intel 和 Apple 芯片。', '建议至少 4 GB 内存。'] },
+    },
+  },
+  {
+    appId: 427520, runner: 'native', status: 'recommended', reviewedAt: '2026-09-05',
+    basisIds: ['store:427520:2026-09-05', 'factorio:fff-371', 'steam:macos-client:2026-09-05'],
+    copy: {
+      en: { title: 'Mac edition · Free demo available', reason: 'Official Intel and Apple silicon builds with a demo.', action: 'Try the Mac demo on Steam before buying.', conditions: ['macOS 12 or later, a 2016 or newer Mac and at least 8 GB RAM; Apple silicon and 16 GB RAM are recommended.', 'This recommendation covers the base game; no CrossOver is needed.'] },
+      'zh-CN': { title: 'Mac 版 · 可免费试玩', reason: '官方提供 Intel 和 Apple 芯片版本及试玩。', action: '先在 Steam 试玩 Mac 版，再决定是否购买。', conditions: ['macOS 12 或更新版本、2016 年或更新的 Mac，至少 8 GB 内存；推荐 Apple 芯片与 16 GB 内存。', '本建议针对游戏本体，无需 CrossOver。'] },
+    },
+  },
+  {
+    appId: 1145350, runner: 'native', status: 'recommended', reviewedAt: '2026-09-05',
+    basisIds: ['store:1145350:2026-09-05'],
+    copy: {
+      en: { title: 'Mac edition · M1 or newer Apple silicon', reason: 'The publisher supports Apple silicon Macs.', action: 'On an M1 or newer Apple silicon Mac, install the Steam Mac edition.', conditions: ['macOS 12 or later, at least 8 GB RAM and 11 GB storage.', 'Intel Macs are not supported; no CrossOver is needed.'] },
+      'zh-CN': { title: 'Mac 版 · 需 M1 或更新 Apple 芯片', reason: '发行商明确支持 Apple 芯片 Mac。', action: '使用 M1 或更新 Apple 芯片的 Mac，直接安装 Steam 的 Mac 版。', conditions: ['macOS 12 或更新版本，至少 8 GB 内存和 11 GB 存储空间。', '不支持 Intel Mac；无需 CrossOver。'] },
+    },
+  },
+  {
     appId: 881100, runner: 'crossover', status: 'recommended', reviewedAt: '2026-09-04',
     basisIds: ['evidence:codeweavers:881100:2026-09-02'],
     copy: {
@@ -17,7 +65,7 @@ export const recommendations: readonly RouteRecommendation[] = [
     basisIds: ['evidence:codeweavers:292030:2026-09-02', 'store:292030:2026-09-04'],
     copy: {
       en: { title: 'CrossOver · Wait before buying for Mac', reason: 'DX11 is the reviewed route.', action: 'Already own it? Use DX11. Buying for Mac? Wait for the update review.', conditions: ['Do not buy for DX12 or ray tracing.', 'Steam announces a requirements change on 29 September 2026; this recommendation covers the reviewed version, not that update.'] },
-      'zh-CN': { title: 'CrossOver · Mac 新购暂缓', reason: '已复核路线使用 DX11。', action: '已有游戏使用 DX11；为 Mac 新购暂缓，等待更新复核结果。', conditions: ['不要为了 DX12 或光追体验购买。', 'Steam 公告 2026 年 9 月 29 日变更配置要求；本结论针对已复核版本，不覆盖该次更新。'] },
+      'zh-CN': { title: '暂不建议为 Mac 购买', reason: '已复核路线使用 DX11。', action: '暂不建议为 Mac 购买，等待更新复核结果；已有游戏可使用 CrossOver 的 DX11 方案。', conditions: ['不要为了 DX12 或光追体验购买。', 'Steam 公告 2026 年 9 月 29 日变更配置要求；本结论针对已复核版本，不覆盖该次更新。'] },
     },
   },
   {
@@ -32,8 +80,8 @@ export const recommendations: readonly RouteRecommendation[] = [
     appId: 620, runner: 'crossover', status: 'recommended', reviewedAt: '2026-09-04',
     basisIds: ['evidence:codeweavers:620:2026-09-02', 'store:620:2026-09-04'],
     copy: {
-      en: { title: 'CrossOver · Not for a co-op purchase', reason: 'Use the Steam Windows edition, not the legacy Mac edition.', action: 'Use the Steam Windows edition, not the legacy Mac edition.', conditions: ['Do not buy for co-op play on Mac.'] },
-      'zh-CN': { title: 'CrossOver · 不建议为合作联机购买', reason: '使用 Steam Windows 版，不走旧 Mac 版。', action: '使用 Steam Windows 版，不走旧 Mac 版。', conditions: ['不要为了 Mac 合作联机体验购买。'] },
+      en: { title: 'Want to play co-op? Hold off on buying.', reason: 'Use the Steam Windows edition, not the legacy Mac edition.', action: 'Use the Steam Windows edition, not the legacy Mac edition.', conditions: ['Want to play co-op with friends on Mac? Hold off on buying.'] },
+      'zh-CN': { title: '想玩合作模式，暂不建议购买', reason: '使用 Steam Windows 版，不走旧 Mac 版。', action: '使用 Steam Windows 版，不走旧 Mac 版。', conditions: ['如果想和朋友一起玩合作模式，暂不建议为 Mac 购买。'] },
     },
   },
   {

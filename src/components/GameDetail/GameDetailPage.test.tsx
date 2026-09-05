@@ -8,6 +8,22 @@ function renderPage(appId: number, locale: 'en' | 'zh-CN' = 'en') {
 }
 
 describe('decision-first game details', () => {
+  it('opens Mac games on their own route and returns there from an unsupported alternative', () => {
+    renderPage(2379780, 'zh-CN')
+    expect(screen.getByRole('heading', { name: '安装 Steam 的 Mac 版即可开始游玩。' })).toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: /获取 CrossOver/ })).not.toBeInTheDocument()
+    screen.getByText('其他方案').parentElement?.setAttribute('open', '')
+    fireEvent.change(screen.getByRole('combobox'), { target: { value: 'crossover' } })
+    expect(screen.getByRole('heading', { name: '此方案不支持这款游戏' })).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: '首选方案: Mac 版' }))
+    expect(screen.getByRole('heading', { name: '安装 Steam 的 Mac 版即可开始游玩。' })).toBeInTheDocument()
+  })
+  it('retains the Apple silicon requirement for Hades II', () => {
+    renderPage(1145350, 'zh-CN')
+    expect(screen.getByRole('heading', { name: /M1 或更新 Apple 芯片/ })).toBeInTheDocument()
+    expect(screen.getByText(/不支持 Intel Mac/)).toBeInTheDocument()
+    expect(screen.getByText(/11 GB/)).toBeInTheDocument()
+  })
   it('gives a preferred route instead of scores and research work', () => {
     renderPage(620)
     expect(screen.getByRole('heading', { name: 'Use the Steam Windows edition, not the legacy Mac edition.' })).toBeInTheDocument()
@@ -26,7 +42,7 @@ describe('decision-first game details', () => {
     screen.getByText('其他方案').parentElement?.setAttribute('open', '')
     fireEvent.change(screen.getByRole('combobox'), { target: { value: 'rosetta' } })
     expect(screen.getByRole('heading', { name: '此方案不支持这款游戏' })).toBeInTheDocument()
-    fireEvent.click(screen.getByRole('button', { name: '首选方案：CrossOver' }))
+    fireEvent.click(screen.getByRole('button', { name: '首选方案: CrossOver' }))
     expect(screen.getByRole('heading', { name: '使用 Steam Windows 版，不走旧 Mac 版。' })).toBeInTheDocument()
   })
   it('makes the multiplayer purchasing decision instead of listing unknowns', () => {

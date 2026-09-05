@@ -6,7 +6,7 @@ import { Header } from './components/Header/Header'
 import { LibraryPage } from './components/Library/LibraryPage'
 import { PrivacyPage } from './components/Privacy/PrivacyPage'
 import { privacyContent } from './content/privacy'
-import { sampleGames } from './data/sampleGames'
+import { catalogGames } from './data/catalogGames'
 import { useLocale } from './i18n/locale'
 import { resolveAppRoute } from './routes'
 
@@ -14,7 +14,7 @@ export function App() {
   const { locale, messages } = useLocale()
   const route = resolveAppRoute(window.location.pathname)
   const detailGame = route.kind === 'game'
-    ? sampleGames.find((game) => game.appId === route.appId)
+    ? catalogGames.find((game) => game.appId === route.appId)
     : undefined
 
   useEffect(() => {
@@ -64,7 +64,7 @@ export function App() {
         ) : (
           <>
             <section className="search-intro shell" aria-labelledby="hero-title">
-              <h1 id="hero-title">{locale === 'zh-CN' ? '查找 Mac 游戏运行方案' : 'Find a Mac gaming route'}</h1>
+              <h1 id="hero-title">{locale === 'zh-CN' ? '在 Mac 上玩 Windows 游戏' : 'Play Windows games on Mac'}</h1>
             </section>
             <GameExplorer />
           </>
