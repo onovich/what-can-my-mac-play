@@ -517,6 +517,8 @@ select:focus-visible {
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
+  padding-inline: 0.5rem;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
   border-bottom: 2px solid var(--ink);
 }
 
@@ -538,8 +540,23 @@ select:focus-visible {
   text-transform: none;
 }
 
+/* The icon and input share one focus surface, instead of nested focus rings. */
+.search-field input:focus-visible {
+  box-shadow: none;
+}
+
 .search-field__control:focus-within {
-  box-shadow: 0 3px 0 var(--coral);
+  background: var(--white);
+  border-bottom-color: var(--coral-dark);
+  box-shadow: 0 1px 0 var(--coral-dark);
+  color: var(--coral-dark);
+}
+
+@media (forced-colors: active) {
+  .search-field__control:focus-within {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
 }
 
 .filter-group {
