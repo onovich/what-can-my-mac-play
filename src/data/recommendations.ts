@@ -5,6 +5,38 @@ import type { RouteRecommendation } from '../domain/recommendation'
 // Not listed => not supported by our current catalog. Never infer support across runners/stores.
 export const recommendations: readonly RouteRecommendation[] = [
   {
+    appId: 379430, runner: 'crossover', status: 'recommended', reviewedAt: '2026-09-06',
+    basisIds: ['store:379430:2026-09-06', 'codeweavers:379430:2026-09-06'],
+    copy: {
+      en: { reason: 'CodeWeavers lists the Mac route as Runs Great, tested with 26.3.0.', action: 'Play the Steam Windows edition with CrossOver.', conditions: [] },
+      'zh-CN': { reason: 'CodeWeavers 的 Mac 路线评级为 Runs Great，测试版本 26.3.0。', action: '使用 CrossOver 游玩 Steam Windows 版。', conditions: [] },
+    },
+  },
+  {
+    appId: 205100, runner: 'crossover', status: 'recommended', reviewedAt: '2026-09-06',
+    basisIds: ['store:205100:2026-09-06', 'codeweavers:205100:2026-09-06'],
+    copy: {
+      en: { reason: 'CodeWeavers lists the Mac route as Runs Great, tested with 26.2.0.', action: 'Play the Steam Windows edition with CrossOver.', conditions: [] },
+      'zh-CN': { reason: 'CodeWeavers 的 Mac 路线评级为 Runs Great，测试版本 26.2.0。', action: '使用 CrossOver 游玩 Steam Windows 版。', conditions: [] },
+    },
+  },
+  {
+    appId: 403640, runner: 'crossover', status: 'recommended', reviewedAt: '2026-09-06',
+    basisIds: ['store:403640:2026-09-06', 'codeweavers:403640:2026-09-06'],
+    copy: {
+      en: { reason: 'CodeWeavers lists the Mac route as Runs Great, tested with 26.2.0.', action: 'Play the Steam Windows edition with CrossOver.', conditions: [] },
+      'zh-CN': { reason: 'CodeWeavers 的 Mac 路线评级为 Runs Great，测试版本 26.2.0。', action: '使用 CrossOver 游玩 Steam Windows 版。', conditions: [] },
+    },
+  },
+  {
+    appId: 502500, runner: 'crossover', status: 'recommended', reviewedAt: '2026-09-06',
+    basisIds: ['store:502500:2026-09-06', 'codeweavers:502500:2026-09-06'],
+    copy: {
+      en: { reason: 'CodeWeavers lists the Mac route as Runs Great, tested with 26.0.0.', action: 'Play the Steam Windows edition with CrossOver.', conditions: [] },
+      'zh-CN': { reason: 'CodeWeavers 的 Mac 路线评级为 Runs Great，测试版本 26.0.0。', action: '使用 CrossOver 游玩 Steam Windows 版。', conditions: [] },
+    },
+  },
+  {
     appId: 489830, runner: 'crossover', status: 'recommended', reviewedAt: '2026-09-05',
     basisIds: ['codeweavers:489830:2026-09-05', 'store:489830:2026-09-05'],
     copy: {

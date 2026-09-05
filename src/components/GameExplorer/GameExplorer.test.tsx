@@ -2,6 +2,7 @@ import { fireEvent, render, screen, within } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import { LocaleProvider } from '../../i18n/LocaleProvider'
 import { GameExplorer } from './GameExplorer'
+import { catalogGames } from '../../data/catalogGames'
 
 function renderExplorer(locale: 'en' | 'zh-CN' = 'en') {
   return render(<LocaleProvider initialLocale={locale}><GameExplorer /></LocaleProvider>)
@@ -27,7 +28,7 @@ describe('decision-first game list', () => {
     renderExplorer()
     fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'Portal' } })
     expect(screen.getByRole('heading', { name: 'Portal 2' })).toBeInTheDocument()
-    expect(screen.getByText(/Showing 1 of 16/)).toBeInTheDocument()
+    expect(screen.getByText(`Showing 1 of ${catalogGames.length} reviewed games`)).toBeInTheDocument()
     fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'no match' } })
     expect(screen.getByRole('heading', { name: 'No matching game.', level: 2 })).toBeInTheDocument()
     fireEvent.click(screen.getByRole('button', { name: /Clear search/ }))

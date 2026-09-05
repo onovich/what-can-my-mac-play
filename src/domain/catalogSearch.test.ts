@@ -3,6 +3,12 @@ import { catalogGames, type CatalogGame } from '../data/catalogGames'
 import { findCatalogGames } from './catalogSearch'
 
 describe('catalog search', () => {
+  it('finds newly reviewed games by alias without merging sequels', () => {
+    expect(findCatalogGames(catalogGames, '耻辱2').map((game) => game.appId)).toEqual([403640])
+    expect(findCatalogGames(catalogGames, '耻辱')[0].appId).toBe(205100)
+    expect(findCatalogGames(catalogGames, '天国拯救').map((game) => game.appId)).toEqual([379430])
+    expect(findCatalogGames(catalogGames, 'AC7').map((game) => game.appId)).toEqual([502500])
+  })
   it('ignores spacing, punctuation and full-width characters', () => {
     expect(findCatalogGames(catalogGames, 'Ｐｏｒｔａｌ：２').map((game) => game.appId)).toEqual([620])
     expect(findCatalogGames(catalogGames, ' 星 露 谷 ').map((game) => game.appId)).toEqual([413150])

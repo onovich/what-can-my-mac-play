@@ -5,10 +5,21 @@ import { catalogGames } from '../data/catalogGames'
 import { getRouteRecommendation, routeSupportStatus } from './recommendation'
 
 describe('closed support catalog', () => {
+  it('keeps published games and admitted recommendations linked without duplicates', () => {
+    const ids = new Set(catalogGames.map((game) => game.appId))
+    expect(ids.size).toBe(catalogGames.length)
+    for (const game of catalogGames) {
+      expect(new URL(game.steamUrl).pathname).toBe(`/app/${game.appId}/`)
+      expect(routeSupportStatus(recommendations, game.appId, game.preferredRunner)).not.toBe('not-supported')
+    }
+    for (const decision of recommendations) expect(ids.has(decision.appId)).toBe(true)
+  })
   it('admits new Windows games only on their reviewed route', () => {
-    for (const appId of [489830, 1687950, 894020, 374320]) {
+    const expansionIds = recommendations.filter((item) => item.reviewedAt === '2026-09-06').map((item) => item.appId)
+    expect(expansionIds.length).toBeGreaterThan(0)
+    for (const appId of [489830, 1687950, 894020, 374320, ...expansionIds]) {
       expect(getRouteRecommendation(recommendations, appId, 'crossover')).toBeDefined()
-      for (const runner of ['native', 'porting-kit', 'wine', 'virtual-machine'] as const) {
+      for (const runner of ['native', 'rosetta', 'porting-kit', 'wine', 'sikarugir', 'whisky', 'virtual-machine'] as const) {
         expect(routeSupportStatus(recommendations, appId, runner)).toBe('not-supported')
       }
     }
