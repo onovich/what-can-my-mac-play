@@ -15,7 +15,7 @@ describe('closed support catalog', () => {
     for (const decision of recommendations) expect(ids.has(decision.appId)).toBe(true)
   })
   it('admits new Windows games only on their reviewed route', () => {
-    const expansionIds = recommendations.filter((item) => item.reviewedAt === '2026-09-06').map((item) => item.appId)
+    const expansionIds = recommendations.filter((item) => item.reviewedAt >= '2026-09-06').map((item) => item.appId)
     expect(expansionIds.length).toBeGreaterThan(0)
     for (const appId of [489830, 1687950, 894020, 374320, ...expansionIds]) {
       expect(getRouteRecommendation(recommendations, appId, 'crossover')).toBeDefined()
@@ -26,7 +26,7 @@ describe('closed support catalog', () => {
   })
   it('limits homepage picks to supported CrossOver games without a Mac-edition route', () => {
     const featured = catalogGames.filter((game) => game.featured)
-    expect(featured.length).toBeGreaterThan(0)
+    expect(featured).toHaveLength(6)
     for (const game of featured) {
       expect(game.preferredRunner).toBe('crossover')
       expect(routeSupportStatus(recommendations, game.appId, 'crossover')).toBe('recommended')

@@ -2,12 +2,26 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import { LocaleProvider } from '../../i18n/LocaleProvider'
 import { GameDetailPage } from './GameDetailPage'
+import { catalogGames } from '../../data/catalogGames'
+import { recommendations } from '../../data/recommendations'
+import { getRouteRecommendation } from '../../domain/recommendation'
 
 function renderPage(appId: number, locale: 'en' | 'zh-CN' = 'en') {
   return render(<LocaleProvider initialLocale={locale}><GameDetailPage appId={appId} /></LocaleProvider>)
 }
 
 describe('decision-first game details', () => {
+  it.each(['en', 'zh-CN'] as const)('publishes every catalog entry with the correct store and conditions in %s', (locale) => {
+    for (const game of catalogGames) {
+      const view = renderPage(game.appId, locale)
+      const decision = getRouteRecommendation(recommendations, game.appId, game.preferredRunner)!
+      expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(game.title)
+      expect(screen.getByRole('link', { name: locale === 'en' ? /View on Steam/ : /查看 Steam 游戏/ })).toHaveAttribute('href', game.steamUrl)
+      expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(decision.copy[locale].action)
+      for (const condition of decision.copy[locale].conditions) expect(screen.getByText(condition)).toBeInTheDocument()
+      view.unmount()
+    }
+  })
   it('opens Mac games on their own route and returns there from an unsupported alternative', () => {
     renderPage(2379780, 'zh-CN')
     expect(screen.getByRole('heading', { name: '安装 Steam 的 Mac 版即可开始游玩。' })).toBeInTheDocument()

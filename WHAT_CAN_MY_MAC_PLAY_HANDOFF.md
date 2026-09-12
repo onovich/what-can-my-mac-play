@@ -1,6 +1,14 @@
 # What Can My Mac Play? 项目交接文档
 
-## 2026-09-06 第二批非原生游戏核验（最新）
+## 2026-09-13 第三批非原生游戏核验（最新）
+
+- 目录从 20 扩至 26：新增 Max Payne 2、C&C 3: Tiberium Wars、Stronghold Crusader HD、Portal、F.E.A.R. 和 NieR:Automata。均核对当前 Steam 无 Mac 支持和对应 Mac CrossOver 记录；不是本机实测。
+- 首页保持 6 款，新增游戏经中英文名称或中文别名搜索进入；尼尔详情保留英文新存档命名失败时的具体语言切换步骤。
+- 新维加斯与 Oblivion 暂缓，避免发布不完整的音频配置方案；怪猎、辐射 4、Prey 的未决问题继续记录在内部，不以正面总评级覆盖具体阻碍。
+- 本批来源见 `docs/research/mature-games-2026-09-13.md` 和 `docs/research/held-games-recheck-2026-09-13.md`，对应 `store:<appId>:2026-09-13` / `codeweavers:<appId>:2026-09-13`。
+- 补充全目录中英文详情、别名和续作区分回归检查；不同重制版、发行渠道或运行器不继承支持。
+
+## 2026-09-06 第二批非原生游戏核验（历史）
 
 - 新增《耻辱》《耻辱 2》《皇牌空战 7》《天国：拯救》4 款，目录从 16 扩至 20；均核对 Steam Windows-only 与对应 CrossOver Mac 正面记录。首页保持 6 款精选，新增条目经搜索进入。
 - 保留中文别名与续作区分，方案名称仍由结构化字段统一生成。没有增加帧率、联机或后续更新的保证。

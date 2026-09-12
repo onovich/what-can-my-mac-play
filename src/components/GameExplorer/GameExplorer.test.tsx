@@ -26,7 +26,7 @@ describe('decision-first game list', () => {
   })
   it('filters games by name and resets an empty result', () => {
     renderExplorer()
-    fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'Portal' } })
+    fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'Portal 2' } })
     expect(screen.getByRole('heading', { name: 'Portal 2' })).toBeInTheDocument()
     expect(screen.getByText(`Showing 1 of ${catalogGames.length} reviewed games`)).toBeInTheDocument()
     fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'no match' } })

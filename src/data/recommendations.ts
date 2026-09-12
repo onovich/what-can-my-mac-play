@@ -5,6 +5,54 @@ import type { RouteRecommendation } from '../domain/recommendation'
 // Not listed => not supported by our current catalog. Never infer support across runners/stores.
 export const recommendations: readonly RouteRecommendation[] = [
   {
+    appId: 12150, runner: 'crossover', status: 'recommended', reviewedAt: '2026-09-13',
+    basisIds: ['store:12150:2026-09-13', 'codeweavers:12150:2026-09-13'],
+    copy: {
+      en: { reason: 'CodeWeavers lists the Mac Steam route as 26.1.0, tested with undefined.', action: 'Play the Steam Windows edition with CrossOver.', conditions: [] },
+      'zh-CN': { reason: 'CodeWeavers 的 Mac Steam 路线评级为 26.1.0，测试版本 undefined。', action: '使用 CrossOver 游玩 Steam Windows 版。', conditions: [] },
+    },
+  },
+  {
+    appId: 24790, runner: 'crossover', status: 'recommended', reviewedAt: '2026-09-13',
+    basisIds: ['store:24790:2026-09-13', 'codeweavers:24790:2026-09-13'],
+    copy: {
+      en: { reason: 'CodeWeavers lists the Mac Steam route as 26.2.0, tested with undefined.', action: 'Play the Steam Windows edition with CrossOver.', conditions: [] },
+      'zh-CN': { reason: 'CodeWeavers 的 Mac Steam 路线评级为 26.2.0，测试版本 undefined。', action: '使用 CrossOver 游玩 Steam Windows 版。', conditions: [] },
+    },
+  },
+  {
+    appId: 40970, runner: 'crossover', status: 'recommended', reviewedAt: '2026-09-13',
+    basisIds: ['store:40970:2026-09-13', 'codeweavers:40970:2026-09-13'],
+    copy: {
+      en: { reason: 'CodeWeavers lists the Mac Steam route as 26.0.0, tested with undefined.', action: 'Play the Steam Windows edition with CrossOver.', conditions: [] },
+      'zh-CN': { reason: 'CodeWeavers 的 Mac Steam 路线评级为 26.0.0，测试版本 undefined。', action: '使用 CrossOver 游玩 Steam Windows 版。', conditions: [] },
+    },
+  },
+  {
+    appId: 400, runner: 'crossover', status: 'recommended', reviewedAt: '2026-09-13',
+    basisIds: ['store:400:2026-09-13', 'codeweavers:400:2026-09-13'],
+    copy: {
+      en: { reason: 'CodeWeavers lists the Mac Steam route as 26.3.0, tested with undefined.', action: 'Play the Steam Windows edition with CrossOver.', conditions: [] },
+      'zh-CN': { reason: 'CodeWeavers 的 Mac Steam 路线评级为 26.3.0，测试版本 undefined。', action: '使用 CrossOver 游玩 Steam Windows 版。', conditions: [] },
+    },
+  },
+  {
+    appId: 21090, runner: 'crossover', status: 'recommended', reviewedAt: '2026-09-13',
+    basisIds: ['store:21090:2026-09-13', 'codeweavers:21090:2026-09-13'],
+    copy: {
+      en: { reason: 'CodeWeavers lists the Mac Steam route as 26.3.0, tested with undefined.', action: 'Play the Steam Windows edition with CrossOver.', conditions: [] },
+      'zh-CN': { reason: 'CodeWeavers 的 Mac Steam 路线评级为 26.3.0，测试版本 undefined。', action: '使用 CrossOver 游玩 Steam Windows 版。', conditions: [] },
+    },
+  },
+  {
+    appId: 524220, runner: 'crossover', status: 'conditional', reviewedAt: '2026-09-13',
+    basisIds: ['store:524220:2026-09-13', 'codeweavers:524220:2026-09-13'],
+    copy: {
+      en: { reason: 'CodeWeavers lists the Mac Steam route as 26.3.0, tested with undefined.', action: 'Play the Steam Windows edition with CrossOver.', conditions: ["If English-language save naming fails, keep the game running, change its language to German in Steam Properties, enter the name, then restore English."] },
+      'zh-CN': { reason: 'CodeWeavers 的 Mac Steam 路线评级为 26.3.0，测试版本 undefined。', action: '使用 CrossOver 游玩 Steam Windows 版。', conditions: ["若英文版新建存档无法输入名字，在游戏运行时将 Steam 游戏语言临时改为德语，输入后切回英文。"] },
+    },
+  },
+  {
     appId: 379430, runner: 'crossover', status: 'recommended', reviewedAt: '2026-09-06',
     basisIds: ['store:379430:2026-09-06', 'codeweavers:379430:2026-09-06'],
     copy: {

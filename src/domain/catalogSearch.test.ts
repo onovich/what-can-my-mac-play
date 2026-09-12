@@ -3,6 +3,14 @@ import { catalogGames, type CatalogGame } from '../data/catalogGames'
 import { findCatalogGames } from './catalogSearch'
 
 describe('catalog search', () => {
+  it('finds the September 13 batch without transferring support to other editions', () => {
+    for (const [query, appId] of [['马克思佩恩2', 12150], ['泰伯利亚战争', 24790], ['要塞十字军', 40970], ['传送门1', 400], ['FEAR', 21090], ['尼尔机械纪元', 524220]] as const) {
+      expect(findCatalogGames(catalogGames, query).map((game) => game.appId)).toEqual([appId])
+    }
+    expect(findCatalogGames(catalogGames, 'Portal')[0].appId).toBe(400)
+    expect(findCatalogGames(catalogGames, 'Portal 2').map((game) => game.appId)).toEqual([620])
+    expect(findCatalogGames(catalogGames, 'Stronghold Crusader Definitive Edition')).toEqual([])
+  })
   it('finds newly reviewed games by alias without merging sequels', () => {
     expect(findCatalogGames(catalogGames, '耻辱2').map((game) => game.appId)).toEqual([403640])
     expect(findCatalogGames(catalogGames, '耻辱')[0].appId).toBe(205100)

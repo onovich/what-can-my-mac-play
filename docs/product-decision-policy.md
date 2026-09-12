@@ -12,6 +12,8 @@ Positive route recommendations are choices among running methods, not unconditio
 
 ## Presentation
 
+- The 2026-09-13 batch resolves `store:<appId>:2026-09-13` / `codeweavers:<appId>:2026-09-13` through `docs/research/mature-games-2026-09-13.md` and `docs/research/held-games-recheck-2026-09-13.md`. Six games are admitted, with NieR's conditional save-name workaround retained. Fallout: New Vegas and Oblivion remain held pending a self-contained audio setup; positive ratings alone do not remove this gate.
+
 - The 2026-09-06 expansion and held candidates are recorded in `docs/research/catalog-expansion-2026-09-06.md`. Its Steam API / CodeWeavers links resolve `store:<appId>:2026-09-06` / `codeweavers:<appId>:2026-09-06`. A positive aggregate rating does not override an unresolved material new-game, launcher or current-patch issue when making a new-purchase recommendation.
 
 - Route labels are generated from the structured `runner` through one shared localized lookup in list and detail views. Never handwrite composite route titles per game. Edition names belong in game titles; material restrictions belong in an optional separate `note`, not in the route identity. Steam is common catalog context and is not repeated in every route label.
