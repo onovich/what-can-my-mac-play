@@ -15,6 +15,7 @@ export type CatalogGame = {
 // Homepage selection is an editorial choice, independent of route-support status.
 // The public catalog does not require archived research scores.
 export const catalogGames: readonly CatalogGame[] = [
+  { appId: 1213210, title: 'Command & Conquer Remastered Collection', steamUrl: 'https://store.steampowered.com/app/1213210/', preferredRunner: 'crossover', featured: false, aliases: ['命令与征服重制版', '命令与征服重制版合集', '命令與征服重製版', 'C&C Remastered'], description: { en: 'Revisit Tiberian Dawn and Red Alert with remastered visuals and music.', 'zh-CN': '重温《泰伯利亚黎明》与《红色警戒》，体验重制画面与音乐。' } },
   { appId: 12150, title: "Max Payne 2: The Fall of Max Payne", steamUrl: 'https://store.steampowered.com/app/12150/', preferredRunner: 'crossover', featured: false, aliases: ["马克思佩恩2","馬克思佩恩2","Max Payne 2"], description: { en: "Fight through a noir story with slow-motion gunplay.", 'zh-CN': "在黑色电影般的故事中体验慢动作枪战。" } },
   { appId: 24790, title: "Command & Conquer 3: Tiberium Wars", steamUrl: 'https://store.steampowered.com/app/24790/', preferredRunner: 'crossover', featured: false, aliases: ["命令与征服3","泰伯利亚战争","C&C3"], description: { en: "Command armies in a real-time strategy campaign.", 'zh-CN': "指挥军队，在即时战略战役中争夺胜利。" } },
   { appId: 40970, title: "Stronghold Crusader HD", steamUrl: 'https://store.steampowered.com/app/40970/', preferredRunner: 'crossover', featured: false, aliases: ["要塞十字军东征HD","要塞十字军","Stronghold Crusader"], description: { en: "Build a castle, manage its economy and withstand sieges.", 'zh-CN': "建造城堡、经营经济，抵御攻城部队。" } },

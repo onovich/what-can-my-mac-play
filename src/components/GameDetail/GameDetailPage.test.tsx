@@ -11,6 +11,15 @@ function renderPage(appId: number, locale: 'en' | 'zh-CN' = 'en') {
 }
 
 describe('decision-first game details', () => {
+  it('keeps the C&C setup in the Steam bottle rather than changing the Mac system', () => {
+    renderPage(1213210, 'zh-CN')
+    expect(screen.getByText(/CrossOver 的 Steam 容器中安装 DirectX for Modern Games/)).toBeInTheDocument()
+  })
+  it('retains the conditional English save-name workaround for NieR', () => {
+    renderPage(524220, 'zh-CN')
+    expect(screen.getByText(/若英文版新建存档无法输入名字.*游戏运行时.*德语.*切回英文/)).toBeInTheDocument()
+    expect(screen.queryByText(/导入.*存档/)).not.toBeInTheDocument()
+  })
   it.each(['en', 'zh-CN'] as const)('publishes every catalog entry with the correct store and conditions in %s', (locale) => {
     for (const game of catalogGames) {
       const view = renderPage(game.appId, locale)

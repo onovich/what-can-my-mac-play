@@ -12,6 +12,8 @@ Positive route recommendations are choices among running methods, not unconditio
 
 ## Presentation
 
+- The additional C&C Remastered review resolves `store:1213210:2026-09-13` / `codeweavers:1213210:2026-09-13` through `docs/research/additional-games-2026-09-13.md`. Its Steam-bottle DirectX setup remains visible; EA App, other C&C releases and multiplayer do not inherit a guarantee.
+
 - The 2026-09-13 batch resolves `store:<appId>:2026-09-13` / `codeweavers:<appId>:2026-09-13` through `docs/research/mature-games-2026-09-13.md` and `docs/research/held-games-recheck-2026-09-13.md`. Six games are admitted, with NieR's conditional save-name workaround retained. Fallout: New Vegas and Oblivion remain held pending a self-contained audio setup; positive ratings alone do not remove this gate.
 
 - The 2026-09-06 expansion and held candidates are recorded in `docs/research/catalog-expansion-2026-09-06.md`. Its Steam API / CodeWeavers links resolve `store:<appId>:2026-09-06` / `codeweavers:<appId>:2026-09-06`. A positive aggregate rating does not override an unresolved material new-game, launcher or current-patch issue when making a new-purchase recommendation.

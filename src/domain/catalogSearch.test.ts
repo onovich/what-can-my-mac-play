@@ -3,6 +3,11 @@ import { catalogGames, type CatalogGame } from '../data/catalogGames'
 import { findCatalogGames } from './catalogSearch'
 
 describe('catalog search', () => {
+  it('keeps the C&C remastered collection distinct from C&C 3', () => {
+    expect(findCatalogGames(catalogGames, '命令与征服重制版').map((game) => game.appId)).toEqual([1213210])
+    expect(findCatalogGames(catalogGames, 'C&C3').map((game) => game.appId)).toEqual([24790])
+    expect(findCatalogGames(catalogGames, 'Red Alert 3')).toEqual([])
+  })
   it('finds the September 13 batch without transferring support to other editions', () => {
     for (const [query, appId] of [['马克思佩恩2', 12150], ['泰伯利亚战争', 24790], ['要塞十字军', 40970], ['传送门1', 400], ['FEAR', 21090], ['尼尔机械纪元', 524220]] as const) {
       expect(findCatalogGames(catalogGames, query).map((game) => game.appId)).toEqual([appId])

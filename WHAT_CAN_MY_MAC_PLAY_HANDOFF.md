@@ -1,6 +1,12 @@
 # What Can My Mac Play? 项目交接文档
 
-## 2026-09-13 第三批非原生游戏核验（最新）
+## 2026-09-13 追加候选核验（最新）
+
+- 新增《命令与征服：重制版合集》，目录从 26 扩至 27，首页保持 6 款。详情给出在 CrossOver Steam 容器内安装 DirectX for Modern Games 的明确步骤，不要求更改 Mac 系统组件。
+- 内部依据见 `docs/research/additional-games-2026-09-13.md`，对应 `store:1213210:2026-09-13` / `codeweavers:1213210:2026-09-13`。未把旧版、EA App 或其他游戏的支持转移到 Steam 重制合集。
+- 增加重制合集与 C&C 3 的搜索区分、DirectX 配置步骤和尼尔条件保留测试。没有新增硬件实测或联机保证。
+
+## 2026-09-13 第三批非原生游戏核验（历史）
 
 - 目录从 20 扩至 26：新增 Max Payne 2、C&C 3: Tiberium Wars、Stronghold Crusader HD、Portal、F.E.A.R. 和 NieR:Automata。均核对当前 Steam 无 Mac 支持和对应 Mac CrossOver 记录；不是本机实测。
 - 首页保持 6 款，新增游戏经中英文名称或中文别名搜索进入；尼尔详情保留英文新存档命名失败时的具体语言切换步骤。

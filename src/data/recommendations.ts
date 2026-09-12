@@ -5,6 +5,14 @@ import type { RouteRecommendation } from '../domain/recommendation'
 // Not listed => not supported by our current catalog. Never infer support across runners/stores.
 export const recommendations: readonly RouteRecommendation[] = [
   {
+    appId: 1213210, runner: 'crossover', status: 'recommended', reviewedAt: '2026-09-13',
+    basisIds: ['store:1213210:2026-09-13', 'codeweavers:1213210:2026-09-13'],
+    copy: {
+      en: { reason: 'CodeWeavers lists the Mac route as Runs Great with 26.2.0; the Steam-specific 26.1 setup includes DirectX for Modern Games.', action: 'Play the Steam Windows edition with CrossOver.', conditions: ['In CrossOver, install DirectX for Modern Games into the Steam bottle before installing the game.'] },
+      'zh-CN': { reason: 'CodeWeavers 的 Mac 路线评级为 Runs Great，测试版本 26.2.0；Steam 专用的 26.1 配置包含 DirectX for Modern Games。', action: '使用 CrossOver 游玩 Steam Windows 版。', conditions: ['先在 CrossOver 的 Steam 容器中安装 DirectX for Modern Games，再安装游戏。'] },
+    },
+  },
+  {
     appId: 12150, runner: 'crossover', status: 'recommended', reviewedAt: '2026-09-13',
     basisIds: ['store:12150:2026-09-13', 'codeweavers:12150:2026-09-13'],
     copy: {
